@@ -1,0 +1,92 @@
+% !TEX program = lualatex
+\documentclass[report,a4paper,11pt]{jlreq}
+
+% -----------------------------------------------------------
+% パッケージの設定
+% -----------------------------------------------------------
+% LuaLaTeXで日本語を扱うための基本パッケージ
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+% フォントを明示的に指定する場合は以下のように設定可能です
+% \setmainjfont{Harano Aji Mincho}
+
+% 数学・記号用パッケージ
+\usepackage{amsmath,amssymb}
+
+% 画像挿入用パッケージ
+\usepackage{graphicx}
+
+% ハイパーリンク（目次や引用のリンク化）の設定
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% -----------------------------------------------------------
+% タイトル・著者情報
+% -----------------------------------------------------------
+\title{卒業論文タイトル（仮）}
+\author{長松 蒼空}
+\date{\today}
+
+% -----------------------------------------------------------
+% 本文開始
+% -----------------------------------------------------------
+\begin{document}
+
+\maketitle
+
+% アブストラクト（概要）
+\begin{abstract}
+ここに論文の概要（アブストラクト）を記述します。
+このテンプレートは、モダンな日本語LaTeX環境である「LuaLaTeX」と、
+日本語組版の標準要件に準拠した「jlreq」ドキュメントクラスを使用しています。
+UTF-8にネイティブ対応しているため、文字コードの問題なくスムーズに執筆できます。
+\end{abstract}
+
+% 目次の出力
+\tableofcontents
+\clearpage
+
+% 第1章
+\chapter{はじめに}
+\section{研究の背景}
+本研究の背景について述べます。LuaLaTeXはモダンなLaTeX環境の標準であり、複雑な環境構築なしで高度な日本語組版が可能です。
+
+\section{研究の目的}
+本研究の目的は、〇〇を明らかにし、〇〇のシステムを構築することです。
+
+% 第2章
+\chapter{関連研究}
+関連する先行研究について述べます。
+文献を引用する場合は、このように記述します\cite{sample2026}。
+
+% 第3章
+\chapter{提案手法}
+\section{数式の記述例}
+インライン数式は $E = mc^2$ のように記述します。
+独立した数式（ディスプレイ数式）は以下のように記述します。
+
+\begin{equation}
+    f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi)\,e^{2 \pi i \xi x} \,d\xi
+\end{equation}
+
+\section{図表の挿入例}
+図を挿入する場合は、\texttt{figure}環境を使用します（必要に応じてコメントアウトを外して画像を配置してください）。
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=10cm]{sample.png}
+%     \caption{提案手法のシステム構成図}
+%     \label{fig:sample}
+% \end{figure}
+
+% 第4章
+\chapter{おわりに}
+本稿では、LuaLaTeXとjlreqクラスを用いた論文執筆の環境整備を行いました。
+今後の課題としては、実際の研究の進捗に合わせて各章を加筆していくことが挙げられます。
+
+% 参考文献
+\begin{thebibliography}{99}
+\bibitem{sample2026}
+著者名, ``論文タイトル'', ジャーナル名, Vol.1, No.1, pp.1--10, 2026.
+\end{thebibliography}
+
+\end{document}

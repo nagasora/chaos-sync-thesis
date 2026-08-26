@@ -1,0 +1,56 @@
+# カオス同期による動的情報圧縮の研究
+
+## 研究の核
+
+> 神経系に見られる動的同期に着想を得て、カオス同期を情報圧縮へ応用できるか検討する。
+
+中心的な問いは、多数のカオス自由度が同期によって縮約されるとき、入力に必要な情報を残し、その情報を安定に読み出して復号できるか、という点です。
+
+同期で自由度が減ることだけでは、情報圧縮が成立したとはいえません。すべての入力が同一の同期軌道・同一の不変測度へ収束すれば、入力差は失われます。本研究では、同期によって消える冗長成分と、同期後も残る入力依存成分を分離して測定します。
+
+## 現在の研究仮説
+
+同期多様体に垂直な方向では収縮し、同期多様体に沿う方向ではカオス性を残す領域、
+
+\[
+\lambda_\perp < 0,\qquad \lambda_\parallel > 0
+\]
+
+において、冗長性の縮約と入力依存情報の保持が両立する可能性があります。特に同期臨界点直後では、横断方向の差を抑えながら有限時間の入力依存軌道を比較的長く保持できる、という仮説を検証します。
+
+## 読み出し候補
+
+- Takenaka–Malmquist（TM）基底: Cauchy 不変測度を持つ可解カオス軌道の状態・時間モード
+- グラフフーリエ変換: ノード間の同期、クラスタ、空間モード
+- 時間遅延・Koopman 解析: 遷移や時間発展構造
+- 横断 Lyapunov 指数: 同期多様体の安定性
+
+潜在表現の候補は、グラフ周波数・TM 次数・時間遅延を統合した
+
+\[
+z(x)=\{\widetilde c_{\ell k,\tau}(x)\}
+\]
+
+です。
+
+## まず読むファイル
+
+1. [PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md)
+2. [MIGRATION_MANIFEST.md](docs/MIGRATION_MANIFEST.md)
+3. [CLOUD_CONVERSATION_INDEX.md](docs/CLOUD_CONVERSATION_INDEX.md)
+4. [REFERENCE_INVENTORY.md](docs/REFERENCE_INVENTORY.md)
+5. [experiments/README.md](experiments/README.md)
+6. [発表フィードバック整理（2026-08-06）](docs/PRESENTATION_FEEDBACK_2026-08-06.md)
+7. [実験記録ガイド](experiments/RECORDING_GUIDE.md)
+8. [モデル学習と結合強度の設計](docs/MODEL_TRAINING_DESIGN.md)
+
+## 作業場所
+
+- 研究文書・実験: この `projects/chaos-sync-thesis` 配下
+- TeXソースと生成PDF: [`../../latex`](../../latex/README.md)
+- PowerPointと発表ノート: [`presentations`](presentations/README.md)
+- 中核論文: [`references/papers`](references/README.md)
+
+## 参考文献
+
+主要 PDF は [references/papers](references/papers) に保存されています。特に、無限次元ランダム結合 Boole 系、Artificial Kuramoto Oscillatory Neurons、TM–Koopman 関連論文の役割を区別して利用します。旧名称とSHA-256は[参考文献台帳](references/README.md)に記録しています。

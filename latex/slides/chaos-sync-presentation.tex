@@ -1,0 +1,461 @@
+% !TEX program = lualatex
+% クラウド版の研究内容をもとにローカル移行用として再構成した Beamer 正本
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage{luatexja}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{bm}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+\definecolor{researchblue}{RGB}{29,78,121}
+\setbeamercolor{structure}{fg=researchblue}
+\setbeamercolor{alerted text}{fg=red!75!black}
+
+\title{カオス同期による動的情報圧縮と復号}
+\subtitle{Takenaka--Malmquist・グラフスペクトル表現を用いた研究構想}
+\author{長松 蒼空}
+\institute{卒業研究テーマ発表}
+\date{\today}
+
+\newcommand{\lperp}{\lambda_{\perp}}
+\newcommand{\lpara}{\lambda_{\parallel}}
+
+\begin{document}
+
+% 1
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% 2
+\begin{frame}{研究背景}
+  \begin{columns}[T]
+    \column{0.49\textwidth}
+    \begin{block}{既存の深層生成モデル}
+      \begin{itemize}
+        \item 高い表現力と生成能力
+        \item 大量のデータ・計算資源
+        \item 潜在表現の解釈が難しい場合がある
+      \end{itemize}
+    \end{block}
+    \column{0.49\textwidth}
+    \begin{block}{着想}
+      神経系では、振動・同期・非線形ダイナミクスが情報統合に関与する。
+      静的なベクトル圧縮とは異なる、動的な情報表現を検討する。
+    \end{block}
+  \end{columns}
+  \vfill
+  \alert{脳の省エネルギー性の原因がカオス同期である、と断定する研究ではない。}
+\end{frame}
+
+% 3
+\begin{frame}{研究の最上位目的}
+  \begin{center}
+    \Large
+    神経系に見られる動的同期に着想を得て、\\[4mm]
+    \alert{カオス同期を情報圧縮へ応用できるか検討する。}
+  \end{center}
+  \vfill
+  \begin{itemize}
+    \item 入力を同期パターンへ符号化できるか
+    \item 同期軌道から必要情報を読み出せるか
+    \item 冗長性の縮約と復号可能性を両立できるか
+  \end{itemize}
+\end{frame}
+
+% 4
+\begin{frame}{自由度縮約と情報圧縮は同じではない}
+  多数の状態が同期多様体へ収束すれば、実効自由度は減少する。
+  \[
+    \|x_i(t)-x_j(t)\|\longrightarrow 0
+  \]
+  しかし、
+  \[
+    \boxed{
+      \text{自由度が減少した}
+      \quad\not\Rightarrow\quad
+      \text{必要な入力情報が保存された}
+    }
+  \]
+  すべての入力が同一の軌道・同一の不変測度へ収束する場合、入力差は失われる。
+\end{frame}
+
+% 5
+\begin{frame}{中心的な研究質問}
+  \begin{enumerate}
+    \item 入力ごとに異なる同期パターンを生成できるか。
+    \item 同期によって消える冗長自由度と、残る入力依存自由度を分けられるか。
+    \item 同期軌道だけから入力またはクラスを復号できるか。
+    \item 同期表現は元入力より実質的に低次元か。
+    \item カオスを使うことに、非カオス系を超える意味があるか。
+  \end{enumerate}
+  \vfill
+  \begin{alertblock}{本研究の核}
+    「同期したか」ではなく、「何が消え、何が残り、どこから読めるか」を調べる。
+  \end{alertblock}
+\end{frame}
+
+% 6
+\begin{frame}{必要な定義：カオス・同期・安定性}
+  離散力学系を
+  \[
+    x_{t+1}=F(x_t)
+  \]
+  とする。複数ノードの完全同期多様体は
+  \[
+    \mathcal S=\{x_1=x_2=\cdots=x_N\}
+  \]
+  である。
+  \begin{itemize}
+    \item 完全同期
+    \item 一般化同期・比例同期
+    \item 位相差同期
+    \item クラスタ同期
+  \end{itemize}
+  本研究では、完全同期以外の同期も対象とする。候補となる安定性条件は
+  \[
+    \boxed{\lperp<0,\qquad \lpara>0}
+  \]
+  である。前者はノード間のずれの収縮、後者は同期多様体上の非自明なカオスの維持を表す。ただし、この条件だけでは復号可能性は保証されない。
+\end{frame}
+
+% 7
+\begin{frame}{可解カオス候補と大自由度結合系}
+  \[
+    f(x)=\alpha x-\frac{\beta}{x}
+  \]
+  Cauchy 密度
+  \[
+    \rho_\gamma(x)=\frac{\gamma}{\pi(x^2+\gamma^2)}
+  \]
+  を持つ可解領域では、軌道統計や尺度母数を解析的に扱える可能性がある。
+  ランダム結合系の例は
+  \[
+    X_i[n+1]
+    =f(X_i[n])
+    +\frac{K}{N-1}\sum_{j\ne i}\varepsilon_{ij}X_j[n]
+  \]
+  大自由度極限では、Cauchy 分布の安定性を使い、巨視的尺度母数へ縮約する議論がある。
+  である。先行研究は同期臨界と自由度縮約の出発点を与えるが、入力符号化・必要情報の保持・復号は直接扱わない。
+\end{frame}
+
+% 10
+\begin{frame}{先行研究の役割分担}
+  \small
+  \begin{tabular}{p{0.27\textwidth}p{0.31\textwidth}p{0.31\textwidth}}
+    \toprule
+    先行研究 & 得られるもの & 残る問題 \\
+    \midrule
+    ランダム結合 Boole 系 & 同期臨界、Cauchy 安定性、大自由度縮約 & 入力の保持・復号を扱わない \\
+    AKOrN & 同期を機械学習の特徴結合へ利用する例 & カオス同期そのものではない \\
+    TM--Koopman 関連 & Cauchy 軌道を読む複素座標・作用素モード & 入力情報を自動的に生むわけではない \\
+    AE / VAE & 圧縮・復元・確率的潜在表現の基準 & 静的潜在表現との比較が必要 \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+% 11
+\begin{frame}{研究ギャップ}
+  \begin{block}{既に分かっていること}
+    結合系が同期する条件、同期をニューラル表現へ利用する例、可解カオスを解析する座標系。
+  \end{block}
+  \begin{alertblock}{まだ整理されていないこと}
+    入力情報を同期パターンへ符号化し、同期後に何が残り、どの条件で安定に復号できるか。
+  \end{alertblock}
+  \vfill
+  \centering
+  \Large
+  同期の成立 \(\ne\) 情報の保持 \(\ne\) 復号可能性
+\end{frame}
+
+% 12
+\begin{frame}{研究仮説}
+  \begin{alertblock}{主仮説}
+    同期臨界点近傍では、横断方向の冗長性を収縮させながら、同期多様体上または有限時間軌道上に入力依存情報を保持できる。
+  \end{alertblock}
+  \begin{itemize}
+    \item H1: 異なる入力は異なる同期署名を形成する。
+    \item H2: 同期署名から入力クラスを識別できる。
+    \item H3: 同期署名から入力を一定精度で再構成できる。
+    \item H4: 同期表現は有限分解能で入力より短い符号になる。
+    \item H5: 非カオス系より頑健性または保持時間が改善する条件がある。
+  \end{itemize}
+\end{frame}
+
+% 13
+\begin{frame}{なぜ同期臨界点近傍か}
+  \begin{columns}[T]
+    \column{0.31\textwidth}
+    \begin{block}{非同期側}
+      冗長な横断自由度が残る。
+    \end{block}
+    \column{0.31\textwidth}
+    \begin{block}{臨界点直後}
+      差は収縮するが、過渡情報が比較的長く残る可能性。
+    \end{block}
+    \column{0.31\textwidth}
+    \begin{block}{深い同期側}
+      入力差が急速に消え、モード崩壊に近い状態になる可能性。
+    \end{block}
+  \end{columns}
+  \vfill
+  \[
+    \lperp<0,\qquad |\lperp|\approx0
+  \]
+  を候補領域として、圧縮率・復号誤差・保持時間を同時に測る。
+\end{frame}
+
+% 14
+\begin{frame}{入力情報をどこに保存するか}
+  \begin{enumerate}
+    \item 同期クラスタの分割パターン
+    \item ノード間の相対位相・時間遅れ
+    \item 同期臨界点近傍の有限時間軌道
+    \item 入力ごとに異なる同期多様体・アトラクタ
+    \item 入力依存の Cauchy 尺度母数・複素極
+    \item 状態より遅く変化する結合・適応変数
+  \end{enumerate}
+  \vfill
+  初期値だけに長期記憶を置く方法は、混合と初期値鋭敏性のため優先度を下げる。
+\end{frame}
+
+% 13
+\begin{frame}{TM 基底とグラフスペクトルによる読み出し}
+  \small
+  Cayley 変換
+  \[
+    q_\gamma(x)=\frac{x-i\gamma}{x+i\gamma}
+  \]
+  と TM モード候補
+  \[
+    M_k^{(\gamma)}(x)=q_\gamma(x)^k
+  \]
+  を用いる。
+  \[
+    c_k(x)=\int_{\mathbb R}
+      \overline{M_k^{(\gamma)}(u)}\rho_x(u)\,du
+  \]
+  を用いる。さらに、グラフ Laplacian を
+  \[
+    L=V\Lambda V^\top
+  \]
+  とする。ノード \(i\) の TM 係数 \(c_{ik}\) を
+  \[
+    \widetilde c_{\ell k}
+    =\sum_{i=1}^{N}V_{i\ell}c_{ik}
+  \]
+  へ変換する。
+  として、TM 次数で状態・時間モードを、グラフ周波数で全体同期・クラスタ・局所不一致を読む。
+  \alert{TM 基底は情報を生み出さない。同一不変測度へ収束すれば入力差は読めない。}
+\end{frame}
+
+% 17
+\begin{frame}{提案する潜在表現}
+  \[
+    \boxed{
+      z(x)=
+      \left\{
+        \widetilde c_{\ell k,\tau}(x)
+      \right\}_{\ell\le L_0,\ |k|\le K_0,\ \tau\le T_0}
+    }
+  \]
+  \begin{itemize}
+    \item \(\ell\): ネットワーク上の同期・クラスタ構造
+    \item \(k\): 可解カオス軌道の複素モード
+    \item \(\tau\): 過渡軌道・時間遅延・遷移構造
+  \end{itemize}
+  \vfill
+  長時間不変測度だけでなく、有限時間の入力依存性も読み出し対象にする。
+\end{frame}
+
+% 18
+\begin{frame}{カオス同期型エンコーダ・デコーダ}
+  \[
+    x
+    \xrightarrow{\Phi}
+    \text{初期状態・外力・結合}
+    \xrightarrow{F^T}
+    \text{同期軌道}
+    \xrightarrow{\Pi_{\mathrm{TM-GFT-delay}}}
+    z(x)
+    \xrightarrow{D}
+    \widehat x
+  \]
+  \begin{itemize}
+    \item \(\Phi\): 入力注入方法を比較する。
+    \item \(F^T\): 結合カオス系の時間発展。
+    \item \(\Pi\): 同期署名を抽出する。
+    \item \(D\): 線形または小規模デコーダから開始する。
+  \end{itemize}
+  強力すぎるデコーダが同期表現の不足を隠さないようにする。
+\end{frame}
+
+% 19
+\begin{frame}{VAE との関係}
+  通常の VAE は
+  \[
+    q_\phi(z\mid x)=
+    \mathcal N\!\left(
+      \mu_\phi(x),\operatorname{diag}\sigma_\phi^2(x)
+    \right)
+  \]
+  を出力する。
+  \begin{block}{卒論の第一段階}
+    カオス同期系が決定論的特徴 \(z(x)\) を出すオートエンコーダとして、復号可能性を検証する。
+  \end{block}
+  \begin{block}{将来の拡張}
+    \[
+      z(x)\rightarrow
+      (\mu_\phi(x),\log\sigma_\phi^2(x))
+    \]
+    を追加し、VAE の特徴抽出器として比較する。
+  \end{block}
+\end{frame}
+
+% 17
+\begin{frame}{実験 E0〜E2：整合性・読み出し・頑健性}
+  \small
+  \begin{columns}[T]
+    \column{0.32\textwidth}
+    \begin{block}{E0: 整合性}
+      \begin{itemize}
+        \item 不変測度
+        \item Lyapunov 指数
+        \item 同期臨界
+        \item TM 係数
+      \end{itemize}
+    \end{block}
+    \column{0.32\textwidth}
+    \begin{block}{E1: 理想同期軌道}
+      \begin{itemize}
+        \item 既知のクラスタ
+        \item 既知の位相差
+        \item 既知の Cauchy パラメータ
+        \item 既知量を回収できるか
+      \end{itemize}
+    \end{block}
+    \column{0.32\textwidth}
+    \begin{block}{E2: 頑健性}
+      \begin{itemize}
+        \item 観測ノイズ
+        \item 欠損
+        \item 有限観測長
+        \item 初期値変動
+      \end{itemize}
+    \end{block}
+  \end{columns}
+  \vfill
+  実装誤差・論文の誤植・読出し手法・結合系の失敗を切り分ける。
+\end{frame}
+
+% 22
+\begin{frame}{実験 E3〜E5 と卒論スコープ}
+  \begin{description}
+    \item[E3] 結合 Boole 系で、入力注入方法・同期・復号可能性を比較する。
+    \item[E4] 破損入力からの連想記憶・アトラクタ選択へ拡張する。
+    \item[E5] MNIST、決定論的 AE、必要なら VAE へ拡張する。
+  \end{description}
+  \vfill
+  \begin{alertblock}{卒論の最小スコープ}
+    \centering
+    \Large E0〜E3
+  \end{alertblock}
+  無限次元化・生成モデル化は、有限次元の最小モデルで識別・復号を確認した後に進める。
+\end{frame}
+
+% 23
+\begin{frame}{評価方法と比較対象}
+  \small
+  \begin{tabular}{p{0.25\textwidth}p{0.61\textwidth}}
+    \toprule
+    評価対象 & 指標 \\
+    \midrule
+    同期 & 同期誤差、秩序変数、横断 Lyapunov 指数 \\
+    識別 & 分類精度、ARI、NMI、クラス条件付き情報量 \\
+    復号 & パラメータ推定誤差、MSE、SSIM \\
+    圧縮 & 潜在次元、有限分解能の符号長、rate--distortion \\
+    頑健性 & ノイズ・欠損・観測長に対する性能曲線 \\
+    分布 & MMD、Wasserstein 距離、自己相関時間 \\
+    \bottomrule
+  \end{tabular}
+  \vfill
+  比較対象：PCA、通常 AE、VAE、非カオス振動子、非結合カオス系、TM のみ、GFT のみ。
+\end{frame}
+
+% 24
+\begin{frame}{まとめ}
+  \begin{enumerate}
+    \item 同期による自由度縮約と、必要情報を残す圧縮を区別する。
+    \item \(\lperp<0\)、\(\lpara>0\) を候補条件とし、復号可能性を別に測る。
+    \item TM・GFT・時間遅延を統合し、同期軌道の状態・空間・時間構造を読む。
+    \item E0〜E3 で、理論整合性→読み出し→頑健性→結合系の順に検証する。
+  \end{enumerate}
+  \vfill
+  \begin{alertblock}{最初に明らかにすること}
+    どの情報が同期で消え、どの情報がどの座標に残るのか。
+  \end{alertblock}
+\end{frame}
+
+% 補足 1
+\appendix
+\begin{frame}{補足：入力注入方法の比較}
+  \begin{itemize}
+    \item 初期状態へ注入
+    \item 時間依存外力として注入
+    \item 結合係数へ注入
+    \item Cauchy 尺度母数・複素極へ注入
+    \item 同期クラスタ・グラフ構造へ注入
+    \item 遅い適応変数へ保存
+  \end{itemize}
+  長期記憶では、初期値だけでなく不変測度・同期多様体・遅い結合へ残す方法を優先する。
+\end{frame}
+
+% 補足 2
+\begin{frame}{補足：数式上の注意}
+  日本語版論文の式(25)には、臨界値と整合しない係数が含まれる可能性がある。
+  英語版と整合する候補は
+  \[
+    \lambda_c=
+    2\log\left[
+      \frac1{\sqrt2}+\sqrt{\frac12-\langle|\varepsilon|\rangle}
+    \right]
+  \]
+  すなわち
+  \[
+    \lambda_c=
+    \log\left[
+      1-\langle|\varepsilon|\rangle
+      +\sqrt{1-2\langle|\varepsilon|\rangle}
+    \right].
+  \]
+  卒論で採用する前に原典と数値計算で再確認する。
+\end{frame}
+
+% 補足 3
+\begin{frame}{補足：未確定事項}
+  \begin{itemize}
+    \item 第一目標は画像全体、クラス、両方のどれか。
+    \item 完全同期、クラスタ同期、一般化同期のどれを主対象にするか。
+    \item TM 基底を使える関数空間と不変測度の正確な条件。
+    \item 有限個のモードで識別可能性を保証できる条件。
+    \item 卒論の主成果を定理・解析手法・最小モデルのどこに置くか。
+  \end{itemize}
+\end{frame}
+
+% 補足 4
+\begin{frame}{補足：教授と確認したい質問}
+  \begin{enumerate}
+    \item 卒論では、画像再構成とクラス保持のどちらを第一目標にするか。
+    \item 主定理を同期安定性、識別可能性、情報縮約のどこに置くか。
+    \item 無限次元極限を主対象にするか、有限系の後段に置くか。
+    \item TM 基底の利用範囲と、先行論文のどの主張を採用できるか。
+    \item E0〜E3 のうち、発表時点で必須の実証はどこまでか。
+  \end{enumerate}
+\end{frame}
+
+\end{document}

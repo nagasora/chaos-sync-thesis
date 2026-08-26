@@ -1,0 +1,52 @@
+# LaTeX generated files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+
+# Build directories
+build/
+out/
+latex/build/
+
+# Tool-managed caches
+.tmp/
+.codex_tmp/
+.pnpm-store/
+.tmp.drive*/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+
+# Personal application documents and standalone seminar repositories are not
+# part of the shared research history.
+applications/
+seminars/
+
+# Keep the research repository reviewable and reproducible. Primary sources
+# and generated office/PDF artifacts remain local; their inventories and
+# Markdown/LaTeX sources are versioned instead.
+archive/
+library/papers/
+projects/*/references/papers/
+*.pdf
+*.docx
+*.pptx
+*.png
+*.npz

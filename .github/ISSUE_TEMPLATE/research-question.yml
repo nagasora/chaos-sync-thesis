@@ -1,0 +1,50 @@
+name: Research question
+description: 研究上の未解決点を、根拠と次の検証につなげて記録する。
+title: "[Question] "
+labels:
+  - research-question
+body:
+  - type: dropdown
+    id: stage
+    attributes:
+      label: 対応する研究段階
+      options:
+        - E0
+        - E1
+        - E2
+        - E3
+        - E4-E5 extension
+        - Cross-cutting
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: 問い
+      description: 一文で、まだ答えを仮定せずに書く。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 現在の根拠
+      description: 原典、式、既存実験、または未検証であることを明示する。
+    validations:
+      required: true
+  - type: textarea
+    id: hypotheses
+    attributes:
+      label: 候補仮説と反証条件
+      description: 支持される条件と、反証または識別不能と判断する条件を分ける。
+  - type: textarea
+    id: next_action
+    attributes:
+      label: 次の一手
+      description: 一つの小さな文献確認、計算、または相談事項に絞る。
+    validations:
+      required: true
+  - type: input
+    id: related_files
+    attributes:
+      label: 関連ファイル・Issue
+      placeholder: projects/chaos-sync-thesis/docs/PROJECT_CONTEXT.md

@@ -1,0 +1,2 @@
+# Markdown の末尾2空白は、研究文書で意図的な改行として使用している。
+*.md whitespace=-trailing-space

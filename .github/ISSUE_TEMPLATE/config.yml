@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 研究運用ガイド
+    url: https://github.com/nagasora/Sora_research/blob/main/projects/chaos-sync-thesis/docs/GITHUB_RESEARCH_WORKFLOW.md
+    about: Issueの単位、Project field、実験記録の正本を確認する。

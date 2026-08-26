@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "question": "一般化Boole写像のCauchy不変測度・Lyapunov指数・TM非零モード0を有限軌道で再現できるか。",
+  "config": {
+    "alpha_values": [
+      0.4,
+      0.5,
+      0.6
+    ],
+    "seeds": [
+      20260806,
+      20260807,
+      20260808,
+      20260809,
+      20260810
+    ],
+    "burn_in": 20000,
+    "observation_length": 100000,
+    "tm_max_order": 8,
+    "diagnostic_sample_size": 20000,
+    "quadrature_points": 200000,
+    "thresholds": {
+      "max_scale_relative_error": 0.05,
+      "max_lyapunov_absolute_error": 0.015,
+      "max_ks_distance": 0.02,
+      "max_tm_nonzero_magnitude": 0.02,
+      "max_quadrature_lyapunov_error": 1e-05
+    }
+  },
+  "per_alpha": [
+    {
+      "alpha": 0.4,
+      "seed_count": 5,
+      "theoretical_scale": 0.816496580927726,
+      "median_scale_relative_error": 0.008216243275367989,
+      "max_scale_relative_error": 0.013947712025118596,
+      "theoretical_lyapunov": 0.6829937571270775,
+      "median_lyapunov_absolute_error": 0.0005593644540616838,
+      "max_lyapunov_absolute_error": 0.0011748922097069014,
+      "max_ks_distance": 0.006502297789314215,
+      "max_tm_nonzero_magnitude": 0.0076205937879598815,
+      "quadrature_lyapunov": 0.6829868256552716,
+      "quadrature_lyapunov_error": 6.931471805970979e-06,
+      "all_states_finite": true,
+      "total_exact_repeat_count": 0,
+      "gates": {
+        "scale": true,
+        "lyapunov": true,
+        "ks": true,
+        "tm": true,
+        "quadrature": true,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "alpha": 0.5,
+      "seed_count": 5,
+      "theoretical_scale": 1.0,
+      "median_scale_relative_error": 0.002535846514024165,
+      "max_scale_relative_error": 0.007904159231894026,
+      "theoretical_lyapunov": 0.6931471805599454,
+      "median_lyapunov_absolute_error": 4.039672679478912e-06,
+      "max_lyapunov_absolute_error": 3.113265140308741e-05,
+      "max_ks_distance": 0.004497165022476657,
+      "max_tm_nonzero_magnitude": 0.004496295820866023,
+      "quadrature_lyapunov": 0.6931402490881394,
+      "quadrature_lyapunov_error": 6.931471805970979e-06,
+      "all_states_finite": true,
+      "total_exact_repeat_count": 0,
+      "gates": {
+        "scale": true,
+        "lyapunov": true,
+        "ks": true,
+        "tm": true,
+        "quadrature": true,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "alpha": 0.6,
+      "seed_count": 5,
+      "theoretical_scale": 1.224744871391589,
+      "median_scale_relative_error": 0.004388918802350436,
+      "max_scale_relative_error": 0.007178164705939179,
+      "theoretical_lyapunov": 0.6829937571270775,
+      "median_lyapunov_absolute_error": 0.00048552184032057966,
+      "max_lyapunov_absolute_error": 0.0008102213921105106,
+      "max_ks_distance": 0.005901228068334374,
+      "max_tm_nonzero_magnitude": 0.006524083089547134,
+      "quadrature_lyapunov": 0.6829868256552716,
+      "quadrature_lyapunov_error": 6.931471805970979e-06,
+      "all_states_finite": true,
+      "total_exact_repeat_count": 0,
+      "gates": {
+        "scale": true,
+        "lyapunov": true,
+        "ks": true,
+        "tm": true,
+        "quadrature": true,
+        "finite": true
+      },
+      "passed": true
+    }
+  ],
+  "overall_passed": true,
+  "caveats": [
+    "合格ゲートは実装回帰を検出する工学的閾値であり、統計的有意水準ではない。",
+    "TM係数の検証は簡略化したCayleyモード q_gamma(x)^k に対するもので、一般のTM系全体の検証ではない。",
+    "有限精度で重複がないことは、長時間周期化が存在しない証明ではない。"
+  ]
+}

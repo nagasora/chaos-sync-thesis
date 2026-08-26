@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "LaTeX: build current file",
+      "type": "shell",
+      "command": "latexmk",
+      "args": ["-lualatex", "-synctex=1", "-file-line-error", "${file}"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "LaTeX: clean current file",
+      "type": "shell",
+      "command": "latexmk",
+      "args": ["-c", "${file}"],
+      "problemMatcher": []
+    }
+  ]
+}

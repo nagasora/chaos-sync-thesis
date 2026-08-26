@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "experiment_id": "{{EXPERIMENT_ID}}",
+  "title": "{{TITLE}}",
+  "stage": "{{STAGE}}",
+  "created_at": "{{CREATED_AT}}",
+  "status": "planned",
+  "hypothesis": "",
+  "data": {
+    "source": "",
+    "provenance": "",
+    "burn_in": null,
+    "observation_length": null,
+    "split_unit": "trajectory_or_seed"
+  },
+  "seeds": [0],
+  "features": [],
+  "baselines": [],
+  "training": {
+    "regime": "readout_only",
+    "trainable_parameters": [],
+    "frozen_parameters": [],
+    "state_time_index": "t",
+    "learning_time_index": "n",
+    "update_schedule": "between_trajectories",
+    "optimizer": null,
+    "loss_terms": [],
+    "coupling_constraints": [],
+    "freeze_all_parameters_for_test": true
+  },
+  "metrics": {
+    "primary": [],
+    "secondary": []
+  },
+  "success_criteria": [],
+  "falsification_criteria": [],
+  "parent_experiment_ids": []
+}

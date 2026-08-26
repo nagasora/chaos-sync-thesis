@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "experiment_id": "20260806_E0_boole-invariant-measure",
+  "title": "一般化Boole写像のCauchy不変測度・Lyapunov指数・TM係数再現",
+  "stage": "E0",
+  "created_at": "2026-08-06T16:27:17.393840+09:00",
+  "status": "completed",
+  "hypothesis": "一般化Boole写像の有限軌道は、理論Cauchy尺度、閉形式Lyapunov指数、非零Cayleyモード期待値0を事前定義誤差内で再現する。",
+  "data": {
+    "source": "synthetic_generalized_boole_orbits",
+    "provenance": "e0_boole_validation.pyで記録済みパラメータから生成",
+    "alpha_values": [0.4, 0.5, 0.6],
+    "initialization": "theoretical_stationary_cauchy",
+    "burn_in": 20000,
+    "observation_length": 100000,
+    "split_unit": "alpha_and_seed",
+    "trajectory_count": 15,
+    "raw_data_policy": "各alphaの先頭seedのみ20000点を診断標本としてNPZ保存"
+  },
+  "seeds": [20260806, 20260807, 20260808, 20260809, 20260810],
+  "features": [
+    "robust_cauchy_scale_from_iqr",
+    "finite_time_lyapunov",
+    "cauchy_ks_distance",
+    "cayley_modes_k_1_to_8",
+    "exact_float_repeat_count"
+  ],
+  "baselines": [
+    "closed_form_cauchy_scale",
+    "closed_form_lyapunov",
+    "independent_angle_quadrature",
+    "theoretical_nonzero_cayley_mode_zero"
+  ],
+  "training": {
+    "regime": "no_training",
+    "trainable_parameters": [],
+    "frozen_parameters": ["alpha", "seed", "burn_in", "observation_length", "tm_max_order"],
+    "state_time_index": "t",
+    "learning_time_index": null,
+    "update_schedule": "none",
+    "optimizer": null,
+    "loss_terms": [],
+    "coupling_constraints": ["uncoupled_single_node"],
+    "freeze_all_parameters_for_test": true
+  },
+  "metrics": {
+    "primary": [
+      "scale_relative_error",
+      "lyapunov_absolute_error",
+      "ks_distance",
+      "tm_max_nonzero_magnitude"
+    ],
+    "secondary": [
+      "quadrature_lyapunov_error",
+      "minimum_absolute_state",
+      "maximum_absolute_state",
+      "exact_repeat_count"
+    ]
+  },
+  "thresholds": {
+    "max_scale_relative_error": 0.05,
+    "max_lyapunov_absolute_error": 0.015,
+    "max_ks_distance": 0.02,
+    "max_tm_nonzero_magnitude": 0.02,
+    "max_quadrature_lyapunov_error": 0.00001
+  },
+  "success_criteria": [
+    "全alphaで全ゲート通過",
+    "全状態が有限",
+    "独立再集計が保存集約値と一致"
+  ],
+  "falsification_criteria": [
+    "いずれかのalphaで事前ゲート不通過",
+    "非有限状態の発生",
+    "保存指標と独立再集計の不一致"
+  ],
+  "parent_experiment_ids": []
+}

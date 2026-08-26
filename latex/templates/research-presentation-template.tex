@@ -1,0 +1,370 @@
+% !TEX program = lualatex
+% 研究発表用 Beamer テンプレート
+% 推奨コンパイラ: LuaLaTeX
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs,colortbl,array}
+\usepackage{graphicx}
+
+% ---------- Typography ----------
+\usefonttheme{professionalfonts}
+\setsansfont{Arial}
+\IfFontExistsTF{Noto Sans JP}{
+  \setsansjfont{Noto Sans JP}[BoldFont={Noto Sans JP}]
+}{
+  \setsansjfont{HaranoAjiGothic}[BoldFont={HaranoAjiGothic}]
+}
+\renewcommand{\familydefault}{\sfdefault}
+
+% ---------- Color system ----------
+\definecolor{researchblue}{HTML}{1D4E79}
+\definecolor{researchink}{HTML}{17212B}
+\definecolor{researchbody}{HTML}{34404B}
+\definecolor{researchmuted}{HTML}{68737E}
+\definecolor{researchline}{HTML}{D7DDE2}
+\definecolor{researchpale}{HTML}{F4F6F8}
+\definecolor{researchalert}{HTML}{8A3B3B}
+
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{normal text}{fg=researchbody,bg=white}
+\setbeamercolor{structure}{fg=researchblue}
+\setbeamercolor{alerted text}{fg=researchalert}
+\setbeamercolor{frametitle}{fg=researchink,bg=white}
+\setbeamercolor{framesubtitle}{fg=researchblue,bg=white}
+\setbeamercolor{footline}{fg=researchmuted,bg=white}
+\setbeamercolor{block title}{fg=researchink,bg=researchpale}
+\setbeamercolor{block body}{fg=researchbody,bg=researchpale}
+
+% ---------- Layout ----------
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{itemize item}{\color{researchblue}\raise0.2ex\hbox{\small$\bullet$}}
+\setbeamertemplate{itemize subitem}{\color{researchblue}\raise0.2ex\hbox{\scriptsize$\bullet$}}
+\setbeamertemplate{bibliography item}[text]
+\setbeamersize{text margin left=9mm,text margin right=9mm}
+
+\setbeamerfont{title}{size=\fontsize{30}{36},series=\bfseries}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{author}{size=\large,series=\bfseries}
+\setbeamerfont{institute}{size=\small}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{frametitle}{size=\LARGE,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\scriptsize,series=\bfseries}
+\setbeamerfont{footline}{size=\scriptsize}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=9mm,rightskip=9mm]{frametitle}
+    \vspace*{3.5mm}
+    {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+      \MakeUppercase{\insertframesubtitle}\par}
+    \vspace{0.8mm}
+    {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+      \insertframetitle\par}
+    \vspace{1.5mm}
+    {\color{researchblue}\rule{\dimexpr\paperwidth-18mm\relax}{0.7pt}}
+    \vspace{1mm}
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=9mm,rightskip=9mm,ht=8mm,dp=0mm]{footline}
+    {\color{researchline}\rule{\dimexpr\paperwidth-18mm\relax}{0.3pt}}\par
+    \vspace{1.3mm}
+    \usebeamerfont{footline}%
+    \insertauthor\hspace{1em}｜\hspace{1em}卒業研究
+    \hfill
+    \insertframenumber
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{title page}{%
+  \vspace*{7mm}
+  {\color{researchblue}\rule{24mm}{1.4pt}}\par
+  \vspace{6mm}
+  {\small\bfseries\color{researchblue}卒業研究｜発表タイトル\par}
+  \vspace{6mm}
+  {\usebeamerfont{title}\color{researchink}\inserttitle\par}
+  \vspace{4mm}
+  {\usebeamerfont{subtitle}\color{researchbody}\insertsubtitle\par}
+  \vfill
+  {\usebeamerfont{author}\color{researchink}\insertauthor\par}
+  \vspace{2mm}
+  {\usebeamerfont{institute}\color{researchmuted}\insertinstitute\par}
+  \vspace{1mm}
+  {\usebeamerfont{date}\color{researchmuted}\insertdate\par}
+  \vspace*{6mm}
+}
+
+% ---------- Reusable helpers ----------
+\newcommand{\slidesource}[1]{%
+  \vfill
+  {\scriptsize\color{researchmuted}出典：#1\par}
+}
+
+\newcommand{\figureplaceholder}[2][0.40\textheight]{%
+  \begin{center}
+    \setlength{\fboxsep}{0pt}%
+    \fcolorbox{researchline}{researchpale}{%
+      \begin{minipage}[c][#1][c]{0.94\linewidth}
+        \centering\large\color{researchmuted}#2
+      \end{minipage}%
+    }
+  \end{center}
+}
+
+\newcommand{\sectionframe}[2]{%
+  \begin{frame}[plain,noframenumbering]
+    \vspace*{13mm}
+    {\fontsize{30}{34}\selectfont\bfseries\color{researchblue}#1\par}
+    \vspace{4mm}
+    {\color{researchblue}\rule{28mm}{1.1pt}}\par
+    \vspace{8mm}
+    {\fontsize{28}{34}\selectfont\bfseries\color{researchink}#2\par}
+  \end{frame}
+}
+
+% ---------- Presentation metadata ----------
+\title{カオス同期による\\動的情報圧縮と復号}
+\subtitle{Takenaka--Malmquist・グラフスペクトル表現を用いた研究構想}
+\author{長松 蒼空}
+\institute{所属・研究室名}
+\date{2026年8月}
+
+\begin{document}
+
+% 表紙
+\begin{frame}[plain,noframenumbering]
+  \titlepage
+\end{frame}
+
+% 作成時の確認用。発表時には削除してよい。
+\begin{frame}{このテンプレートの使い方}
+  \framesubtitle{Template guide}
+  \large
+  必要なレイアウトだけ複製し、不要なページは削除します。
+  \vspace{4mm}
+  \begin{itemize}
+    \item 1枚につき主張は1つにする
+    \item 本文は3〜5項目、図表は原則1つに絞る
+    \item 青は見出しと強調だけに使う
+    \item 引用・データ出典はスライド下部に残す
+    \item 未確定事項と実験結果を同じ言い方で示さない
+  \end{itemize}
+\end{frame}
+
+% 章扉
+\sectionframe{01}{背景と目的}
+
+% 背景・目的
+\begin{frame}{同期による自由度縮約だけでは、圧縮とは言えない}
+  \framesubtitle{Background}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.66\textwidth}
+      \Large\bfseries\color{researchink}
+      多数の状態が同じ軌道へ近づくと実効自由度は減る。\\
+      ただし、入力差が残っているとは限らない。
+    \end{column}
+    \begin{column}{0.29\textwidth}
+      \begin{block}{区別する2つの量}
+        自由度の減少\\[1mm]
+        必要情報の保持
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vspace{2mm}
+  \begin{itemize}
+    \item 入力ごとに異なる同期表現を形成できるか
+    \item 同期軌道から入力依存情報を読み出せるか
+    \item 低次元化と復号可能性を同時に評価できるか
+  \end{itemize}
+  \vspace{2mm}
+  {\small\color{researchalert}
+    注意：脳の省エネルギー性の原因がカオス同期であるとは断定しない。}
+\end{frame}
+
+% 研究質問
+\begin{frame}{何が消え、何が残り、どこから読めるのか}
+  \framesubtitle{Research question}
+  {\large\bfseries\color{researchink}
+  同期によって消える冗長自由度と、\\
+  残る入力依存自由度を分離できるか。\par}
+  \vspace{4mm}
+  \color{researchline}\rule{\textwidth}{0.4pt}
+  \vspace{2mm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.30\textwidth}
+      {\color{researchblue}\large 形成}\par\vspace{2mm}
+      {\normalsize\color{researchbody}入力ごとに異なる\\同期パターン}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      {\color{researchblue}\large 保持}\par\vspace{2mm}
+      {\normalsize\color{researchbody}有限時間軌道に\\残る情報}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      {\color{researchblue}\large 復号}\par\vspace{2mm}
+      {\normalsize\color{researchbody}TM・GFTからの\\識別と再構成}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% 手法フロー
+\begin{frame}{入力から同期軌道を経て、低次元表現を読み出す}
+  \framesubtitle{Method}
+  \centering
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{c@{\hspace{1.3mm}$\rightarrow$\hspace{1.3mm}}c@{\hspace{1.3mm}$\rightarrow$\hspace{1.3mm}}c@{\hspace{1.3mm}$\rightarrow$\hspace{1.3mm}}c@{\hspace{1.3mm}$\rightarrow$\hspace{1.3mm}}c@{\hspace{1.3mm}$\rightarrow$\hspace{1.3mm}}c}
+    \scriptsize 入力 & \scriptsize 符号化 & \scriptsize 同期軌道 & \scriptsize 読み出し & \scriptsize 潜在表現 & \scriptsize 復号 \\
+    \fbox{\rule{0pt}{8mm}\hspace{5mm}$x$\hspace{5mm}} &
+    \fbox{\rule{0pt}{8mm}\hspace{3mm}$\Phi(x)$\hspace{3mm}} &
+    \fbox{\rule{0pt}{8mm}\hspace{5mm}$F^T$\hspace{5mm}} &
+    \fbox{\rule{0pt}{8mm}\hspace{2mm}TM--GFT\hspace{2mm}} &
+    \colorbox{researchpale}{\rule{0pt}{8mm}\hspace{4mm}$z(x)$\hspace{4mm}} &
+    \fbox{\rule{0pt}{8mm}\hspace{5mm}$\hat{x}$\hspace{5mm}}
+  \end{tabular}
+  \vspace{9mm}
+
+  \large\bfseries\color{researchink}
+  潜在表現 $z(x)$ は、軌道に残った入力依存情報を読み出す座標であり、\\
+  情報を新たに作るものではない。
+\end{frame}
+
+% 数式・定義
+\begin{frame}{収縮と動的情報の保持を別々に確認する}
+  \framesubtitle{Definition}
+  \vspace{3mm}
+  \begin{equation*}
+    \boxed{\lambda_{\perp}<0 \qquad \text{かつ} \qquad \lambda_{\parallel}>0}
+  \end{equation*}
+  \vspace{5mm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      \centering
+      {\Large\bfseries\color{researchblue}$\lambda_{\perp}<0$}\par\vspace{3mm}
+      ノード間のずれが収縮
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \centering
+      {\Large\bfseries\color{researchblue}$\lambda_{\parallel}>0$}\par\vspace{3mm}
+      同期多様体上の非自明なカオス
+    \end{column}
+  \end{columns}
+  \vfill
+  \centering\alert{この条件だけでは入力の復号可能性を保証しない。}
+\end{frame}
+
+% 図を1枚見せるページ
+\begin{frame}{図を1枚見せるときは、説明文より表示面積を優先する}
+  \framesubtitle{Figure}
+  \figureplaceholder[0.38\textheight]{図・グラフ・シミュレーション結果}
+  \small 図1　図から読み取れる事実を1文で説明する。
+  \slidesource{著者作成 / 文献情報}
+\end{frame}
+
+% 比較図
+\begin{frame}{比較図は軸・尺度・凡例をそろえる}
+  \framesubtitle{Comparison}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.47\textwidth}
+      \large\bfseries 条件A
+      \figureplaceholder[0.28\textheight]{図A}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \large\bfseries 条件B
+      \figureplaceholder[0.28\textheight]{図B}
+    \end{column}
+  \end{columns}
+  \vspace{4mm}
+  \centering\large\bfseries\color{researchink}
+  比較から言えることを、条件差と結果差の関係として1文で示す。
+\end{frame}
+
+% 結果グラフと解釈
+\begin{frame}{結果は、グラフと解釈を分けて示す}
+  \framesubtitle{Result}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.65\textwidth}
+      \figureplaceholder[0.40\textheight]{結果グラフ}
+      {\scriptsize\color{researchmuted}軸名・単位・試行数・誤差範囲を記載する。}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      {\large\bfseries\color{researchblue}読み取り}\par\vspace{2mm}
+      \large\bfseries\color{researchink}
+      結果が示す傾向を、研究質問との関係で説明する。
+      \vspace{3mm}
+
+      {\small\normalfont\color{researchmuted}
+        推測と測定結果を同じ文に混ぜない。}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% 比較表
+\begin{frame}{比較表は、判断に必要な列だけを残す}
+  \framesubtitle{Table}
+  \renewcommand{\arraystretch}{1.45}
+  \begin{tabular}{p{0.22\textwidth}p{0.18\textwidth}p{0.18\textwidth}p{0.28\textwidth}}
+    \rowcolor{researchpale}
+    \bfseries 方法 & \bfseries 復号誤差 & \bfseries 潜在次元 & \bfseries 備考 \\
+    \midrule
+    PCA & 0.31 & 16 & 線形基準 \\
+    非カオス系 & 0.28 & 16 & アブレーション \\
+    \rowcolor{researchpale}
+    \bfseries 提案法 & \bfseries 0.22 & \bfseries 16 & \bfseries 例示値 \\
+    \bottomrule
+  \end{tabular}
+  \vspace{5mm}
+
+  {\small\color{researchmuted}
+    注：数値はレイアウト確認用。平均値だけでなく、分散・試行数・評価条件を併記する。}
+\end{frame}
+
+% 結果・解釈・限界
+\begin{frame}{結果・解釈・限界を分けて述べる}
+  \framesubtitle{Discussion}
+  \begin{description}[\textbf{限界}]
+    \item[{\color{researchblue}結果}] 測定から直接確認できたこと
+    \item[{\color{researchblue}解釈}] 結果が研究質問に対して意味すること
+    \item[{\color{researchalert}限界}] 条件・データ・理論上の制約
+  \end{description}
+\end{frame}
+
+% 結論
+\begin{frame}{発表の最後は、結論と次の検証を残す}
+  \framesubtitle{Conclusion}
+  \Large\bfseries\color{researchink}
+  同期による縮約の中に入力依存情報を残し、\\
+  安定に復号できる条件を検証する。
+  \vspace{6mm}
+
+  {\large\color{researchblue}次に行うこと}
+  \normalsize\normalfont\color{researchbody}
+  \begin{itemize}
+    \item E0：不変測度・Lyapunov 指数・TM係数を再現する
+    \item E1：人工軌道で読み出し条件と失敗条件を切り分ける
+    \item 教授と、卒論で保持したい情報の定義を確定する
+  \end{itemize}
+\end{frame}
+
+% 参考文献
+\begin{frame}{参考文献}
+  \framesubtitle{References}
+  \small
+  \begin{thebibliography}{9}
+    \bibitem{paper1}
+      著者名, ``論文名,'' 雑誌名, 巻(号), pp.xx--yy, 年.
+    \bibitem{book1}
+      著者名, 書籍名, 出版社, 年.
+    \bibitem{conference1}
+      著者名, ``会議論文名,'' 会議名, 年.
+    \bibitem{software1}
+      公開データ・ソフトウェア名, バージョン, URL, 閲覧日.
+  \end{thebibliography}
+\end{frame}
+
+\end{document}

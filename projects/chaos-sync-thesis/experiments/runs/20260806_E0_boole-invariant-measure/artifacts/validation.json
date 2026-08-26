@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "check_count": 37,
+  "failed_check_count": 0,
+  "checks": [
+    {
+      "name": "experiment_config",
+      "passed": true,
+      "detail": "status、alpha、seed、閾値をsummaryと照合"
+    },
+    {
+      "name": "metrics_record",
+      "passed": true,
+      "detail": "metrics.jsonの状態と総合判定をsummaryと照合"
+    },
+    {
+      "name": "environment_record",
+      "passed": true,
+      "detail": "dependencies=['ipykernel', 'matplotlib', 'nbclient', 'nbformat', 'numpy']"
+    },
+    {
+      "name": "row_grain",
+      "passed": true,
+      "detail": "expected=15, actual=15, unique=15"
+    },
+    {
+      "name": "finite_states",
+      "passed": true,
+      "detail": "全seed行のfinite列を確認"
+    },
+    {
+      "name": "aggregate_alpha_0.4_scale_relative_error",
+      "passed": true,
+      "detail": "recomputed=0.0139477120251186, recorded=0.0139477120251186"
+    },
+    {
+      "name": "aggregate_alpha_0.4_lyapunov_absolute_error",
+      "passed": true,
+      "detail": "recomputed=0.001174892209706901, recorded=0.001174892209706901"
+    },
+    {
+      "name": "aggregate_alpha_0.4_ks_distance",
+      "passed": true,
+      "detail": "recomputed=0.006502297789314215, recorded=0.006502297789314215"
+    },
+    {
+      "name": "aggregate_alpha_0.4_tm_max_nonzero_magnitude",
+      "passed": true,
+      "detail": "recomputed=0.007620593787959882, recorded=0.007620593787959882"
+    },
+    {
+      "name": "aggregate_alpha_0.5_scale_relative_error",
+      "passed": true,
+      "detail": "recomputed=0.007904159231894026, recorded=0.007904159231894026"
+    },
+    {
+      "name": "aggregate_alpha_0.5_lyapunov_absolute_error",
+      "passed": true,
+      "detail": "recomputed=3.113265140308741e-05, recorded=3.113265140308741e-05"
+    },
+    {
+      "name": "aggregate_alpha_0.5_ks_distance",
+      "passed": true,
+      "detail": "recomputed=0.004497165022476657, recorded=0.004497165022476657"
+    },
+    {
+      "name": "aggregate_alpha_0.5_tm_max_nonzero_magnitude",
+      "passed": true,
+      "detail": "recomputed=0.004496295820866023, recorded=0.004496295820866023"
+    },
+    {
+      "name": "aggregate_alpha_0.6_scale_relative_error",
+      "passed": true,
+      "detail": "recomputed=0.007178164705939179, recorded=0.007178164705939179"
+    },
+    {
+      "name": "aggregate_alpha_0.6_lyapunov_absolute_error",
+      "passed": true,
+      "detail": "recomputed=0.0008102213921105106, recorded=0.0008102213921105106"
+    },
+    {
+      "name": "aggregate_alpha_0.6_ks_distance",
+      "passed": true,
+      "detail": "recomputed=0.005901228068334374, recorded=0.005901228068334374"
+    },
+    {
+      "name": "aggregate_alpha_0.6_tm_max_nonzero_magnitude",
+      "passed": true,
+      "detail": "recomputed=0.006524083089547134, recorded=0.006524083089547134"
+    },
+    {
+      "name": "gate_alpha_0.4_scale",
+      "passed": true,
+      "detail": "metric=0.013947712025118596, threshold=0.05"
+    },
+    {
+      "name": "gate_alpha_0.4_lyapunov",
+      "passed": true,
+      "detail": "metric=0.0011748922097069014, threshold=0.015"
+    },
+    {
+      "name": "gate_alpha_0.4_ks",
+      "passed": true,
+      "detail": "metric=0.006502297789314215, threshold=0.02"
+    },
+    {
+      "name": "gate_alpha_0.4_tm",
+      "passed": true,
+      "detail": "metric=0.0076205937879598815, threshold=0.02"
+    },
+    {
+      "name": "gate_alpha_0.4_quadrature",
+      "passed": true,
+      "detail": "metric=6.931471805970979e-06, threshold=1e-05"
+    },
+    {
+      "name": "gate_alpha_0.5_scale",
+      "passed": true,
+      "detail": "metric=0.007904159231894026, threshold=0.05"
+    },
+    {
+      "name": "gate_alpha_0.5_lyapunov",
+      "passed": true,
+      "detail": "metric=3.113265140308741e-05, threshold=0.015"
+    },
+    {
+      "name": "gate_alpha_0.5_ks",
+      "passed": true,
+      "detail": "metric=0.004497165022476657, threshold=0.02"
+    },
+    {
+      "name": "gate_alpha_0.5_tm",
+      "passed": true,
+      "detail": "metric=0.004496295820866023, threshold=0.02"
+    },
+    {
+      "name": "gate_alpha_0.5_quadrature",
+      "passed": true,
+      "detail": "metric=6.931471805970979e-06, threshold=1e-05"
+    },
+    {
+      "name": "gate_alpha_0.6_scale",
+      "passed": true,
+      "detail": "metric=0.007178164705939179, threshold=0.05"
+    },
+    {
+      "name": "gate_alpha_0.6_lyapunov",
+      "passed": true,
+      "detail": "metric=0.0008102213921105106, threshold=0.015"
+    },
+    {
+      "name": "gate_alpha_0.6_ks",
+      "passed": true,
+      "detail": "metric=0.005901228068334374, threshold=0.02"
+    },
+    {
+      "name": "gate_alpha_0.6_tm",
+      "passed": true,
+      "detail": "metric=0.006524083089547134, threshold=0.02"
+    },
+    {
+      "name": "gate_alpha_0.6_quadrature",
+      "passed": true,
+      "detail": "metric=6.931471805970979e-06, threshold=1e-05"
+    },
+    {
+      "name": "alpha_half_special_values",
+      "passed": true,
+      "detail": "alpha=0.5でscale=1、Lyapunov=log(2)を確認"
+    },
+    {
+      "name": "diagnostic_samples",
+      "passed": true,
+      "detail": "keys=['alpha_0.40', 'alpha_0.50', 'alpha_0.60'], lengths={'alpha_0.40': 20000, 'alpha_0.50': 20000, 'alpha_0.60': 20000}, finite=True"
+    },
+    {
+      "name": "executed_notebook",
+      "passed": true,
+      "detail": "executed_code_cells=5, errors=0, images=1"
+    },
+    {
+      "name": "exported_chart",
+      "passed": true,
+      "detail": "path=e0_metric_gates.png, bytes=131611"
+    },
+    {
+      "name": "overall_gate",
+      "passed": true,
+      "detail": "recorded=True"
+    }
+  ],
+  "failed_checks": []
+}

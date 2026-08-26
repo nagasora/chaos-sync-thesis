@@ -1,0 +1,1803 @@
+% !TEX program = lualatex
+\documentclass[11pt,a4paper]{ltjsarticle}
+
+\usepackage{luatexja-fontspec}
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage[table]{xcolor}
+\usepackage{geometry}
+\usepackage{array,booktabs,longtable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{url}
+
+\geometry{top=23mm,bottom=19mm,left=20mm,right=18mm,headheight=28pt,headsep=5mm}
+\setsansfont{Arial}
+\IfFontExistsTF{Noto Sans JP}{
+  \setsansjfont{Noto Sans JP}[BoldFont={Noto Sans JP}]
+}{
+  \setsansjfont{HaranoAjiGothic}[BoldFont={HaranoAjiGothic}]
+}
+\renewcommand{\familydefault}{\sfdefault}
+
+\definecolor{researchnavy}{HTML}{0B1F33}
+\definecolor{researchink}{HTML}{17212B}
+\definecolor{researchblue}{HTML}{2F6BBD}
+\definecolor{researchteal}{HTML}{0F766E}
+\definecolor{researchmuted}{HTML}{68798A}
+\definecolor{researchline}{HTML}{CCD7E3}
+\definecolor{researchpale}{HTML}{F1F6FB}
+\definecolor{researchpaleteal}{HTML}{EAF8F5}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=researchblue,
+  urlcolor=researchblue,
+  pdftitle={カオス同期によるクラス情報の縮約とTM-GFT表現からの読み出し},
+  pdfauthor={長松蒼空}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlength{\jot}{5pt}
+\setlength{\LTpre}{0.4em}
+\setlength{\LTpost}{0.8em}
+\renewcommand{\arraystretch}{1.25}
+\allowdisplaybreaks[2]
+\emergencystretch=2em
+\widowpenalty=10000
+\clubpenalty=10000
+\sloppy
+
+\setlist[itemize]{leftmargin=2.1em,itemsep=0.25em,topsep=0.3em,label=\textcolor{researchblue}{\small$\bullet$}}
+\setlist[enumerate]{leftmargin=2.3em,itemsep=0.25em,topsep=0.3em,label=\textcolor{researchteal}{\arabic*.}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{researchmuted}カオス同期によるクラス情報の縮約とTM-GFT表現}
+\fancyfoot[L]{\small\color{researchmuted}THEORY NOTE \textbar\ 2026.08.05}
+\fancyfoot[R]{\small\bfseries\color{researchink}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{researchline}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0pt}
+
+\newenvironment{keyquote}{%
+  \begin{quote}\color{researchteal}\bfseries\large%
+}{%
+  \end{quote}%
+}
+
+\begin{document}
+
+\begin{titlepage}
+\pagecolor{researchnavy}
+\color{white}
+\vspace*{27mm}
+{\color{researchblue}\rule{26mm}{2pt}}\par
+\vspace{10mm}
+{\fontsize{25}{36}\selectfont\bfseries
+カオス同期による\\
+クラス情報の縮約と\\
+TM-GFT表現からの読み出し\par}
+\vspace{10mm}
+{\large 研究テーマ発表のための詳細理論ノート・実験設計・想定問答\par}
+\vfill
+{\large 長松 蒼空\par}
+{\normalsize 2026年8月5日\par}
+\vspace{18mm}
+{\large 中心命題：同期で自由度が縮んでも、クラス情報が残るとは限らない。\par}
+\end{titlepage}
+\nopagecolor
+\color{researchink}
+\setcounter{page}{1}
+
+\tableofcontents
+\clearpage
+\section*{\textcolor{researchink}{このノートの結論を最初に読む}}
+
+\addcontentsline{toc}{section}{このノートの結論を最初に読む}
+
+本研究で調べたいのは、単に「多数のカオス系が同期するか」ではない。同期によってノード間の自由度が小さくなったときにも、入力画像のクラスを区別するための情報が有限時間軌道に残るかを調べたい。さらに、残った差をTakenaka-Malmquist（TM）型の時間・分布モードと、グラフフーリエ変換（GFT）の空間モードで読み出せるかを検証する。\par
+
+同期安定性を表す候補条件は、同期多様体に垂直な摂動が縮むこと、すなわち最大横断Lyapunov指数が負になることである。一方、同期多様体上の運動がカオスであるためには平行方向の最大Lyapunov指数が正であり得る。しかし、\par
+
+\[
+\lambda_{\perp}<0,\qquad \lambda_{\parallel}>0
+\]
+
+は「カオス同期が安定している」ことの候補条件であって、「MNISTのクラス情報が保存される」ことを保証しない。同期が強すぎて全入力がほぼ同じ軌道へ収束すれば、自由度は減ってもクラス情報は失われる。この区別が本研究の中心である。\par
+
+発表で最も重要な一文は次である。\par
+
+\begin{keyquote}
+
+同期したかどうかだけでなく、同期の過程で何が消え、クラス識別に必要な何が残るかを調べる。
+
+\end{keyquote}
+
+\par\medskip{\color{researchline}\hrule}\medskip
+
+\section*{\textcolor{researchink}{0. 研究質問、仮説、主張の境界}}
+
+\addcontentsline{toc}{section}{0. 研究質問、仮説、主張の境界}
+
+\subsubsection*{\textcolor{researchteal}{0.1 研究質問}}
+
+\begin{keyquote}
+
+結合カオス系が同期して自由度が縮約するとき、MNISTのクラス識別に必要な情報は保持されるか。また、その情報をTM型基底とGFTから読み出せるか。
+
+\end{keyquote}
+
+最終対象はMNISTの10クラス分類である。ただし最初から10クラスを解くのではなく、人工2クラスまたはMNISTの2数字で、同期・情報保持・読み出しの成立条件を確認してから拡張する。\par
+
+\subsubsection*{\textcolor{researchteal}{0.2 主仮説}}
+
+主仮説は次の三段階に分ける。\par
+
+\begin{enumerate}
+
+\item 入力依存に初期化または駆動した結合カオス系では、結合強度の増加に伴いノード間の不一致が縮む。
+
+\item 完全同期の深部では入力差も消えやすいが、同期転移の近傍では有限時間の過渡軌道にクラス依存差が残り得る。
+
+\item その差は、各ノード軌道のCauchy型位相モードを読むTM型表現と、ノード間の整合・不一致を読むGFT表現の組み合わせにより、線形または小さな分類器で読み出せる可能性がある。
+
+\end{enumerate}
+
+ここで「残り得る」「可能性がある」は未検証の仮説である。同期臨界近傍が最良になることも、カオスが非カオスより有利であることも、実験結果を得るまでは確定事項ではない。\par
+
+\subsubsection*{\textcolor{researchteal}{0.3 今回の「圧縮」の定義}}
+
+今回の圧縮は画像を完全復元する可逆圧縮ではない。入力画像 X から、784画素より小さな特徴 Z を作り、その特徴からクラス Y を高い精度で予測できるかを見る意味保存型・非可逆圧縮である。\par
+
+\[
+\begin{gathered}
+X\in\mathbb{R}^{784}
+\xrightarrow{\text{結合力学系の有限時間軌道}}
+Z\in\mathbb{R}^{d}
+\longrightarrow \widehat{Y},\\
+d<784
+\end{gathered}
+\]
+
+したがって「圧縮できた」と言うには、少なくとも特徴次元または実効ビット数が減り、同時に未見データでクラス精度が保たれる必要がある。同期誤差が小さいだけでは圧縮成功とは言えない。\par
+
+\subsubsection*{\textcolor{researchteal}{0.4 既知、提案、未検証の区別}}
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}p{0.38\textwidth}@{}}
+\rowcolor{researchink}
+\textcolor{white}{\textbf{区分}} & \textcolor{white}{\textbf{内容}} & \textcolor{white}{\textbf{本研究での扱い}} \\
+\endfirsthead
+\rowcolor{researchink}
+\textcolor{white}{\textbf{区分}} & \textcolor{white}{\textbf{内容}} & \textcolor{white}{\textbf{本研究での扱い}} \\
+\endhead
+既知 & 同期多様体と横断安定性は結合力学系の標準的枠組みで解析できる & 理論の土台 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+既知 & GFTはグラフLaplacianの固有ベクトルに信号を展開する & 空間読み出しの土台 \\
+\addlinespace[2pt]
+原典中の構成 & Cauchy測度に適したCayley変換の整数冪をTM型モードとして使う & 時間・分布読み出し候補 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+提案 & TM型係数とGFT係数を統合し、同期軌道を低次元特徴化する & 本研究の中心 \\
+\addlinespace[2pt]
+未検証 & 同期臨界近傍にMNISTのクラス情報が最も多く残る & 実験仮説 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+未検証 & カオス系が非カオス系より圧縮・分類に有利である & 比較実験で検証 \\
+\addlinespace[2pt]
+対象外 & 脳の省電力性、長期記憶、質量ギャップ、KMS状態を本研究で説明する & 主張しない \\
+\addlinespace[2pt]
+\end{longtable}
+\endgroup
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第1章 離散時間力学系とカオス}}
+
+\addcontentsline{toc}{section}{第1章 離散時間力学系とカオス}
+
+\subsection*{\textcolor{researchblue}{1.1 写像、状態、軌道}}
+
+離散時間力学系は、現在の状態から次の状態を決める規則として書ける。\par
+
+\[
+x(t+1)=F\!\left(x(t)\right)
+\]
+
+\(x(t)\) は時刻 t の状態、F は更新規則である。初期状態 \(x(0)\) を決めてFを繰り返し適用すると、\par
+
+\[
+x(0),\;x(1),\;x(2),\;\ldots
+\]
+
+という軌道が得られる。画像処理に使う場合、画素値を初期状態や外力、パラメータへ写し込み、その後の軌道を特徴として使うことになる。\par
+
+重要なのは、Fが決定論的でも軌道が単純とは限らないことである。同じ初期状態には同じ軌道が対応するが、非常に近い二つの初期状態が時間とともに大きく離れることがある。この初期値鋭敏性がカオスの主要な特徴の一つである。\par
+
+\subsection*{\textcolor{researchblue}{1.2 固定点と周期軌道}}
+
+固定点 x* は、一度到達すると変化しない状態である。\par
+
+\[
+F(x^{\ast})=x^{\ast}
+\]
+
+固定点の近くで \(x(t)=x^{\ast}+\delta(t)\) と置き、Fを一次まで展開すると、1次元では\par
+
+\[
+\delta(t+1)\approx F'(x^{\ast})\,\delta(t)
+\]
+
+となる。\(|F'(x^{\ast})|<1\) なら小さなずれが縮むため固定点は局所安定、\(|F'(x^{\ast})|>1\) ならずれが増えるため不安定である。\par
+
+p周期軌道は F を p 回適用すると元へ戻る点の集合である。安定性は合成写像 \(F^p\) の微分で判定する。カオス軌道は固定点や短い周期軌道に落ち着かず、非周期的に見える複雑な運動を続ける。\par
+
+\subsection*{\textcolor{researchblue}{1.3 接線力学とJacobian}}
+
+多次元状態 \(x(t)\in\mathbb{R}^{m}\) では、微小摂動 \(\delta x(t)\) の発展はJacobian DFを使って\par
+
+\[
+\delta x(t+1)\approx DF\!\left(x(t)\right)\,\delta x(t)
+\]
+
+と書ける。Tステップ後は\par
+
+\[
+\delta x(T)\approx DF\!\left(x(T-1)\right)\cdots DF\!\left(x(1)\right)DF\!\left(x(0)\right)\delta x(0)
+\]
+
+となる。軌道に沿って異なるJacobianの積を取るため、各時刻での傾きだけでなく長時間の平均的な伸縮を見る必要がある。\par
+
+\subsection*{\textcolor{researchblue}{1.4 Lyapunov指数}}
+
+1次元写像では、最大Lyapunov指数を直感的に\par
+
+\[
+\lambda=\lim_{T\to\infty}\frac{1}{T}\sum_{t=0}^{T-1}\log\left|F'\!\left(x(t)\right)\right|
+\]
+
+と書ける。\(\lambda>0\) なら微小差は平均的に指数増幅し、\(\lambda<0\) なら平均的に縮む。より直感的には、十分小さな初期差 \(\delta x(0)\) が\par
+
+\[
+\left|\delta x(t)\right|\approx e^{\lambda t}\left|\delta x(0)\right|
+\]
+
+と変化する指数率が\(\lambda\)である。\par
+
+多次元では方向ごとに伸縮率が異なり、複数のLyapunov指数が存在する。最大指数が正であることはカオスの強い指標だが、厳密なカオスの定義は文脈により異なる。発表では「正の最大Lyapunov指数により微小差が平均的に増幅される複雑な決定論的運動」と説明すればよい。\par
+
+\subsection*{\textcolor{researchblue}{1.5 有限時間Lyapunov指数}}
+
+実験で観測する軌道は有限長なので、無限時間極限ではなく有限時間Lyapunov指数を使う。\par
+
+\[
+\lambda_T\!\left(x(0)\right)=\frac{1}{T}\sum_{t=0}^{T-1}\log\left|F'\!\left(x(t)\right)\right|
+\]
+
+\(\lambda_T\) は初期状態と観測窓に依存し、同じ系でも正負が揺れることがある。本研究では、この揺らぎ自体が入力依存情報を含む可能性がある。ただし「有限時間指数が揺れるから分類できる」とは限らない。クラス内で再現性があり、クラス間で分離するかを未見データで確かめる必要がある。\par
+
+\subsection*{\textcolor{researchblue}{1.6 不変集合、不変測度、エルゴード性}}
+
+軌道が長時間滞在する集合や分布を記述するために、不変集合と不変測度を使う。\par
+
+\begin{itemize}
+
+\item 不変集合: Fで写しても集合の外へ出ない集合。
+
+\item 不変測度: 力学系を進めても確率分布として変化しない測度。
+
+\item エルゴード性: 適切な条件の下で、一つの長い軌道の時間平均と分布に関する空間平均が一致する性質。
+
+\item 混合性: 初期の集合に関する依存が時間とともに弱くなる、エルゴード性より強い性質。
+
+\end{itemize}
+
+これらは同じ概念ではない。特に、Cauchy不変分布を持つことだけから、入力情報が保持されることや、全ての観測量が良く平均化されることは導けない。\par
+
+\subsection*{\textcolor{researchblue}{1.7 カオスは情報を増やすのか}}
+
+決定論的写像は、入力に無かったクラス情報を新しく作らない。カオスは微小差を拡大し、非線形な特徴を作ることはできるが、同時に差を複雑に混ぜ、読み出しにくくする可能性もある。\par
+
+したがってカオスを使う理由は、現時点では次の検証仮説にとどめる。\par
+
+\begin{keyquote}
+
+入力依存の微小差を豊かな時間パターンへ展開し、結合による縮約と組み合わせることで、小さな読み出し特徴へクラス差を残せる可能性がある。
+
+\end{keyquote}
+
+この仮説は、非カオス写像、線形系、ランダム特徴との比較によって初めて評価できる。\par
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第2章 結合系、同期多様体、横断安定性}}
+
+\addcontentsline{toc}{section}{第2章 結合系、同期多様体、横断安定性}
+
+\subsection*{\textcolor{researchblue}{2.1 ネットワーク上の結合力学系}}
+
+N個のノードがあり、各ノード i の状態を \(x_i(t)\) とする。典型的な離散時間結合系は\par
+
+\[
+x_i(t+1)=F\!\left(x_i(t)\right)+\varepsilon\sum_{j=1}^{N}A_{ij}\,H\!\left(x_j(t),x_i(t)\right)
+\]
+
+と書ける。\(A_{ij}\) は結合、\(\varepsilon\) は結合強度、H は相互作用である。差分結合の一例は\par
+
+\[
+x_i(t+1)=F\!\left(x_i(t)\right)-\varepsilon\sum_{j=1}^{N}L_{ij}\,G\!\left(x_j(t)\right)
+\]
+
+である。L=D-A はグラフLaplacian、Dは次数行列である。Lの各行和が0なので、全ノードが同じ状態なら結合項が消える。\par
+
+\subsection*{\textcolor{researchblue}{2.2 同期多様体}}
+
+完全同期状態は\par
+
+\[
+x_1(t)=x_2(t)=\cdots=x_N(t)=s(t)
+\]
+
+で表される。この状態全体が同期多様体 S である。\par
+
+\[
+\mathcal{S}=\left\{(x_1,\ldots,x_N)\in\mathbb{R}^{N}\;\middle|\;x_1=x_2=\cdots=x_N\right\}
+\]
+
+同期多様体が不変であるとは、一度S上に入れば次の時刻もS上に留まることである。差分結合では行和0により結合項が消え、同期軌道は通常\par
+
+\[
+s(t+1)=F\!\left(s(t)\right)
+\]
+
+に従う。\par
+
+N個のスカラー状態が完全同期すると、瞬間状態はN自由度から1自由度へ縮約される。しかしこれは幾何学的な自由度の話であり、入力クラスの情報が残るかとは別問題である。\par
+
+\subsection*{\textcolor{researchblue}{2.3 平行方向と横断方向}}
+
+同期多様体の近傍の摂動は二種類に分けられる。\par
+
+\begin{itemize}
+
+\item 平行方向: 全ノードが同じ向きに動く摂動。同期関係を壊さず、同期軌道そのものを変える。
+
+\item 横断方向: ノード間の差を作る摂動。同期関係を壊す。
+
+\end{itemize}
+
+平行方向のLyapunov指数 \(\lambda_{\parallel}\) が正なら、同期軌道上ではカオスが続き得る。横断方向の最大Lyapunov指数 \(\lambda_{\perp}\) が負なら、ノード間の小さな差は平均的に縮む。\par
+
+\[
+\begin{aligned}
+\lambda_{\parallel}>0&\quad &&\text{同期した全体運動は初期値鋭敏},\\
+\lambda_{\perp}<0&\quad &&\text{ノード間の差は同期多様体へ戻る}.
+\end{aligned}
+\]
+
+両者が同時に成立する状態を、直感的には「一緒にカオス運動している」と説明できる。\par
+
+\subsection*{\textcolor{researchblue}{2.4 2ノード系で横断指数を導く}}
+
+最も簡単な対称結合を考える。\par
+
+\[
+\begin{aligned}
+x_1(t+1)&=(1-\varepsilon)f\!\left(x_1(t)\right)+\varepsilon f\!\left(x_2(t)\right),\\
+x_2(t+1)&=\varepsilon f\!\left(x_1(t)\right)+(1-\varepsilon)f\!\left(x_2(t)\right).
+\end{aligned}
+\]
+
+平均と差を\par
+
+\[
+\begin{aligned}
+s(t)&=\frac{x_1(t)+x_2(t)}{2},\\
+\delta(t)&=\frac{x_1(t)-x_2(t)}{2}.
+\end{aligned}
+\]
+
+と置く。同期状態では\(\delta=0\)であり、両ノードは \(s(t+1)=f(s(t))\) に従う。\par
+
+同期状態の近くで \(x_1=s+\delta\)、\(x_2=s-\delta\) とし、fを一次展開する。\par
+
+\[
+\begin{aligned}
+f(s+\delta)&\approx f(s)+f'(s)\delta,\\
+f(s-\delta)&\approx f(s)-f'(s)\delta.
+\end{aligned}
+\]
+
+二式の差を取ると\par
+
+\[
+\delta(t+1)\approx (1-2\varepsilon)f'\!\left(s(t)\right)\delta(t)
+\]
+
+したがってTステップ後の横断方向の増幅率は積で表され、対数平均を取ると\par
+
+\[
+\begin{aligned}
+\lambda_{\perp}
+&=\lim_{T\to\infty}\frac{1}{T}\sum_{t=0}^{T-1}
+\log\left|(1-2\varepsilon)f'\!\left(s(t)\right)\right|\\
+&=\lambda_f+\log|1-2\varepsilon|.
+\end{aligned}
+\]
+
+となる。\(\lambda_f\) は単体写像fの同期軌道上のLyapunov指数である。一方、平行方向では結合係数が相殺されるので\par
+
+\[
+\lambda_{\parallel}=\lambda_f
+\]
+
+である。この例では \(\lambda_{\perp}<0\) が同期の局所安定条件になる。\par
+
+この導出が教えることは二つある。\par
+
+\begin{enumerate}
+
+\item 結合は横断方向だけを安定化し、同期軌道上のカオスを残せる。
+
+\item この条件は同期近傍の微小摂動に関する条件であり、全ての初期状態から同期することや情報保持を保証しない。
+
+\end{enumerate}
+
+\subsection*{\textcolor{researchblue}{2.5 NノードとLaplacian固有モード}}
+
+同期軌道 s(t) の周りで \(x_i=s+\eta_i\) とし、全ノードの摂動をまとめて \(\eta\) と書く。差分結合を線形化すると、概念的には\par
+
+\[
+\boldsymbol{\eta}(t+1)=\left[I_N\otimes DF\!\left(s(t)\right)-\varepsilon L\otimes DG\!\left(s(t)\right)\right]\boldsymbol{\eta}(t)
+\]
+
+となる。Lが対称なら固有分解\par
+
+\[
+L=U\Lambda U^{\mathsf T}
+\]
+
+ができる。Laplacian固有ベクトル方向へ摂動を展開すると、ネットワーク方向が固有モードごとに分離する。\par
+
+\[
+\boldsymbol{\xi}_k(t+1)=\left[DF\!\left(s(t)\right)-\varepsilon\mu_k DG\!\left(s(t)\right)\right]\boldsymbol{\xi}_k(t)
+\]
+
+\(\mu_k\) はLのk番目の固有値である。\(\mu_0=0\) に対応する固有ベクトルは全ノード同相の平行モードであり、\(\mu_k>0\) のモードは横断モードである。各横断モードの最大指数が全て負なら、同期多様体は局所的に横断安定である。\par
+
+連続時間系では同じ考えが\par
+
+\[
+\frac{d\boldsymbol{\xi}}{dt}=\left[DF\!\left(s(t)\right)+\alpha DH\!\left(s(t)\right)\right]\boldsymbol{\xi}
+\]
+
+の形に整理され、Master Stability Functionとして知られる。離散時間か連続時間か、結合が状態に入るか写像出力に入るかで式は変わるため、実装したモデルに合わせて導出し直す必要がある。\par
+
+\subsection*{\textcolor{researchblue}{2.6 局所安定、有限時間、吸引域}}
+
+\(\lambda_{\perp}<0\) から言えるのは、通常は同期軌道の近くの十分小さな横断摂動が漸近的に縮むことである。次は別途確認が必要である。\par
+
+\begin{itemize}
+
+\item 有限時間内に十分小さな同期誤差まで到達するか。
+
+\item 初期状態が同期多様体の吸引域に入っているか。
+
+\item 非線形効果や数値発散が起きないか。
+
+\item 一部の横断方向だけ不安定でないか。
+
+\item 雑音や入力駆動があるときにも同期が維持されるか。
+
+\item bubblingやon-off intermittencyのような一時的離脱がないか。
+
+\end{itemize}
+
+したがって理論指数に加え、実験では同期誤差\par
+
+\[
+\begin{aligned}
+E_{\mathrm{sync}}(t)
+&=\sqrt{\frac{1}{N}\sum_{i=1}^{N}\left|x_i(t)-\bar{x}(t)\right|^2},\\
+\bar{x}(t)&=\frac{1}{N}\sum_{i=1}^{N}x_i(t).
+\end{aligned}
+\]
+
+を直接測る。\par
+
+\subsection*{\textcolor{researchblue}{2.7 完全同期以外の同期}}
+
+結合系には完全同期以外にも位相同期、一般化同期、クラスタ同期、遅延同期などがある。本研究の最初の段階では完全同期とその近傍に限定する。理由は、自由度縮約と横断安定性を最も明確に定義でき、TM-GFT特徴との関係を切り分けやすいからである。\par
+
+将来、完全同期が情報を消しすぎる場合には、クラスタ同期を「クラス情報を残しながら自由度を減らす中間状態」として検討できる。ただし今回は拡張候補であり、主張には含めない。\par
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第3章 同期と情報圧縮はなぜ同じではないか}}
+
+\addcontentsline{toc}{section}{第3章 同期と情報圧縮はなぜ同じではないか}
+
+\subsection*{\textcolor{researchblue}{3.1 二種類の自由度}}
+
+同期で減るのは、主にノード状態を独立に記述するための力学的自由度である。分類に必要なのは、入力クラスを区別する統計的情報である。\par
+
+\begin{itemize}
+
+\item 状態自由度: その瞬間の全ノード状態を記述するために必要な座標数。
+
+\item 情報自由度: 入力やラベルの違いを区別するために必要な表現能力。
+
+\end{itemize}
+
+完全同期で状態自由度が N から 1 へ減っても、異なる入力が異なる同期軌道へ写るなら情報は残り得る。逆に全入力が同じ吸引軌道へ写るなら、状態自由度は減るがクラス情報も消える。\par
+
+\subsection*{\textcolor{researchblue}{3.2 入力、特徴、ラベルのMarkov連鎖}}
+
+入力画像Xから決定論的または確率的な変換で特徴Zを作り、ZからラベルYを予測する。\par
+
+\[
+Y\longleftarrow X\longrightarrow Z\longrightarrow \widehat{Y}
+\]
+
+入力Xが与えられた後にZを作る処理は、元に無かったYの情報を新しく作れない。データ処理不等式の直感では\par
+
+\[
+I(Y;Z)\le I(Y;X)
+\]
+
+である。力学系は、クラス情報を増やす魔法ではなく、不要な変動を捨てながら必要な差を読みやすい座標へ変換することを目指す。\par
+
+\subsection*{\textcolor{researchblue}{3.3 十分統計としての特徴}}
+
+理想的な意味圧縮では、小さな特徴Zが分類に関してXと同じ情報を持つ。\par
+
+\[
+P(Y\mid Z)\approx P(Y\mid X)
+\]
+
+完全な一致は現実には評価しにくいので、同一のデータ分割上で、強い分類器を使った生画像特徴と同期特徴の精度差を見る。Zの次元を小さくするだけでなく、特徴量の量子化精度も考えなければ「ビット数としての圧縮」とは言えない。\par
+
+\subsection*{\textcolor{researchblue}{3.4 Information Bottleneckとの関係}}
+
+Information Bottleneckは概念的に、入力Xの詳細を圧縮しながらラベルYに関する情報を残す表現Zを考える。\par
+
+\[
+\min_{Z}\; I(X;Z)-\beta I(Z;Y)
+\]
+
+本研究はこの目的関数を直接最適化するとは限らない。関係するのは、「小さなZ」と「Yを予測できるZ」を同時に求める考え方である。有限サンプルで相互情報量を高次元の連続変数から正確に推定するのは難しいため、最初の評価では次元・量子化後ビット数・分類精度を主要指標にする。\par
+
+\subsection*{\textcolor{researchblue}{3.5 圧縮率の複数の定義}}
+
+特徴次元だけで圧縮を評価すると、各成分が64bit浮動小数なら、784個の8bit画素より総ビット数が大きい場合がある。少なくとも次を区別する。\par
+
+\[
+\begin{aligned}
+\text{次元圧縮率}
+&=\frac{d}{784},\\[2mm]
+\text{概算ビット圧縮率}
+&=\frac{d\times(\text{特徴1成分の量子化ビット数})}{784\times 8},\\[2mm]
+\text{精度保持率}
+&=\frac{\operatorname{Acc}(Z)}{\operatorname{Acc}(X)}.
+\end{aligned}
+\]
+
+最初は次元圧縮率を主に使い、成立が見えた段階で8bitや16bit量子化を行い、実効ビット数を比較する。\par
+
+\subsection*{\textcolor{researchblue}{3.6 良い同期と悪い同期}}
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}>{\raggedright\arraybackslash}p{0.14\textwidth}>{\raggedright\arraybackslash}p{0.14\textwidth}>{\raggedright\arraybackslash}p{0.41\textwidth}@{}}
+\rowcolor{researchink}
+\textcolor{white}{\textbf{状態}} & \textcolor{white}{\textbf{同期誤差}} & \textcolor{white}{\textbf{クラス精度}} & \textcolor{white}{\textbf{解釈}} \\
+\endfirsthead
+\rowcolor{researchink}
+\textcolor{white}{\textbf{状態}} & \textcolor{white}{\textbf{同期誤差}} & \textcolor{white}{\textbf{クラス精度}} & \textcolor{white}{\textbf{解釈}} \\
+\endhead
+非同期・高精度 & 大 & 高 & 情報はあるが縮約していない可能性 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+同期・低精度 & 小 & 低 & 自由度と一緒に必要情報も消えた \\
+\addlinespace[2pt]
+同期・高精度 & 小 & 高 & 研究が狙う状態。ただし特徴サイズも確認 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+非同期・低精度 & 大 & 低 & 力学系または入力注入が不適切 \\
+\addlinespace[2pt]
+\end{longtable}
+\endgroup
+
+最終的に狙うのは「同期誤差が十分小さい」「特徴が小さい」「テスト精度が高い」の三条件が同時に成立する領域である。\par
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第4章 なぜ同期臨界近傍を見るのか}}
+
+\addcontentsline{toc}{section}{第4章 なぜ同期臨界近傍を見るのか}
+
+\subsection*{\textcolor{researchblue}{4.1 結合強度による三領域の仮説}}
+
+結合強度\(\varepsilon\)を小さい方から増やすと、概念的には次の領域を想定できる。\par
+
+\begin{enumerate}
+
+\item 弱結合領域: ノードは独立に近く、入力差は多く残るが特徴次元も大きい。
+
+\item 同期転移近傍: 横断摂動の一部がゆっくり減衰し、有限時間では入力依存の過渡差が残る可能性がある。
+
+\item 深い同期領域: ノード差は急速に消え、低次元になるが入力差まで消える危険がある。
+
+\end{enumerate}
+
+本研究の主仮説は2の領域に最良の精度と縮約の折衷点があることだが、これは一般定理ではない。入力の入れ方、写像、グラフ、観測窓、分類器によって最良点は変わり、転移点と一致しない可能性もある。\par
+
+\subsection*{\textcolor{researchblue}{4.2 臨界近傍の長い過渡}}
+
+最大横断指数が0に近いと、横断差の減衰・増幅率 \(e^{\lambda_{\perp}t}\) は遅い。\(\lambda_{\perp}<0\) でも絶対値が小さければ、有限時間内には初期差が完全には消えない。\par
+
+\[
+|\delta(t)|\approx e^{\lambda_{\perp}t}|\delta(0)|
+\]
+
+この長い過渡が入力差を一時的に保持する可能性がある。一方、観測窓が長すぎると最終的に差が消え、短すぎると同期による縮約が進まない。そのため観測開始時刻 t0 と窓長 W は結合強度と同じくらい重要な設計変数になる。\par
+
+\subsection*{\textcolor{researchblue}{4.3 有限時間特徴として測るもの}}
+
+入力ごとに、次を時系列として記録する。\par
+
+\begin{itemize}
+
+\item 同期誤差 \(E_{\mathrm{sync}}(t)\)
+
+\item ノード平均 \(\bar{x}(t)\)
+
+\item Laplacian帯域ごとのGFTエネルギー
+
+\item TM型モード係数の時間窓ごとの変化
+
+\item 有限時間平行・横断Lyapunov指数
+
+\end{itemize}
+
+「臨界付近」を単に\(\varepsilon\)の値で呼ばず、最大有限時間横断指数が0付近、または同期誤差の減衰時間が急変する領域としてデータから特定する。\par
+
+\subsection*{\textcolor{researchblue}{4.4 仮説が外れる場合}}
+
+最良分類点が弱結合側にあるなら、同期は圧縮に寄与していない可能性がある。深い同期側にあるなら、共通同期軌道そのものに入力情報が符号化されている可能性がある。転移点と分類最良点が異なることも十分あり得る。\par
+
+したがって結論は「臨界が重要だった」と先に決めず、同期指標、特徴サイズ、精度の三者関係から判断する。\par
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第5章 Cauchy型カオス系を理論出発点にする理由}}
+
+\addcontentsline{toc}{section}{第5章 Cauchy型カオス系を理論出発点にする理由}
+
+\subsection*{\textcolor{researchblue}{5.1 一般化Boole写像}}
+
+先行研究で扱われる代表的な形は\par
+
+\[
+F(x)=\alpha x-\frac{\beta}{x}
+\]
+
+のような一般化Boole写像である。パラメータ領域によってCauchy型の不変分布を持ち、Lyapunov指数や同期条件を解析的に扱える場合がある。\par
+
+この系を使う理由は、「カオスだから脳に似ている」からではなく、分布と安定性を数式で追いやすく、TM型表現との接続を検討しやすいからである。\par
+
+\subsection*{\textcolor{researchblue}{5.2 Cauchy分布}}
+
+中心0、尺度\(\gamma>0\)のCauchy密度は\par
+
+\[
+\rho_{\gamma}(x)=\frac{1}{\pi}\frac{\gamma}{x^2+\gamma^2}
+\]
+
+である。平均や分散は通常の意味では存在しない。このため、標本平均や分散を当然のように使うと不安定になる。中央値、分位点、位相変換後の統計、ロバスト尺度などを併用する必要がある。\par
+
+Cauchy分布は独立なCauchy変数の線形結合に対して安定であり、適切な写像・結合の下で分布族が閉じることが解析上の利点になる。ただし、有限ノード・有限時間・入力駆動した実験で理論通りの不変分布になるとは限らないので、QQ plotや経験分布で確認する。\par
+
+\subsection*{\textcolor{researchblue}{5.3 条件付きLyapunov指数}}
+
+駆動系または結合系で、同期軌道に対する横断摂動の指数を条件付きLyapunov指数として計算できる場合がある。Cauchy不変密度\(\rho_{\gamma}\)が既知なら、概念的には\par
+
+\[
+\lambda_{\mathrm{cond}}=\int_{-\infty}^{\infty}\log\left|J_{\perp}(x)\right|\rho_{\gamma}(x)\,dx
+\]
+
+のように解析平均へ落とせる。具体式は写像と結合規則に依存する。先行論文中の臨界値や閉形式を別モデルへそのまま移さず、自分が実装した有限N系について式を導出し、数値Lyapunov指数と照合する。\par
+
+\subsection*{\textcolor{researchblue}{5.4 無限次元ランダム結合系の位置づけ}}
+
+ランダム結合Boole系に関する先行研究は、Cauchy不変分布と同期転移を解析できる理論的出発点として使う。しかし、その論文が示すのは特定の写像・結合・極限における同期条件であり、次を直接は示さない。\par
+
+\begin{itemize}
+
+\item 画像入力をどのように注入すべきか。
+
+\item MNISTのクラス情報が保持されるか。
+
+\item TM-GFT特徴が分類に有効か。
+
+\item 有限ノード・有限時間でも同じ臨界点になるか。
+
+\end{itemize}
+
+これらが本研究側の未検証課題である。\par
+
+\subsection*{\textcolor{researchblue}{5.5 数値上の注意}}
+
+\(F(x)=\alpha x-\beta/x\) は\(x=0\)付近で特異になる。実装では次を明示する。\par
+
+\begin{itemize}
+
+\item 0除算を避ける小さな閾値の扱い。
+
+\item 値が発散した試行の割合。
+
+\item 浮動小数点型とクリッピングの有無。
+
+\item 同じ処理を全条件に適用したか。
+
+\item クリッピングが不変分布やLyapunov指数を変えていないか。
+
+\end{itemize}
+
+安易なクリッピングで計算を安定させると、元の力学系とは別の写像になる。発散率が高い場合は、パラメータ領域・変数変換・高精度計算を先に検討する。\par
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第6章 TM型基底: Cauchy軌道を複素位相モードで読む}}
+
+\addcontentsline{toc}{section}{第6章 TM型基底: Cauchy軌道を複素位相モードで読む}
+
+\subsection*{\textcolor{researchblue}{6.1 Cayley変換}}
+
+実数xを複素単位円へ送る変換を\par
+
+\[
+u_{\gamma}(x)=\frac{x-i\gamma}{x+i\gamma},\qquad \gamma>0
+\]
+
+と置く。実数xについて分子と分母は複素共役なので\par
+
+\[
+|u_{\gamma}(x)|=1
+\]
+
+である。したがって \(u_{\gamma}(x)=e^{i\theta}\) と書け、実直線上の値を円周上の位相へ変換している。\par
+
+\subsection*{\textcolor{researchblue}{6.2 Cauchy測度が一様位相へ写る}}
+
+xと角度\(\theta\)の対応を\par
+
+\[
+x=\gamma\cot\!\left(\frac{\theta}{2}\right)
+\]
+
+と置くと、向きの符号を除いてCauchy測度は円周の一様測度へ移る。\par
+
+\[
+\rho_{\gamma}(x)\,dx=\frac{d\theta}{2\pi}
+\]
+
+この関係が重要である。Cauchy分布に従う実数軌道をCayley変換すると、理想条件では位相が円周上で一様になる。通常のFourierモード exp(ik\(\theta\)) をx上へ戻したものが\par
+
+\[
+\begin{aligned}
+M_k(x)&=u_{\gamma}(x)^k\\
+&=\left(\frac{x-i\gamma}{x+i\gamma}\right)^k.
+\end{aligned}
+\]
+
+である。\par
+
+\subsection*{\textcolor{researchblue}{6.3 直交性の導出}}
+
+Cauchy重み付き内積を\par
+
+\[
+\langle f,g\rangle_{\rho}=\int_{-\infty}^{\infty}f(x)\,\overline{g(x)}\,\rho_{\gamma}(x)\,dx
+\]
+
+とする。Cayley変換により\par
+
+\[
+\begin{aligned}
+\langle M_k,M_{\ell}\rangle_{\rho}
+&=\int_{0}^{2\pi}e^{ik\theta}e^{-i\ell\theta}\,\frac{d\theta}{2\pi}\\
+&=\int_{0}^{2\pi}e^{i(k-\ell)\theta}\,\frac{d\theta}{2\pi}\\
+&=\delta_{k\ell}.
+\end{aligned}
+\]
+
+となる。すなわち整数kのモードはCauchy測度の下で直交する。これは「Cauchy型軌道をFourierのように読む」という本研究の直感的根拠になる。\par
+
+\subsection*{\textcolor{researchblue}{6.4 係数の定義}}
+
+連続分布に対する理想係数は\par
+
+\[
+\begin{aligned}
+c_k&=\langle h,M_k\rangle_{\rho}\\
+&=\int_{-\infty}^{\infty}h(x)\,\overline{M_k(x)}\,\rho_{\gamma}(x)\,dx.
+\end{aligned}
+\]
+
+である。実験では各ノードiの有限時間軌道 \(x_i(t)\) しかないので、時間窓Wについて経験平均を使う。\par
+
+\[
+c_{i,k}=\frac{1}{W}\sum_{t=t_0}^{t_0+W-1}h\!\left(x_i(t)\right)\overline{M_k\!\left(x_i(t)\right)}
+\]
+
+hを何にするかは設計変数である。\(h=1\)では理想的な一様位相分布なら\(k\ne0\)の係数が0になるため、入力差を読むには、時間重み、観測量\(h(x)\)、窓分割、位相遷移の統計などが必要になる可能性がある。\par
+
+この点は非常に重要である。「軌道値に\(M_k\)を適用して平均する」だけで常に情報のある特徴が得られるわけではない。\par
+
+\subsection*{\textcolor{researchblue}{6.5 時系列としてのTM型特徴}}
+
+候補となる作り方は複数ある。\par
+
+\begin{enumerate}
+
+\item 窓内モーメント: 各窓で平均した \(c_{i,k}\)。
+
+\item 時刻別位相: \(z_{i,k}(t)=M_k(x_i(t))\) をそのまま短い系列として保持。
+
+\item 遷移相関: \(M_k(x_i(t+\tau))\,\overline{M_{\ell}(x_i(t))}\) の平均。
+
+\item 入力との差分: 基準入力またはノード平均に対する係数差。
+
+\item 振幅重み付き: ロバストに正規化した\(h(x)\)を掛ける。
+
+\end{enumerate}
+
+最小実験では1から始め、情報が無い場合に2または3へ進む。特徴を増やしすぎると圧縮目的に反するため、最終的には少数のkと少数の時間窓へ切り詰める。\par
+
+\subsection*{\textcolor{researchblue}{6.6 正負モードと実数特徴化}}
+
+実数由来の位相信号では、適切な定義の下で正負モードが複素共役の関係を持つ。分類器に渡すには次の選択肢がある。\par
+
+\begin{itemize}
+
+\item 実部と虚部を別成分にする。
+
+\item 振幅と位相に分ける。
+
+\item \(|c_k|^2\) をモードエネルギーとして使う。
+
+\item 共役対の片側だけを残す。
+
+\end{itemize}
+
+位相は \(-\pi\) と \(\pi\) の境界で不連続になるため、位相角を直接入れるより実部・虚部の方が安定なことが多い。どの表現を採用しても、特徴次元の数え方を明示する。\par
+
+\subsection*{\textcolor{researchblue}{6.7 \(\gamma\)の選び方}}
+
+尺度\(\gamma\)はCayley変換の中心的パラメータである。\par
+
+\begin{itemize}
+
+\item 理論上の不変Cauchy尺度が分かるなら、その値を使う。
+
+\item 入力駆動で分布が変わるなら、訓練データだけからロバストに推定する。
+
+\item \(\gamma\)を分類精度で選ぶ場合は、検証データ内で選びテストデータを見ない。
+
+\item ノードごとに\(\gamma\)を変えると比較が難しくなるため、最初は全ノード共通にする。
+
+\end{itemize}
+
+\(\gamma\)が極端に小さい・大きいと位相の分解能が偏る。\(\gamma\)に対する特徴と精度の感度を確認する。\par
+
+\subsection*{\textcolor{researchblue}{6.8 古典的TM系との用語上の注意}}
+
+一般のMalmquist-Takenaka系は、Hardy空間で異なる極を順に用いる正規化された有理直交系として書かれることが多い。本ノートの\par
+
+\[
+\left(\frac{x-i\gamma}{x+i\gamma}\right)^k
+\]
+
+は、Cauchy重み付き空間を単位円Fourier系へ写した整数冪の構成であり、「Cauchy重み付きTM型モード」または「同一尺度のTM型基底」と呼ぶのが安全である。\par
+
+発表では簡潔さのためTM基底と呼んでもよいが、質問されたら、一般のTM系全体ではなくCauchy測度に適合した特殊な構成を使う予定だと説明する。\par
+
+\subsection*{\textcolor{researchblue}{6.9 TM型表現ができないこと}}
+
+TM型変換は座標変換・特徴抽出であり、軌道から失われた情報を復元しない。異なる入力が全く同じ軌道分布・遷移へ収束したなら、TM型係数も同じになる。\par
+
+\begin{keyquote}
+
+TMは情報を作るのではなく、軌道に残った差をCauchy分布に合った座標で見やすくする候補である。
+
+\end{keyquote}
+
+これが発表での正確な位置づけである。\par
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第7章 GFT: ノード間の同期・不一致構造を読む}}
+
+\addcontentsline{toc}{section}{第7章 GFT: ノード間の同期・不一致構造を読む}
+
+\subsection*{\textcolor{researchblue}{7.1 グラフとLaplacian}}
+
+ノード間結合を無向重み付きグラフ G=(V,E,A) で表す。隣接行列A、次数行列D、組合せLaplacianLを\par
+
+\[
+\begin{aligned}
+D_{ii}&=\sum_{j=1}^{N}A_{ij},\\
+L&=D-A.
+\end{aligned}
+\]
+
+と定義する。無向グラフならLは対称半正定値であり、固有分解できる。\par
+
+\[
+\begin{aligned}
+Lu_{\ell}&=\mu_{\ell}u_{\ell},\\
+0=\mu_0&\le\mu_1\le\cdots\le\mu_{N-1}.
+\end{aligned}
+\]
+
+連結グラフでは\(\mu_0=0\)は一重で、対応固有ベクトル\(u_0\)は定数ベクトルに比例する。\par
+
+\subsection*{\textcolor{researchblue}{7.2 グラフフーリエ変換}}
+
+ノード上の信号 \(y\in\mathbb{R}^{N}\) をLaplacian固有ベクトルへ展開する。\par
+
+\[
+\begin{aligned}
+\widehat{y}_{\ell}&=u_{\ell}^{\mathsf T}y,\\
+y&=\sum_{\ell=0}^{N-1}\widehat{y}_{\ell}u_{\ell}.
+\end{aligned}
+\]
+
+行列で書けば\par
+
+\[
+\begin{aligned}
+\widehat{y}&=U^{\mathsf T}y,\\
+y&=U\widehat{y}.
+\end{aligned}
+\]
+
+である。通常のFourier変換が直線や円の正弦波へ展開するのに対し、GFTはグラフ構造に適応した固有モードへ展開する。\par
+
+\subsection*{\textcolor{researchblue}{7.3 低周波と高周波の意味}}
+
+グラフ信号の滑らかさはDirichletエネルギーで測れる。\par
+
+\[
+y^{\mathsf T}Ly=\frac{1}{2}\sum_{i=1}^{N}\sum_{j=1}^{N}A_{ij}(y_i-y_j)^2
+\]
+
+さらに固有展開を使うと\par
+
+\[
+y^{\mathsf T}Ly=\sum_{\ell=0}^{N-1}\mu_{\ell}|\widehat{y}_{\ell}|^2
+\]
+
+となる。隣接ノードで値が近ければエネルギーは小さく、低い固有値のモードに集中する。隣接ノードで急に値が変わる信号は高い固有値のモードを多く含む。\par
+
+完全同期した瞬間状態 y=c・1 は定数モードだけを持ち、連結グラフでは非零周波成分が消える。したがって高周波GFTエネルギーはノード間不一致の自然な指標になる。\par
+
+\subsection*{\textcolor{researchblue}{7.4 同期誤差との関係}}
+
+完全グラフや正則グラフでは、平均からのずれと非定数GFTエネルギーが直接対応しやすい。一般グラフでも\par
+
+\[
+\sum_{\ell=1}^{N-1}|\widehat{y}_{\ell}|^2
+\]
+
+は定数成分以外の総エネルギーであり、同期からのずれを表す。ただし、どのノード差を強く罰するかはAに依存する。GFTは「データだけ」ではなく「選んだグラフに対する周波数」である。\par
+
+\subsection*{\textcolor{researchblue}{7.5 グラフ選択の意味}}
+
+候補グラフには次がある。\par
+
+\begin{itemize}
+
+\item 結合系で実際に使ったネットワーク。
+
+\item MNIST画素の2次元格子グラフ。
+
+\item 学習データから作る類似度グラフ。
+
+\item ランダムグラフまたは全結合グラフ。
+
+\end{itemize}
+
+最初は「力学系の結合グラフ」と「GFTの解析グラフ」を同一にする。異なるグラフを使うと、どちらの構造が性能に寄与したか分からなくなるためである。\par
+
+\subsection*{\textcolor{researchblue}{7.6 正規化Laplacian}}
+
+次数が大きく異なるグラフでは\par
+
+\[
+L_{\mathrm{sym}}=I-D^{-1/2}AD^{-1/2}
+\]
+
+を使う選択肢がある。組合せLと正規化Lでは固有ベクトルと周波数解釈が変わる。最初の実験ではどちらか一方を固定し、比較するときだけ変更する。\par
+
+\subsection*{\textcolor{researchblue}{7.7 連結でないグラフと固有値縮退}}
+
+グラフが非連結なら0固有値が複数あり、各連結成分の定数モードが存在する。この場合、低周波が「全体同期」ではなく「成分ごとの同期」を表す。また固有値が重複すると、固有空間内の基底は一意でない。個々の係数より、縮退した帯域全体のエネルギーを使う方が再現性が高い。\par
+
+\subsection*{\textcolor{researchblue}{7.8 GFTができないこと}}
+
+GFTも情報を新しく作らない。完全同期で非定数成分が消えた後に高周波係数を見ても、失われたノード差は戻らない。\par
+
+\begin{keyquote}
+
+GFTは、どのノードがどのように不一致だったかを、結合グラフに沿った空間周波数として読む座標である。
+
+\end{keyquote}
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第8章 TM-GFT統合表現}}
+
+\addcontentsline{toc}{section}{第8章 TM-GFT統合表現}
+
+\subsection*{\textcolor{researchblue}{8.1 軌道テンソル}}
+
+Nノード、観測窓Wの軌道を\par
+
+\[
+X_{\mathrm{traj}}=\bigl[x_i(t)\bigr]\in\mathbb{R}^{N\times W}
+\]
+
+とする。入力画像1枚につき一つの軌道テンソルが得られる。\par
+
+TM型変換は主に各ノードの値・時間方向を読む。GFTは主にノード方向を読む。この役割分担を明確にする。\par
+
+\subsection*{\textcolor{researchblue}{8.2 TMを先に適用する構成}}
+
+時間窓\(\tau\)ごと、ノードi、TMモードkについて\par
+
+\[
+c_{i,k,\tau}=\frac{1}{W_{\tau}}\sum_{t\in\mathcal{W}_{\tau}}h\!\left(x_i(t)\right)\overline{M_k\!\left(x_i(t)\right)}
+\]
+
+を計算する。各(k,\(\tau\))についてノード信号 \(c_{:,k,\tau}\) にGFTを適用する。\par
+
+\[
+\widetilde{c}_{\ell,k,\tau}=\sum_{i=1}^{N}u_{\ell}(i)c_{i,k,\tau}
+\]
+
+最終特徴は \(\widetilde{c}_{\ell,k,\tau}\) の実部・虚部またはエネルギーである。\par
+
+この構成では、TMが各ノード軌道の分布・位相パターンを要約し、GFTがその要約量のノード間配置を読む。\par
+
+\subsection*{\textcolor{researchblue}{8.3 GFTを先に適用する構成}}
+
+各時刻tのノード状態 \(x_{:,t}\) にGFTを適用し、グラフモード時系列を得る。\par
+
+\[
+\widehat{x}_{\ell}(t)=\sum_{i=1}^{N}u_{\ell}(i)x_i(t)
+\]
+
+その後、各lの時系列へTM型変換を適用する。この構成では、まず同期・不一致モードに分解し、その時間変動をTMで読む。\par
+
+二つの順序は一般には同じ結果にならない。TM型変換が非線形であるためである。最小実験では「TM後GFT」を主とし、「GFT後TM」は比較条件にする。\par
+
+\subsection*{\textcolor{researchblue}{8.4 特徴次元}}
+
+保持するGFTモード数をL、TMモード数をK、時間窓数をQとする。複素係数の実部・虚部を使うなら概算次元は\par
+
+\[
+d=2LKQ
+\]
+
+である。例えば\(L=4\)、\(K=4\)、\(Q=3\)なら\(d=96\)となり、784画素より小さい。エネルギーだけなら\(d=LKQ=48\)である。\par
+
+次元を後からPCAで小さくするだけではTM-GFT自体の圧縮性が分かりにくい。まずL、K、Qを明示的に切って比較する。\par
+
+\subsection*{\textcolor{researchblue}{8.5 低周波だけでよいとは限らない}}
+
+完全同期に近いほどGFT低周波が支配的になるが、クラス差が局所的な同期の崩れに現れるなら中・高周波が重要かもしれない。したがって次を比較する。\par
+
+\begin{itemize}
+
+\item 定数モードのみ。
+
+\item 低周波帯域。
+
+\item 中周波帯域。
+
+\item 高周波帯域。
+
+\item 全帯域から同じ次元だけ選ぶ。
+
+\end{itemize}
+
+「低周波=有用、高周波=雑音」と先に決めない。帯域ごとの分類性能と同期誤差への寄与を測る。\par
+
+\subsection*{\textcolor{researchblue}{8.6 情報が失われる位置}}
+
+処理経路の各段階で情報が失われ得る。\par
+
+\begin{enumerate}
+
+\item 画像から初期状態・駆動への写像。
+
+\item 力学系の時間発展。
+
+\item 時間窓平均。
+
+\item TMモードの切り捨て。
+
+\item GFTモードの切り捨て。
+
+\item 実部・虚部からエネルギーだけにする操作。
+
+\item 量子化。
+
+\end{enumerate}
+
+どこで精度が落ちたかを知るため、中間表現ごとの線形プローブを用意する。\par
+
+\subsection*{\textcolor{researchblue}{8.7 数値安定性と前処理}}
+
+\begin{itemize}
+
+\item 各入力で軌道長を同じにする。
+
+\item burn-inを捨てるかどうかを固定する。
+
+\item 特徴標準化は訓練データだけでfitする。
+
+\item 複素係数は実部・虚部へ決定論的に変換する。
+
+\item 固有ベクトルの符号反転に対して、エネルギー特徴は不変だが実部特徴は反転することに注意する。
+
+\item 固有値縮退がある場合は固有ベクトル単位より帯域エネルギーを使う。
+
+\item train/testで同じグラフ固有基底を使う。
+
+\end{itemize}
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第9章 MNISTへ接続する実験設計}}
+
+\addcontentsline{toc}{section}{第9章 MNISTへ接続する実験設計}
+
+\subsection*{\textcolor{researchblue}{9.1 入力注入は研究上の設計変数}}
+
+画像Xを力学系へ入れる方法は確立していない。主な候補は次である。\par
+
+\subsubsection*{\textcolor{researchteal}{A. 初期状態注入}}
+
+\[
+x_i(0)=a+b\,\operatorname{encoder}_i(X)
+\]
+
+以後は自律発展させる。入力の影響が時間とともに消えるか、同期軌道へ残るかを最も明確に観察できる。\par
+
+\subsubsection*{\textcolor{researchteal}{B. 外力注入}}
+
+\[
+x_i(t+1)=\operatorname{coupled\_map}_i\!\left(x(t)\right)+\eta\,\operatorname{input}_i(X,t)
+\]
+
+入力を継続的に与える。情報は残りやすいが、「力学系が保持した」のか「外力をそのまま読んだ」のかを区別する対照が必要になる。\par
+
+\subsubsection*{\textcolor{researchteal}{C. パラメータ変調}}
+
+\[
+\alpha_i=\alpha_0+\eta\,\operatorname{encoder}_i(X)
+\]
+
+入力を写像パラメータへ入れる。異なる入力で異なる力学系になるため、同期多様体の不変性や同一条件での比較が崩れる可能性がある。\par
+
+最初はAの初期状態注入を採用し、成立しない場合にBを比較する。入力注入法は今後比較する設計変数であり、発表時点で唯一解を主張しない。\par
+
+\subsection*{\textcolor{researchblue}{9.2 784画素とNノードの対応}}
+
+\(N<784\)の場合、画像をノードへ写すencoderが必要である。公平性のため、最初は学習しない固定変換を使う。\par
+
+\begin{itemize}
+
+\item 平均プーリング。
+
+\item 固定ランダム射影。
+
+\item 低周波2D-DCTまたはPCA。ただしPCAは訓練データだけでfit。
+
+\item 画素ブロックごとの平均。
+
+\end{itemize}
+
+学習可能encoderを最初から使うと、性能がencoderによるのかカオス同期によるのか分からなくなる。\par
+
+\subsection*{\textcolor{researchblue}{9.3 E0からE3の段階的検証}}
+
+\subsubsection*{\textcolor{researchteal}{E0: 単体写像の再現}}
+
+目的は実装した写像が想定した力学を持つか確認すること。\par
+
+\begin{itemize}
+
+\item 軌道図。
+
+\item 最大Lyapunov指数。
+
+\item 経験分布と理論分布。
+
+\item 発散率。
+
+\end{itemize}
+
+\subsubsection*{\textcolor{researchteal}{E1: 2ノード同期}}
+
+目的は横断指数と同期誤差の対応を確認すること。\par
+
+\begin{itemize}
+
+\item \(\varepsilon\)掃引。
+
+\item 理論 \(\lambda_{\perp}\) と数値 \(\lambda_{\perp}\) の比較。
+
+\item 複数初期値で同期率を測定。
+
+\item 収束時間を測定。
+
+\end{itemize}
+
+\subsubsection*{\textcolor{researchteal}{E2: 有限Nネットワーク}}
+
+目的はLaplacianモードごとの同期安定性と有限サイズ効果を確認すること。\par
+
+\begin{itemize}
+
+\item Nとグラフを変更。
+
+\item 各横断モードの指数。
+
+\item GFTエネルギーの時間変化。
+
+\item 理論転移点と数値転移点の差。
+
+\end{itemize}
+
+\subsubsection*{\textcolor{researchteal}{E3: 2クラス情報保持}}
+
+目的は同期とクラス情報保持を初めて同時評価すること。\par
+
+\begin{itemize}
+
+\item 人工2クラスまたはMNISTの2数字。
+
+\item \(\varepsilon\)、観測窓、K、Lを掃引。
+
+\item TMのみ、GFTのみ、TM-GFTを比較。
+
+\item 生入力、PCA、ランダム射影と比較。
+
+\end{itemize}
+
+E3で成立条件が見えた後に10クラスへ拡張する。\par
+
+\subsection*{\textcolor{researchblue}{9.4 比較対象}}
+
+最低限、同じ特徴次元と同じ分類器で次を比較する。\par
+
+\begin{enumerate}
+
+\item 生画素。
+
+\item PCA。
+
+\item 固定ランダム射影。
+
+\item 非結合カオス系。
+
+\item 結合した非カオス系。
+
+\item 同期臨界近傍。
+
+\item 深い完全同期領域。
+
+\item TMのみ。
+
+\item GFTのみ。
+
+\item TM-GFT。
+
+\end{enumerate}
+
+「カオスが必要か」は4と5、「同期が必要か」は4と6、「TM-GFTが必要か」は6の中で8から10を比較して答える。\par
+
+\subsection*{\textcolor{researchblue}{9.5 分類器}}
+
+最初は線形分類器を主にする。理由は、特徴にクラス情報が読みやすい形で残っているかを評価しやすいからである。\par
+
+\begin{itemize}
+
+\item Logistic Regression。
+
+\item Linear SVM。
+
+\item 小さなMLPを補助比較。
+
+\end{itemize}
+
+大きなニューラルネットワークを使うと、分類器自身が複雑な表現学習を行い、TM-GFTの寄与が見えにくくなる。\par
+
+\subsection*{\textcolor{researchblue}{9.6 評価指標}}
+
+主要指標は次の三軸で報告する。\par
+
+\subsubsection*{\textcolor{researchteal}{同期}}
+
+\begin{itemize}
+
+\item 最終同期誤差。
+
+\item 窓平均同期誤差。
+
+\item 同期到達時間。
+
+\item 最大有限時間横断Lyapunov指数。
+
+\end{itemize}
+
+\subsubsection*{\textcolor{researchteal}{情報保持}}
+
+\begin{itemize}
+
+\item テストAccuracy。
+
+\item クラス不均衡がある場合はmacro F1。
+
+\item 混同行列。
+
+\item 複数seedの平均と標準偏差。
+
+\end{itemize}
+
+\subsubsection*{\textcolor{researchteal}{圧縮}}
+
+\begin{itemize}
+
+\item 特徴次元d。
+
+\item 量子化後の概算ビット数。
+
+\item 生入力に対する精度差。
+
+\item 必要なら計算時間とメモリ。
+
+\end{itemize}
+
+\subsection*{\textcolor{researchblue}{9.7 データ分割と漏洩防止}}
+
+\begin{itemize}
+
+\item train/validation/testを最初に固定する。
+
+\item \(\gamma\)、PCA、標準化、モード選択はtrainでfitし、validationで選択する。
+
+\item testは最終評価まで見ない。
+
+\item 同じ元画像から作った複数軌道を異なる分割へ入れない。
+
+\item ハイパーパラメータ探索結果をtestに合わせて選ばない。
+
+\end{itemize}
+
+\subsection*{\textcolor{researchblue}{9.8 反復可能性}}
+
+各実験で保存する。\par
+
+\begin{itemize}
+
+\item 設定ファイル: 写像、結合、グラフ、N、\(\varepsilon\)、軌道長、burn-in、K、L、Q。
+
+\item 乱数seed。
+
+\item コードの版。
+
+\item 指標CSV。
+
+\item 軌道の代表例。
+
+\item 失敗・発散の件数。
+
+\item 図を再生成できるスクリプト。
+
+\end{itemize}
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第10章 結果の読み方と反証条件}}
+
+\addcontentsline{toc}{section}{第10章 結果の読み方と反証条件}
+
+\subsection*{\textcolor{researchblue}{10.1 成功の最小条件}}
+
+最小成功は、2クラス問題で次が同時に成立することとする。\par
+
+\begin{enumerate}
+
+\item Nノード系で同期誤差が結合強度とともに系統的に減少する。
+
+\item 784未満のTM-GFT特徴で、生入力またはPCAに近いテスト精度が得られる。
+
+\item 同じ次元のランダム射影より安定して良い。
+
+\item 深い同期領域より転移近傍の方が精度と縮約の折衷で優れる。
+
+\item 複数seedで傾向が再現する。
+
+\end{enumerate}
+
+ここで数値閾値はE0からE2のばらつきを見て事前に決める。結果を見た後に成功基準を変更しない。\par
+
+\subsection*{\textcolor{researchblue}{10.2 典型的な失敗と解釈}}
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}p{0.38\textwidth}@{}}
+\rowcolor{researchink}
+\textcolor{white}{\textbf{観測結果}} & \textcolor{white}{\textbf{第一解釈}} & \textcolor{white}{\textbf{次に行う確認}} \\
+\endfirsthead
+\rowcolor{researchink}
+\textcolor{white}{\textbf{観測結果}} & \textcolor{white}{\textbf{第一解釈}} & \textcolor{white}{\textbf{次に行う確認}} \\
+\endhead
+\(\lambda_{\perp}<0\)だが同期誤差が下がらない & 有限時間不足、吸引域外、実装式不一致 & 長時間化、微小差実験、Jacobian検証 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+同期するが分類精度がchance & 入力差が力学系で消失 & 観測窓を早める、注入法変更 \\
+\addlinespace[2pt]
+非同期でも高精度 & 入力は残るが同期圧縮の効果なし & 特徴次元とGFT帯域を削る \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+TMのみ無効 & 分布一致不足、単純平均で情報消失 & \(\gamma\)推定、窓分割、遷移相関 \\
+\addlinespace[2pt]
+GFTのみ無効 & グラフがクラス構造に不適切 & 結合グラフ、帯域、Nを再検討 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+TM-GFTがPCA以下 & 提案座標の利点がない & 同次元・同分類器を再確認後、否定結果として報告 \\
+\addlinespace[2pt]
+カオスと非カオスが同等 & カオスは必要条件でない & 再現できれば重要な否定結果 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+seedで結果が大きく変動 & 臨界ゆらぎまたは推定不安定 & seed増加、信頼区間、安定領域の探索 \\
+\addlinespace[2pt]
+\end{longtable}
+\endgroup
+
+\subsection*{\textcolor{researchblue}{10.3 反証可能な形にする}}
+
+良い仮説は、どの結果なら棄却されるかが明確である。\par
+
+\begin{itemize}
+
+\item 臨界近傍仮説: \(\varepsilon\)掃引で同期転移近傍に精度・圧縮の優位が再現しなければ支持されない。
+
+\item カオス必要性仮説: 非カオス対照が同等以上なら支持されない。
+
+\item TM-GFT有効性仮説: 同次元のPCA・ランダム射影・単独変換を上回らなければ支持されない。
+
+\item 意味圧縮仮説: 特徴を小さくすると精度が大幅に失われるなら支持されない。
+
+\end{itemize}
+
+否定結果でも、「同期安定性だけでは情報保持を保証しない」という研究質問への有効な答えになる。\par
+
+\subsection*{\textcolor{researchblue}{10.4 因果的な主張を避ける}}
+
+相関として「臨界付近で精度が高かった」だけでは、臨界性が原因とは言えない。結合強度変更は同期率、軌道分布、数値スケール、特徴分散を同時に変える。アブレーションと正規化を行い、どの変化が性能に寄与したかを切り分ける。\par
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第11章 発表用の説明}}
+
+\addcontentsline{toc}{section}{第11章 発表用の説明}
+
+\subsection*{\textcolor{researchblue}{11.1 1分で説明する「同期だけでは圧縮にならない理由」}}
+
+\begin{keyquote}
+
+同期すると、多数のノードが同じ運動をするので、状態を記述する自由度は減ります。しかし、圧縮として重要なのは、入力の違い、とくにクラス識別に必要な違いが残ることです。全ての画像が同じ同期軌道へ収束すれば、自由度は減ってもクラス情報は失われます。そこで本研究では、同期誤差だけでなく、低次元特徴からの分類精度を同時に測り、何が消えて何が残るかを調べます。
+
+\end{keyquote}
+
+\subsection*{\textcolor{researchblue}{11.2 40秒で説明する \(\lambda_{\perp}\) と \(\lambda_{\parallel}\)}}
+
+\begin{keyquote}
+
+同期状態の近くのずれは二方向に分けられます。全ノードが一緒にずれる平行方向と、ノード同士の差を作る横断方向です。平行方向の指数が正なら、同期した全体運動はカオスを続けます。横断方向の指数が負なら、ノード間の差は縮んで同期へ戻ります。ただし、これは同期の安定性の条件であり、入力のクラス情報が残ることは保証しません。
+
+\end{keyquote}
+
+\subsection*{\textcolor{researchblue}{11.3 40秒で説明するTMとGFTの違い}}
+
+\begin{keyquote}
+
+TM型表現は、Cauchy型の軌道値を複素位相モードへ写し、各ノードの時間・分布パターンを読みます。GFTは、結合グラフのLaplacian固有モードを使い、ノード間で一様な同期成分と局所的な不一致成分を分けます。つまりTMは各ノードの軌道側、GFTはノード間構造側を担当します。どちらも、軌道から失われた情報を作り直す手法ではありません。
+
+\end{keyquote}
+
+\subsection*{\textcolor{researchblue}{11.4 研究全体の30秒版}}
+
+\begin{keyquote}
+
+カオス同期で多数の状態がまとまるとき、入力画像のクラス情報まで消えるのか、それとも有限時間軌道に残るのかを調べます。残った情報を、Cauchy型軌道に合うTM型モードと、同期構造を読むGFTで低次元化し、MNIST分類で評価します。まず2ノードと2クラスから、同期・情報保持・圧縮を別々に検証します。
+
+\end{keyquote}
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第12章 想定問答}}
+
+\addcontentsline{toc}{section}{第12章 想定問答}
+
+\subsection*{\textcolor{researchblue}{Q1. 研究の新規性は何ですか。}}
+
+同期そのもの、GFTそのもの、TM型モードそのものは既存の考え方である。新規性候補は、同期による自由度縮約とクラス情報保持を分離して評価し、Cauchy型の時間・分布表現であるTM型モードと、ネットワーク空間表現であるGFTを組み合わせて、同期転移近傍の有限時間軌道から意味情報を読む点にある。ただし、新規性は追加の文献調査で確定する必要がある。\par
+
+\subsection*{\textcolor{researchblue}{Q2. なぜカオスが必要なのですか。}}
+
+必要だとはまだ分かっていない。カオスの初期値鋭敏性が入力差を豊かな時間パターンへ展開する可能性を仮説としている。非カオス写像・線形系・ランダム特徴と同条件で比較し、同等なら「カオスは必要でない」と結論する。\par
+
+\subsection*{\textcolor{researchblue}{Q3. なぜ完全同期の深部ではなく臨界近傍なのですか。}}
+
+深い同期ではノード差と入力差が速く消える可能性がある。一方、臨界近傍では横断収縮が遅く、有限時間過渡に入力差が残りながら自由度が減る可能性があるためである。ただしこれは主仮説であり、最良点が臨界にあることは実験で検証する。\par
+
+\subsection*{\textcolor{researchblue}{Q4. \(\lambda_{\perp}<0\)なら圧縮に成功したと言えますか。}}
+
+言えない。\(\lambda_{\perp}<0\)は同期多様体の局所横断安定性を示す候補条件である。圧縮成功には、特徴サイズが小さく、未見データの分類精度が保たれることが別に必要である。\par
+
+\subsection*{\textcolor{researchblue}{Q5. \(\lambda_{\parallel}>0\)は必須ですか。}}
+
+カオス同期を主張するなら同期軌道上の正の指数は重要である。しかし意味圧縮に最適かは未検証であり、\(\lambda_{\parallel}\le 0\)の非カオス対照も比較する。\par
+
+\subsection*{\textcolor{researchblue}{Q6. TMは何を入力し、何を出しますか。}}
+
+各ノードの有限時間軌道または窓内の観測値を入力し、Cayley変換の整数冪に対する複素係数を出す。出力はモードごとの実部・虚部、またはエネルギーとして分類器へ渡す。\par
+
+\subsection*{\textcolor{researchblue}{Q7. TMを使えば情報が復元できますか。}}
+
+完全な全モードと適切な関数空間では展開として再構成を考えられるが、本研究では少数モードへ切り詰めるので非可逆である。また、力学系の段階で異なる入力が同じ軌道へ潰れた場合、その情報はTMでは戻らない。\par
+
+\subsection*{\textcolor{researchblue}{Q8. それは本当にTakenaka-Malmquist基底ですか。}}
+
+本研究でまず使うのはCauchy測度をCayley変換で円周の一様測度へ写した整数冪で、一般のTM系の特殊な構成として扱う。誤解を避けるなら「Cauchy重み付きTM型モード」と呼ぶ。一般の異なる極を持つTM系への拡張は今後の課題である。\par
+
+\subsection*{\textcolor{researchblue}{Q9. GFTの低周波はなぜ同期を表しますか。}}
+
+Laplacianの低周波固有ベクトルは隣接ノード間で滑らかである。完全同期の定数信号は0固有値の定数モードだけを持ち、非定数モードが消えるためである。ただしグラフが非連結なら成分ごとの定数モードが複数存在する。\par
+
+\subsection*{\textcolor{researchblue}{Q10. TMとGFTを組み合わせる必要がありますか。}}
+
+必要性は未検証である。TMはノード内の時間・分布構造、GFTはノード間構造を担当するという補完関係を仮説としている。TMのみ、GFTのみ、単純統計、PCAと比較する。\par
+
+\subsection*{\textcolor{researchblue}{Q11. 画像をどうやってカオス系に入れますか。}}
+
+最初は固定encoderで画像をN次元へ写し、初期状態として注入する。外力注入とパラメータ変調は比較候補であり、唯一の正解としては主張しない。\par
+
+\subsection*{\textcolor{researchblue}{Q12. なぜ最初からMNIST 10クラスをしないのですか。}}
+
+失敗したときに、同期理論、入力注入、特徴抽出、分類のどこが原因か分からなくなるためである。E0からE3まで段階的に検証し、2クラスで成立条件を得てから10クラスへ拡張する。\par
+
+\subsection*{\textcolor{researchblue}{Q13. PCAとの違いは何ですか。}}
+
+PCAはデータ分散が大きい線形方向を学習する。TM-GFTはCauchy型軌道と結合グラフという力学的構造に基づく座標である。ただし、分類圧縮性能でPCAを上回る保証はなく、PCAは重要な基準線である。\par
+
+\subsection*{\textcolor{researchblue}{Q14. rate-distortion理論との関係は何ですか。}}
+
+本研究の現段階は厳密なrate-distortion最適化ではない。歪みを画像復元誤差ではなく分類損失として考える意味圧縮に近いが、情報率や最適境界を理論的に導出する段階ではない。まず次元・量子化ビット数と精度の曲線を実験的に示す。\par
+
+\subsection*{\textcolor{researchblue}{Q15. AKOrNは根拠になりますか。}}
+
+同期型の振動表現が機械学習で利用できる例として参考になる。しかしAKOrNは本研究のカオス同期条件や圧縮性能を証明するものではない。着想と関連研究として限定的に扱う。\par
+
+\subsection*{\textcolor{researchblue}{Q16. 脳がカオス同期で省電力化しているという研究ですか。}}
+
+違う。神経系の動的・同期的な表現から着想を得ているが、脳の省電力性や記憶の原因をカオス同期で説明する研究ではない。工学的な情報表現の可能性を検証する。\par
+
+\subsection*{\textcolor{researchblue}{Q17. 質量ギャップやKMS状態は研究に関係しますか。}}
+
+今回使うのは原典中に現れるCauchy重み付きの有理モード表現だけである。質量ギャップ、KMS状態、量子場理論に関する主張は研究質問と実験設計から外す。\par
+
+\subsection*{\textcolor{researchblue}{Q18. 分類器が学習しているだけではありませんか。}}
+
+その可能性を抑えるため、線形分類器を主にし、同じ分類器と同じ特徴次元でPCA・ランダム射影・各アブレーションを比較する。大きな分類器で性能だけを上げることは主目的にしない。\par
+
+\subsection*{\textcolor{researchblue}{Q19. 同期誤差とGFT高周波は重複した指標ではありませんか。}}
+
+関連するが同じではない。同期誤差は平均からの総ずれを測り、GFTはずれをグラフ固有モードごとに分解する。どの空間スケールの不一致がクラス情報を持つかを調べられる点がGFTの役割である。\par
+
+\subsection*{\textcolor{researchblue}{Q20. 実験結果がまだないのに発表してよいのですか。}}
+
+今回はテーマ・計画発表であり、問題設定、既知と未検証の境界、反証可能な仮説、段階的な実験計画を提示する。結果が無いことを隠さず、何を測れば仮説を支持・棄却できるかを明確にする。\par
+
+\subsection*{\textcolor{researchblue}{Q21. 研究が失敗した場合、何が残りますか。}}
+
+同期安定性と意味情報保持が一致しない条件、カオスが不要な条件、TM-GFTが基準線を上回らない条件を明らかにできる。否定結果でも、同期を圧縮と同一視しないための実証的知見になる。\par
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第13章 用語集}}
+
+\addcontentsline{toc}{section}{第13章 用語集}
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.65\textwidth}@{}}
+\rowcolor{researchink}
+\textcolor{white}{\textbf{用語}} & \textcolor{white}{\textbf{この研究での意味}} \\
+\endfirsthead
+\rowcolor{researchink}
+\textcolor{white}{\textbf{用語}} & \textcolor{white}{\textbf{この研究での意味}} \\
+\endhead
+写像 & 現在状態を次状態へ送る更新規則 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+軌道 & 初期状態から写像を反復して得る状態列 \\
+\addlinespace[2pt]
+カオス & 正の最大Lyapunov指数に代表される初期値鋭敏な決定論的運動 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+同期多様体 & 全ノード状態が等しい状態集合 \\
+\addlinespace[2pt]
+平行方向 & 同期関係を保ったまま全ノードが一緒に変化する方向 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+横断方向 & ノード間の差を作り同期関係を壊す方向 \\
+\addlinespace[2pt]
+\(\lambda_{\parallel}\) & 同期多様体に沿った最大Lyapunov指数 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+\(\lambda_{\perp}\) & 同期多様体に垂直な最大Lyapunov指数 \\
+\addlinespace[2pt]
+有限時間指数 & 有限長の観測窓で計算した局所的な平均伸縮率 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+Cauchy分布 & \(\rho_{\gamma}(x)=\frac{1}{\pi}\frac{\gamma}{x^2+\gamma^2}\)で表される裾の重い分布 \\
+\addlinespace[2pt]
+Cayley変換 & 実直線を複素単位円へ写す有理変換 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+TM型モード & Cauchy重み付き空間で用いるCayley変換の整数冪 \\
+\addlinespace[2pt]
+グラフLaplacian & L=D-A。グラフ信号の滑らかさと固有モードを定める行列 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+GFT & Laplacian固有ベクトルへの信号展開 \\
+\addlinespace[2pt]
+Dirichletエネルギー & 隣接ノード差の重み付き二乗和 \\
+\addlinespace[2pt]
+\rowcolor{researchpale}
+意味圧縮 & 完全復元でなく、下流課題に必要な情報を小さな特徴へ残す圧縮 \\
+\addlinespace[2pt]
+アブレーション & 構成要素を外して寄与を確認する比較実験 \\
+\addlinespace[2pt]
+\end{longtable}
+\endgroup
+
+\goodbreak
+
+\section*{\textcolor{researchink}{第14章 発表前チェックリスト}}
+
+\addcontentsline{toc}{section}{第14章 発表前チェックリスト}
+
+\subsection*{\textcolor{researchblue}{理論}}
+
+\begin{itemize}
+
+\item 写像、軌道、固定点、Lyapunov指数を自分の言葉で説明できる。
+
+\item 2ノード系の \(\delta(t+1)\approx(1-2\varepsilon)f'(s(t))\delta(t)\) を追える。
+
+\item \(\lambda_{\perp}<0\)が局所横断安定性であり、全局安定や情報保持ではないと説明できる。
+
+\item 同期誤差と有限時間横断指数の違いを説明できる。
+
+\item Cauchy測度がCayley変換で一様位相へ写る直感を説明できる。
+
+\item TM型モードの直交性を円周Fourier系へ帰着して説明できる。
+
+\item GFTとDirichletエネルギーの関係を説明できる。
+
+\end{itemize}
+
+\subsection*{\textcolor{researchblue}{課題設定}}
+
+\begin{itemize}
+
+\item 圧縮を「784未満の特徴と精度保持」で定義できる。
+
+\item 完全画像復元を目標にしていないと明言できる。
+
+\item 臨界近傍、カオスの必要性、TM-GFTの有効性が未検証だと明言できる。
+
+\item 入力注入法が設計変数だと答えられる。
+
+\item MNIST 2クラスから始める理由を答えられる。
+
+\end{itemize}
+
+\subsection*{\textcolor{researchblue}{主張しないこと}}
+
+\begin{itemize}
+
+\item 脳の省電力性や長期記憶の原因がカオス同期である。
+
+\item \(\lambda_{\perp}<0\) かつ \(\lambda_{\parallel}>0\)なら情報圧縮が保証される。
+
+\item TM型変換が消えた情報を復元する。
+
+\item AKOrNがカオス同期圧縮を証明する。
+
+\item 無限次元Boole系の同期条件が有限MNIST系へそのまま適用できる。
+
+\item 質量ギャップ・KMS状態・量子場理論が本研究の成果である。
+
+\end{itemize}
+
+\goodbreak
+
+\section*{\textcolor{researchink}{参考文献と根拠の使い分け}}
+
+\addcontentsline{toc}{section}{参考文献と根拠の使い分け}
+
+\subsection*{\textcolor{researchblue}{ローカル原典}}
+
+[P1] \textcolor{researchblue}{Synchronization of chaotic systems.pdf} 同期多様体、平行・横断方向、Master Stability Functionの標準的説明に使用する。\par
+
+[P2] \textcolor{researchblue}{Chaotic synchronization of mutually coupled systems arbitrary proportional linear relations.pdf} 一般化Boole写像、Cauchy不変分布、条件付きLyapunov指数を持つ可解な結合系の例として使用する。\par
+
+[P3] \textcolor{researchblue}{Infinite Dimensional Chaotic Synchronization for Randomly Coupling Systems and Dynamical Phase Transition.pdf} ランダム結合・無限次元極限における同期転移の理論的出発点として使用する。画像情報保持の根拠には使わない。\par
+
+[P4] \textcolor{researchblue}{ARTIFICIAL KURAMOTO OSCILLATORY NEURONS.pdf} 同期型振動表現の機械学習利用例として使用する。カオス同期や圧縮理論の証明には使わない。\par
+
+[P5] \textcolor{researchblue}{Universal Mass Gap Formula ∆m = m0lnK Spontaneous Kubo-Martin-Schwinger State Emergence with Maximal Quantum Chaos.pdf} Cauchy重み付きの \(\left(\frac{x-i\gamma}{x+i\gamma}\right)^k\) というTM型モードの式に限って参照する。質量ギャップ・KMS・量子論の主張は使用しない。\par
+
+\subsection*{\textcolor{researchblue}{公開資料}}
+
+[W1] D. I. Shuman, S. K. Narang, P. Frossard, A. Ortega, P. Vandergheynst, “The Emerging Field of Signal Processing on Graphs,” arXiv:1211.0053. \url{https://arxiv.org/abs/1211.0053}\par
+
+[W2] N. Tishby, F. C. Pereira, W. Bialek, “The Information Bottleneck Method,” arXiv:physics/0004057. \url{https://arxiv.org/abs/physics/0004057}\par
+
+[W3] T. Miyato, S. Löwe, A. Geiger, M. Welling, “Artificial Kuramoto Oscillatory Neurons,” ICLR 2025 OpenReview. \url{https://openreview.net/forum?id=nwDRD4AMoN}\par
+
+\subsection*{\textcolor{researchblue}{根拠の強さ}}
+
+\begin{itemize}
+
+\item P1とW1は標準理論の基礎根拠として使う。
+
+\item P2とP3は特定モデルでの解析例であり、一般の入力保持へ拡張しない。
+
+\item P4とW3は関連する機械学習例であり、本研究の圧縮性能を保証しない。
+
+\item P5はTM型モード式の所在として限定利用し、周辺の物理主張から切り離す。
+
+\item W2は意味情報を残す圧縮という概念整理に使い、直接実装した目的関数とは言わない。
+
+\end{itemize}
+
+\par\medskip{\color{researchline}\hrule}\medskip
+
+\subsection*{\textcolor{researchblue}{最後に覚える一文}}
+
+\begin{keyquote}
+
+本研究は、同期を圧縮と決めつける研究ではない。同期によって自由度が縮む過程で、クラス情報がいつ消え、いつ残り、その残差をTM型モードとGFTでどこまで小さく読めるかを検証する研究である。
+
+\end{keyquote}
+\end{document}

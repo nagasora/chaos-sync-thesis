@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "primary": {
+    "overall_passed": true,
+    "alpha_count": 3,
+    "seed_count_per_alpha": 5
+  },
+  "secondary": {
+    "summary_artifact": "artifacts/summary.json",
+    "per_seed_artifact": "artifacts/per_seed_metrics.csv",
+    "diagnostic_samples": "artifacts/diagnostic_orbit_samples.npz"
+  },
+  "per_seed_artifact": "artifacts/per_seed_metrics.csv",
+  "notes": [
+    "合格ゲートは実装回帰を検出する工学的閾値であり、統計的有意水準ではない。",
+    "TM係数の検証は簡略化したCayleyモード q_gamma(x)^k に対するもので、一般のTM系全体の検証ではない。",
+    "有限精度で重複がないことは、長時間周期化が存在しない証明ではない。"
+  ]
+}
