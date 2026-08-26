@@ -13,8 +13,9 @@ GitHubを、研究の結論を先に決める場所ではなく、未解決点�
 
 | Project field | 用途 |
 | --- | --- |
-| Status | `Inbox` → `Needs evidence` → `Ready to experiment` → `In progress` → `Review` → `Done` / `Parked` |
-| Type | `Question`、`Experiment`、`Decision`、`Literature` |
+| Status | `Todo` → `In Progress` → `Done` |
+| Research state | `Needs evidence`、`Ready to experiment`、`Review`、`Parked` |
+| Research item | `Question`、`Experiment`、`Decision`、`Literature` |
 | Stage | `E0`〜`E5`、`Cross-cutting` |
 | Evidence | 原典・再現計算・未検証を区別する短い根拠 |
 | Next action | 次に一つだけ行う検証または判断 |
