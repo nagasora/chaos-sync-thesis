@@ -1,0 +1,12 @@
+{
+  "split_disjoint": true,
+  "e4_dynamics_frozen": true,
+  "all_metrics_finite": true,
+  "digits_shape_8x8": true,
+  "terminal_comparison_dimension": 8,
+  "tm_beats_terminal_reconstruction_common_dimension": false,
+  "tm_beats_terminal_reconstruction_d16": false,
+  "tm_beats_raw_dct_reconstruction_d16": true,
+  "tm_classification_above_0_70_d16": false,
+  "tm_matches_input_pca_ssim_within_0_10": false
+}

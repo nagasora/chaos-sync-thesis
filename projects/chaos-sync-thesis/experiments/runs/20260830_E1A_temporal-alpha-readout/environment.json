@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-30T14:23:16.958233+09:00",
+  "python_version": "3.12.13 (main, Aug  7 2026, 02:26:41) [MSC v.1944 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\長松　蒼空\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "dependencies": [
+    "numpy==2.3.5"
+  ],
+  "execution_command": "python e1a_temporal_alpha_readout.py --run-directory .",
+  "notes": [
+    "実行時に依存パッケージと実コマンドを追記する。"
+  ]
+}

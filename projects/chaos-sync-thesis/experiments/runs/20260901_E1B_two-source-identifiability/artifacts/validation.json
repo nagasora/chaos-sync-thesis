@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "check_count": 20,
+  "failed_check_count": 0,
+  "checks": [
+    {
+      "name": "completed_status",
+      "passed": true,
+      "detail": "statuses=('completed', 'completed', 'completed')"
+    },
+    {
+      "name": "full_rank_observation",
+      "passed": true,
+      "detail": "determinant=0.9125"
+    },
+    {
+      "name": "pair_seed_split_disjoint",
+      "passed": true,
+      "detail": "fit=16, test=32, parent_overlap=0"
+    },
+    {
+      "name": "source_data_store",
+      "passed": true,
+      "detail": "rows=352, shape=(352, 4096)"
+    },
+    {
+      "name": "source_manifest",
+      "passed": true,
+      "detail": "rows=352"
+    },
+    {
+      "name": "feature_store_dimensions",
+      "passed": true,
+      "detail": "rows=704, dimensions={'oracle_tm_full_rank': 32, 'oracle_fourier_full_rank': 32, 'direct_tm_full_rank': 32, 'direct_fourier_full_rank': 32, 'direct_tm_rank_one': 16, 'direct_fourier_rank_one': 16}"
+    },
+    {
+      "name": "collision_target_swap",
+      "passed": true,
+      "detail": "collision_count=352"
+    },
+    {
+      "name": "rank_one_exact_feature_collision",
+      "passed": true,
+      "detail": "max_difference=0.0, tolerance=1e-12"
+    },
+    {
+      "name": "trajectory_manifest",
+      "passed": true,
+      "detail": "rows=704"
+    },
+    {
+      "name": "grouped_fold_assignment",
+      "passed": true,
+      "detail": "fold_counts={2: 4, 0: 4, 3: 4, 1: 4}"
+    },
+    {
+      "name": "ridge_penalty_selection",
+      "passed": true,
+      "detail": "rows=30"
+    },
+    {
+      "name": "test_metric_recomputation",
+      "passed": true,
+      "detail": "metrics={'oracle_tm_full_rank': {'ordered': 0.002083314369515024, 'invariant': 0.002083314369515024}, 'oracle_fourier_full_rank': {'ordered': 0.003050688721131833, 'invariant': 0.003050688721131833}, 'direct_tm_full_rank': {'ordered': 0.007740222490239181, 'invariant': 0.00774022249023918}, 'direct_fourier_full_rank': {'ordered': 0.00906970888669749, 'invariant': 0.00906970888669749}, 'direct_tm_rank_one': {'ordered': 0.07371025666935448, 'invariant': 0.07371025666935448}, 'direct_fourier_rank_one': {'ordered': 0.07389114491748885, 'invariant': 0.07389114491748885}}"
+    },
+    {
+      "name": "theoretical_collision_floor",
+      "passed": true,
+      "detail": "floor=0.07302967433402215, tm=0.07371025666935448, fourier=0.07389114491748885"
+    },
+    {
+      "name": "success_gate",
+      "passed": true,
+      "detail": "components={'oracle_tm_below_threshold': True, 'rank_one_collision_exact': True, 'rank_one_ordered_floor_tm': True, 'rank_one_ordered_floor_fourier': True}, success=True"
+    },
+    {
+      "name": "pair_seed_aggregations",
+      "passed": true,
+      "detail": "pair_rows=36, seed_rows=192"
+    },
+    {
+      "name": "collision_diagnostics",
+      "passed": true,
+      "detail": "rows=192"
+    },
+    {
+      "name": "plot_artifacts",
+      "passed": true,
+      "detail": "sizes={'identifiability_results.png': 98525, 'prediction_scatter.png': 142264}"
+    },
+    {
+      "name": "code_sha256",
+      "passed": true,
+      "detail": "files=['e1a_matched_capacity_readout.py', 'e1a_temporal_alpha_readout.py', 'e1b_two_source_identifiability.py', 'validate_results.py']"
+    },
+    {
+      "name": "artifact_sha256",
+      "passed": true,
+      "detail": "files=14"
+    },
+    {
+      "name": "environment_record",
+      "passed": true,
+      "detail": "dependencies=['numpy==1.26.2', 'matplotlib==3.9.1']"
+    }
+  ],
+  "failed_checks": []
+}

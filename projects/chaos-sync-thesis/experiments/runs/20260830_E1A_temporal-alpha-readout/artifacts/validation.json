@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "check_count": 13,
+  "failed_check_count": 0,
+  "checks": [
+    {
+      "name": "split_disjoint",
+      "passed": true,
+      "detail": "train/test alphaと全seed splitの非重複を確認"
+    },
+    {
+      "name": "test_row_grain",
+      "passed": true,
+      "detail": "rows=48, expected=48"
+    },
+    {
+      "name": "feature_set",
+      "passed": true,
+      "detail": "features=['cayley_delay_k1', 'fourier_bands', 'raw_window', 'robust_quantiles', 'tm_delay', 'tm_delay_shuffled', 'tm_no_delay']"
+    },
+    {
+      "name": "test_rmse_robust_quantiles",
+      "passed": true,
+      "detail": "recomputed=0.08985735020106407, recorded=0.08985735020106407"
+    },
+    {
+      "name": "test_rmse_raw_window",
+      "passed": true,
+      "detail": "recomputed=0.1135450662294084, recorded=0.1135450662294084"
+    },
+    {
+      "name": "test_rmse_fourier_bands",
+      "passed": true,
+      "detail": "recomputed=0.002382310910179949, recorded=0.002382310910179949"
+    },
+    {
+      "name": "test_rmse_cayley_delay_k1",
+      "passed": true,
+      "detail": "recomputed=0.01221686158395474, recorded=0.01221686158395474"
+    },
+    {
+      "name": "test_rmse_tm_no_delay",
+      "passed": true,
+      "detail": "recomputed=0.09061130707000431, recorded=0.09061130707000431"
+    },
+    {
+      "name": "test_rmse_tm_delay_shuffled",
+      "passed": true,
+      "detail": "recomputed=0.1043662761755957, recorded=0.1043662761755957"
+    },
+    {
+      "name": "test_rmse_tm_delay",
+      "passed": true,
+      "detail": "recomputed=0.002096758775579707, recorded=0.002096758775579707"
+    },
+    {
+      "name": "validation_selected_baseline",
+      "passed": true,
+      "detail": "expected=fourier_bands, recorded=fourier_bands"
+    },
+    {
+      "name": "success_gate",
+      "passed": true,
+      "detail": "difference=0.0002855521346002421, ci_lower=-0.0003337856030878797, success=False"
+    },
+    {
+      "name": "environment",
+      "passed": true,
+      "detail": "dependencies=['numpy==2.3.5']"
+    }
+  ],
+  "failed_checks": []
+}

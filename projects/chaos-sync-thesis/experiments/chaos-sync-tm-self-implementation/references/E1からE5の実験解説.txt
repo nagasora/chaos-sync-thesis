@@ -1,0 +1,235 @@
+## 実験体系の統一と追加実験を完了しました
+
+旧E系統とT系統を、研究上の依存関係に沿った**単一のE0〜E5体系**へ統一しました。既存runは再現性とハッシュを壊さないため物理的には改名せず、旧番号を`legacy_aliases`として正規実験IDへ対応付けています。
+
+| 正規段階 | 研究上の役割 | 旧E/T系統との対応 |
+|---|---|---|
+| **E0** | 単一写像の数学・数値整合性 | 旧E0、旧T0〜T3 |
+| **E1** | TM時間特徴の読み出し・識別可能性 | 旧E1A、E1B |
+| **E2** | ノイズ・欠損・有限観測長への頑健性 | 旧E2、今回のE2A |
+| **E3** | 同期転移・同期basin・入力情報保持 | 旧E3A、旧T4、今回のE3B・E3C |
+| **E4** | 合成時系列の圧縮・復元 | 今回のE4A |
+| **E5** | 画像の圧縮・復元 | 今回のE5A、将来のE5B |
+
+正規IDは、例えば次の形式です。
+
+```text
+E3B-TANGENT-TWO-NODE-BASIN
+E3C-BOOLE-N8-INPUT-RETENTION
+E4A-BOOLE-SYNTHETIC-SIGNAL-RECONSTRUCTION
+```
+
+実行フォルダは日付付きの
+
+```text
+YYYYMMDD_<正規ID>_<slug>
+```
+
+とし、研究段階、写像族、目的が名前だけで判別できるようにしました。
+
+---
+
+## 今回、新たに実行した実験
+
+### E2A：観測頑健性
+
+既存E1Bの2源full-rank観測を引き継ぎ、読み出しをclean条件で固定したまま、次を変化させました。
+
+- ガウス観測ノイズ
+- 欠損率
+- 有限観測長
+- oracle逆混合と直接混合チャネル読み出し
+- 16次元TM短遅延特徴と16次元Fourier特徴
+
+ノイズ条件ごとの全予測、seed別誤差、信頼区間、特徴量を保存しています。
+
+### E3B：2自由度タンジェント系の同期basin
+
+旧T4をE3Bへ統合しました。
+
+\[
+T_\beta(x)=\tan(\beta x)
+\]
+
+を局所写像とし、出力混合型と状態拡散型について、
+
+\[
+\lambda_\parallel>0,\qquad \lambda_\perp<0
+\]
+
+という局所条件と、有限差を持つ初期値から実際に同期へ到達する大域basinを分離して評価しました。
+
+単に横Lyapunov指数が負であるだけでなく、
+
+- 同期成功率
+- 同期到達時間
+- 一時的な誤差増幅
+- 再離脱
+- 結合強度による同期窓
+
+を数値評価しています。出力混合率 \(1/2\) は1ステップ同期の正対照として含めました。
+
+### E3C：\(N=8\) Booleネットワークの入力保持
+
+\[
+F_\alpha(x)=\alpha\left(x-\frac1x\right)
+\]
+
+を持つ8ノード出力混合ネットワークへ、二値入力をゼロ和の2クラスタ方向として注入しました。
+
+結合強度を理論臨界値
+
+\[
+K_c=0.5
+\]
+
+の周辺で走査し、次を同時に測っています。
+
+\[
+\text{同期誤差},\quad
+\text{入力分類精度},\quad
+\text{潜在有効次元}
+\]
+
+比較した読み出しは、
+
+- 終端状態
+- raw graph特徴
+- TM–graph時間特徴
+
+です。これにより「同期したか」と「入力情報が残ったか」を別の指標として判定できます。
+
+### E4A：合成時系列の圧縮・復元
+
+64点の次の信号を入力しました。
+
+\[
+u_t=A\sin(2\pi ft+\phi)
+\]
+
+\[
+u_t=A\sin\left(
+2\pi\left(f_0t+\frac12rt^2\right)+\phi
+\right)
+\]
+
+および2周波数混合波形です。
+
+8ノードBooleネットワークを入力駆動し、同一ridge decoder、同一潜在次元の条件で、
+
+- TM spectrum
+- raw mean DCT
+- flattened reservoir
+- 終端状態
+- 入力PCA oracle
+
+を比較しました。
+
+潜在次元
+
+\[
+d_z\in\{4,8,16,32\}
+\]
+
+ごとのNMSE、復元誤差、rate–distortion表を保存しています。
+
+### E5A：小画像による画像圧縮pilot
+
+オフラインで完全再現できるよう、scikit-learnの8×8 digits、1797画像を使いました。
+
+E4Aで選択した力学系パラメータを凍結し、画像用に再調整せず、
+
+- 再構成NMSE
+- PSNR
+- SSIM
+- 潜在表現からの分類balanced accuracy
+- 潜在次元別rate–distortion
+
+を評価しています。
+
+ここは**画像段階のpilot**です。28×28の完全なMNISTを使う確認実験は、混同を避けるため別ID
+
+```text
+E5B-MNIST-CONFIRMATORY
+```
+
+として`not_run_requires_external_dataset_compute`の状態に分離しました。
+
+---
+
+## 既存結果も同じ台帳へ統合しています
+
+既存runについては、再実行済みと偽らず、既存成果として次を取り込みました。
+
+- E0A：一般化Boole写像の不変Cauchy測度、Lyapunov指数、簡略TMモード
+- E1A：16次元容量一致比較  
+  TM RMSE \(0.001342\)、Fourier RMSE \(0.002614\)
+- E1B：2源識別可能性  
+  oracle TM RMSE \(0.002083\)、rank-one理論下限 \(0.073030\)
+- E3A：有限サイズ同期転移  
+  最大 \(N\) の局所持続同期 \(K_{50}=0.465625\)、理論値 \(0.5\) と整合
+
+重要な既存結論である、
+
+\[
+\text{TM基底は、観測写像が失った情報を新しく作り直すことはできない}
+\]
+
+という識別可能性境界も、統合レポート内で明確に区別しています。
+
+---
+
+## 再現性のために保存したもの
+
+各新規runには、集約値だけでなく次を保存しました。
+
+- 実験前に固定した設定
+- seedとデータ分割
+- 生成入力と前処理後データ
+- モデル入力特徴
+- 全test予測
+- 条件別・seed別CSV
+- JSON集約値
+- 図と図の元データ
+- 実行環境
+- SHA-256
+- 独立検証結果
+- 成功条件、反証条件、結果判断
+
+単体テストと統合validatorを実行し、PDFについても構文検査、テキスト抽出検査、全ページの画像レンダリング確認を行っています。
+
+---
+
+# 成果物
+
+### 詳細PDFレポート
+
+定式化、理論導出、実験条件、既存結果、新規結果、考察、限界、次の仮説までまとめています。
+
+[カオス同期実験体系・理論・結果・考察 詳細PDFレポート](sandbox:/mnt/data/chaos_sync_unified_study/report/chaos_sync_unified_experiment_report_ja.pdf)
+
+### 実験一式
+
+コード、テスト、設定、各runの数値結果、全予測、図、統一台帳、PDFを含む完全版です。
+
+[統一実験プロジェクト完全版ZIP](sandbox:/mnt/data/chaos_sync_unified_study_bundle.zip)
+
+PDFと主要な結果台帳だけをまとめた軽量版です。
+
+[主要結果のみの軽量ZIP](sandbox:/mnt/data/chaos_sync_unified_results_only.zip)
+
+### 個別資料
+
+[統一実験ID仕様](sandbox:/mnt/data/chaos_sync_unified_study/UNIFIED_EXPERIMENT_SCHEMA.md)
+
+[全実験の結果要約](sandbox:/mnt/data/chaos_sync_unified_study/RESULTS_SUMMARY.md)
+
+[実験レジストリCSV](sandbox:/mnt/data/chaos_sync_unified_study/experiment_registry.csv)
+
+[実験レジストリJSON](sandbox:/mnt/data/chaos_sync_unified_study/experiment_registry.json)
+
+[統合検証結果](sandbox:/mnt/data/chaos_sync_unified_study/suite_validation.json)
+
+[プロジェクトREADME](sandbox:/mnt/data/chaos_sync_unified_study/README.md)
+
+既存のDrive・GitHub側のrunは破壊的に改名せず、今回の成果は独立した統合バンドルとして作成しています。次の推奨ステップは、PDFで定義したE5Bの設定をそのままGoogle Colabで実行し、28×28 MNISTでE5Aの傾向が再現するか確認することです。

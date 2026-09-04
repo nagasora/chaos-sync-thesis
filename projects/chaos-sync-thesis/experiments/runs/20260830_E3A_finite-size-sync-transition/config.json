@@ -1,0 +1,81 @@
+{
+  "schema_version": 2,
+  "experiment_id": "20260830_E3A_finite-size-sync-transition",
+  "title": "ランダム結合一般化Boole写像の有限サイズ同期転移pilot",
+  "stage": "E3A",
+  "created_at": "2026-08-30T00:00:00+09:00",
+  "status": "planned",
+  "hypotheses": {
+    "H1": "一様正結合のlocal初期化では経験的閾値が論文のKc=0.5付近に現れる。",
+    "H2": "E|eps|=1を共有する全分布で経験的閾値が一致する。",
+    "H3": "符号付き結合の同期近傍ではE epsと行平均揺らぎが残り、H2から外れる可能性がある。",
+    "H4": "適応Cauchy尺度のTM秩序変数は非同期相でO(N^-1/2)、同期相で1へ近づく。"
+  },
+  "parent_experiment_ids": [
+    "20260806_E0_boole-invariant-measure"
+  ],
+  "simulation": {
+    "alpha": 0.25,
+    "node_counts": [
+      64,
+      128,
+      256
+    ],
+    "matrix_seeds": [
+      20260830,
+      20260831,
+      20260832
+    ],
+    "coupling_distributions": [
+      "uniform_positive",
+      "positive_binary",
+      "biased_sign",
+      "rademacher"
+    ],
+    "k_values": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7
+    ],
+    "burn_in": 300,
+    "evaluation_steps": 300,
+    "local_growth_steps": 30,
+    "local_perturbation": 1e-08,
+    "near_zero_threshold": 1e-12,
+    "bootstrap_repetitions": 500,
+    "bootstrap_seed": 20260901,
+    "success_mean_order": 0.8,
+    "success_q05_order": 0.5,
+    "phase_heatmap_k_values": [
+      0.4,
+      0.65
+    ],
+    "save_figures": true
+  },
+  "controls": [
+    "K=0",
+    "uniform_positive",
+    "global versus local initialization",
+    "same E|eps| with different E eps",
+    "multiple N and matrix/initial-condition seeds"
+  ],
+  "success_criteria": [
+    "P1でTM秩序曲線に明確なクロスオーバーが現れる。",
+    "対称・対角0・seed再現性・TM単位円の回帰テストが通る。",
+    "R=0.5補間と最大勾配の二つの経験的閾値をseed bootstrap区間付きで保存する。",
+    "非有限値をclipせず発生率として保存する。"
+  ],
+  "falsification_criteria": [
+    "一様正結合のlocal条件でもKc近傍に秩序変数の変化がない。",
+    "E|eps|を合わせても符号付き結合が同じ曲線を示さない場合、H2を支持しない。",
+    "K=0のTM秩序がN^-1/2スケールから系統的に外れる場合、H4を再検討する。"
+  ]
+}

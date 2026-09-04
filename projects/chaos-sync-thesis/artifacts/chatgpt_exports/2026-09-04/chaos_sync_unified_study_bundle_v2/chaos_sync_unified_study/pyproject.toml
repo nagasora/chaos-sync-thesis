@@ -1,0 +1,11 @@
+[project]
+name = "chaos-sync-unified-study"
+version = "0.1.0"
+description = "Unified E-series experiment suite for chaos synchronization and information retention"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pandas", "scipy", "scikit-learn", "matplotlib", "reportlab"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

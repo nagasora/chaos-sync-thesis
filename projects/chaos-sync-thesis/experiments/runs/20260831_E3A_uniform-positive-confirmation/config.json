@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "experiment_id": "20260831_E3A_uniform-positive-confirmation",
+  "title": "一様正結合における同期臨界値の10-seed確認",
+  "stage": "E3A",
+  "created_at": "2026-08-31T15:37:22+09:00",
+  "status": "planned",
+  "hypotheses": {
+    "H1": "一様正結合のlocal初期化では、持続同期成功率が0.5となる結合強度が理論値Kc=0.5の±0.05以内に現れる。"
+  },
+  "parent_experiment_ids": ["20260830_E3A_finite-size-sync-transition"],
+  "simulation": {
+    "alpha": 0.25,
+    "node_counts": [64, 128, 256, 512],
+    "matrix_seeds": [20260910, 20260911, 20260912, 20260913, 20260914, 20260915, 20260916, 20260917, 20260918, 20260919],
+    "coupling_distributions": ["uniform_positive"],
+    "k_values": [0.0, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.6],
+    "burn_in": 1000,
+    "evaluation_steps": 1000,
+    "local_growth_steps": 30,
+    "local_perturbation": 1e-08,
+    "near_zero_threshold": 1e-12,
+    "bootstrap_repetitions": 2000,
+    "bootstrap_seed": 20260920,
+    "success_mean_order": 0.8,
+    "success_q05_order": 0.5,
+    "phase_heatmap_k_values": [0.475, 0.525],
+    "save_figures": true,
+    "theory_kc_tolerance": 0.05
+  },
+  "controls": [
+    "K=0",
+    "global versus local initialization",
+    "N=64, 128, 256, 512",
+    "10 independent matrix and initial-condition seeds",
+    "pilotと同一の写像・秩序変数・持続同期判定"
+  ],
+  "success_criteria": [
+    "最大Nのlocal条件で持続同期K50が有限値として得られる。",
+    "持続同期K50が理論値Kc=0.5の±0.05以内に入る。",
+    "seed bootstrap 95%区間と全runの非有限値発生率を保存する。"
+  ],
+  "falsification_criteria": [
+    "最大Nのlocal条件で持続同期K50を観測できない。",
+    "持続同期K50が事前許容幅0.05を超えて理論値Kc=0.5から外れる。",
+    "有限サイズを増やしても閾値推定が収束せず、bootstrap区間が系統的に広い。"
+  ]
+}

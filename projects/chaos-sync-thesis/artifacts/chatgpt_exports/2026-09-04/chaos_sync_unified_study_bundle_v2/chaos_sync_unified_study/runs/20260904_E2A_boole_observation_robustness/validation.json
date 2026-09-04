@@ -1,0 +1,7 @@
+{
+  "mixing_matrix_invertible": true,
+  "train_test_alpha_disjoint": true,
+  "matched_feature_dimension": true,
+  "all_metrics_finite": true,
+  "noise_degrades_oracle_tm": true
+}

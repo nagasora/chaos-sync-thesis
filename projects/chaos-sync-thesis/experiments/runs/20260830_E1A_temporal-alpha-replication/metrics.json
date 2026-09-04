@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "primary": {
+    "success": false,
+    "tm_delay_test_rmse": 0.002096141582799823,
+    "best_baseline_name": "fourier_bands",
+    "best_baseline_test_rmse": 0.0023558115284938222,
+    "baseline_minus_tm_ci_95": [
+      -2.3386435860683587e-05,
+      0.0005612665938632742
+    ]
+  },
+  "secondary": {
+    "tm_no_delay_test_rmse": 0.09029062696921422,
+    "shuffled_tm_delay_test_rmse": 0.09922815752732933,
+    "summary_artifact": "artifacts/summary.json",
+    "per_feature_artifact": "artifacts/per_feature_metrics.csv"
+  },
+  "per_seed_artifact": "artifacts/test_predictions.csv",
+  "notes": [
+    "本pilotは単一源のalpha回収だけを扱い、2源分離と識別不能対照は未実行である。",
+    "軌道ごとのロバスト標準化は周辺尺度差を抑えるが、有限標本の尺度推定誤差を完全には消さない。",
+    "bootstrapはtest seedをクラスタとして再標本化した工学的区間で、理論的保証ではない。",
+    "test alphaは学習範囲内の未使用補間点であり、範囲外外挿は検証していない。"
+  ]
+}

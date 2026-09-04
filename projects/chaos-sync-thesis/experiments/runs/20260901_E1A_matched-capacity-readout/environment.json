@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-01T01:03:58.367787+09:00",
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\長松　蒼空\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "dependencies": [
+    "numpy==1.26.2",
+    "matplotlib==3.9.1"
+  ],
+  "execution_command": "python e1a_matched_capacity_readout.py --run-directory .",
+  "notes": [
+    "実行時に依存パッケージと実コマンドを追記する。"
+  ],
+  "reuse_command": "python e1a_matched_capacity_readout.py --run-directory . --reuse-features artifacts/features.npz",
+  "reused_feature_store": "C:\\研究\\projects\\chaos-sync-thesis\\experiments\\runs\\20260901_E1A_matched-capacity-readout\\artifacts\\features.npz",
+  "code_sha256": {
+    "e1a_matched_capacity_readout.py": "2798ea24147bcb451067fb4af0139c6643d98750d31642499b2c5a9fa15f733c",
+    "validate_results.py": "f06ba8389a38a01b2727423da23e1bf776b5e4a3959f85c925c79d4fd94a60f0",
+    "e1a_temporal_alpha_readout.py": "187ded094586225199fb01d3298be55d747ad4e6f6ebd4fda95b7b6c030bb1e8"
+  },
+  "data_provenance": {
+    "generator": "F_alpha(x)=alpha*(x-1/x)",
+    "trajectory_identifiers": "artifacts/trajectory_manifest.csv",
+    "model_input_store": "artifacts/features.npz"
+  },
+  "artifact_sha256": {
+    "features.npz": "4fc3e3b585082ebcb7b4f3f7295c92d6feaa71bf8134fb0a26cfa9178688c686",
+    "trajectory_manifest.csv": "12abdbaebb6df38dcb346ec08988e1e8c8eb1c60176be098c3cb31878bf327e5",
+    "fold_assignments.csv": "17b70e1021812848aa412b6791f75efadf5c997bf73c16786920bb184579021b",
+    "candidate_cv_metrics.csv": "89266238d7f802c36787ddb3d8bdb7e186f6d034732b62be26683e57dd640019",
+    "model_penalty_cv_metrics.csv": "c9240a05ec7fa36d3969df1185c0d88d63634aec462352ecd9f61f4087fbb749",
+    "model_metrics.csv": "a113144d55b049894941d7e0b34fef32d768c435fb5e789e546da404d99a9b76",
+    "test_predictions.csv": "9fe8876937f7b5480cee0efd7b2e369d1beed61ba9303ced5ae19edbad59ff50",
+    "alpha_metrics.csv": "d0d6597216e0ba8a088715365c64b103f46574eccf82fdd39b1f3bdd2d8cca92",
+    "seed_metrics.csv": "dfffb81cc31818281967df87083353d1adc5618a428b8f68b4192fd2ae307a3e",
+    "bootstrap_differences.csv": "7d8b07efc814ff5eb36ac25924ca0685e568032c608ad60aad1a9efba723fb45",
+    "matched_capacity_results.png": "28e691a5fad3b9b6c6cbb0f6190fc459ca610f2e43f8cd11fe4574ee9c6d16d4",
+    "tm_candidate_selection.png": "6075cd492853fbca7bc8c4694f9cb7a548ebb8fe13557cf88d66593577e983df"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "check_count": 19,
+  "failed_check_count": 0,
+  "checks": [
+    {
+      "name": "completed_status",
+      "passed": true,
+      "detail": "statuses=('completed', 'completed', 'completed')"
+    },
+    {
+      "name": "seed_split_disjoint",
+      "passed": true,
+      "detail": "fit=28, test=48, parent_overlap=0"
+    },
+    {
+      "name": "feature_store_row_grain",
+      "passed": true,
+      "detail": "fit=140, test=192"
+    },
+    {
+      "name": "feature_store_dimensions",
+      "passed": true,
+      "detail": "dimensions={'fourier_16': 16, 'tm_full_80': 80, 'tm_instant_16': 16, 'tm16_short_lag_orders': 16, 'tm16_low_order_multiscale': 16, 'tm16_order1_long_lags': 16, 'tm16_delay_only_orders': 16}"
+    },
+    {
+      "name": "trajectory_manifest",
+      "passed": true,
+      "detail": "rows=332"
+    },
+    {
+      "name": "grouped_fold_assignment",
+      "passed": true,
+      "detail": "fold_counts={0: 7, 2: 7, 3: 7, 1: 7}"
+    },
+    {
+      "name": "tm_candidate_selection",
+      "passed": true,
+      "detail": "selected=short_lag_orders, cv_rmse=0.0018259833278783792"
+    },
+    {
+      "name": "matched_feature_dimensions",
+      "passed": true,
+      "detail": "dimensions={'tm_selected_16': '16', 'fourier_16': '16', 'tm_full_80': '80', 'tm_instant_16': '16'}"
+    },
+    {
+      "name": "model_penalty_selection",
+      "passed": true,
+      "detail": "selected_models=['fourier_16', 'tm_full_80', 'tm_instant_16']"
+    },
+    {
+      "name": "test_rmse_recomputation",
+      "passed": true,
+      "detail": "rmse={'tm_selected_16': 0.0013424366436820892, 'fourier_16': 0.002614089997720455, 'tm_full_80': 0.0013175256595460646, 'tm_instant_16': 0.09465949355470438}"
+    },
+    {
+      "name": "summary_model_metrics",
+      "passed": true,
+      "detail": "models=['fourier_16', 'tm_full_80', 'tm_instant_16', 'tm_selected_16']"
+    },
+    {
+      "name": "bootstrap_recomputation",
+      "passed": true,
+      "detail": "difference=0.0012716533540383657, ci=[0.0009851505463246988, 0.001559634505576595]"
+    },
+    {
+      "name": "success_gate",
+      "passed": true,
+      "detail": "expected=True, recorded=True"
+    },
+    {
+      "name": "alpha_metrics_recomputation",
+      "passed": true,
+      "detail": "rows=16"
+    },
+    {
+      "name": "seed_metrics_recomputation",
+      "passed": true,
+      "detail": "seeds=48"
+    },
+    {
+      "name": "plot_artifacts",
+      "passed": true,
+      "detail": "sizes={'matched_capacity_results.png': 122195, 'tm_candidate_selection.png': 63924}"
+    },
+    {
+      "name": "code_sha256",
+      "passed": true,
+      "detail": "files=['e1a_matched_capacity_readout.py', 'e1a_temporal_alpha_readout.py', 'validate_results.py']"
+    },
+    {
+      "name": "artifact_sha256",
+      "passed": true,
+      "detail": "files=['alpha_metrics.csv', 'bootstrap_differences.csv', 'candidate_cv_metrics.csv', 'features.npz', 'fold_assignments.csv', 'matched_capacity_results.png', 'model_metrics.csv', 'model_penalty_cv_metrics.csv', 'seed_metrics.csv', 'test_predictions.csv', 'tm_candidate_selection.png', 'trajectory_manifest.csv']"
+    },
+    {
+      "name": "environment_record",
+      "passed": true,
+      "detail": "dependencies=['numpy==1.26.2', 'matplotlib==3.9.1']"
+    }
+  ],
+  "failed_checks": []
+}

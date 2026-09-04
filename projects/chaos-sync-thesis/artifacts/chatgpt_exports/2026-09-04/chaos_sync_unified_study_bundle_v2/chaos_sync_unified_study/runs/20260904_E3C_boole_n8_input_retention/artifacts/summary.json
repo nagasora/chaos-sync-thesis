@@ -1,0 +1,66 @@
+{
+  "experiment_id": "E3C-BOOLE-N8-INPUT-RETENTION",
+  "status": "completed",
+  "config": {
+    "alpha": 0.5,
+    "n_nodes": 8,
+    "couplings": [
+      0.0,
+      0.3,
+      0.45,
+      0.5,
+      0.52,
+      0.6,
+      0.8,
+      0.95
+    ],
+    "n_seed_groups": 360,
+    "n_steps": 80,
+    "late_window": 24,
+    "input_amplitude": 0.02,
+    "nuisance_amplitude": 0.002,
+    "train_fraction": 0.7,
+    "seed": 20260904
+  },
+  "theoretical_lambda_parallel": 0.6931471805599454,
+  "theoretical_output_mixing_critical_coupling": 0.5,
+  "integrity_checks": {
+    "paired_labels_per_group": true,
+    "group_split_disjoint": true,
+    "all_metrics_finite": true,
+    "critical_value_in_grid_neighborhood": true
+  },
+  "scientific_gates": {
+    "postcritical_tm_above_0_65": false,
+    "postcritical_sync_below_uncoupled": true,
+    "deep_sync_information_loss": true
+  },
+  "best_postcritical_tm": {
+    "coupling": 0.52,
+    "feature": "tm_graph_late",
+    "feature_dim": 32,
+    "cv_balanced_accuracy": 0.5716205837173579,
+    "selected_c": 10.0,
+    "test_accuracy": 0.591743119266055,
+    "test_balanced_accuracy": 0.591743119266055,
+    "median_sync_rms": 0.006210325855782429,
+    "p90_sync_rms": 0.2727153668451235,
+    "effective_rank": 7.842548775154761
+  },
+  "deepest_coupling_tm": {
+    "coupling": 0.95,
+    "feature": "tm_graph_late",
+    "feature_dim": 32,
+    "cv_balanced_accuracy": 0.5517153097798259,
+    "selected_c": 10.0,
+    "test_accuracy": 0.536697247706422,
+    "test_balanced_accuracy": 0.536697247706422,
+    "median_sync_rms": 0.0,
+    "p90_sync_rms": 0.0,
+    "effective_rank": 7.617910763280968
+  },
+  "interpretation": {
+    "main": "同期臨界直後の有限時間窓で、横方向冗長性の縮約と入力符号の線形読み出しを同時に評価した。",
+    "caution": "入力は二群コントラスト方向の微小摂動であり、一般画像・長期記憶へ直ちに一般化しない。"
+  }
+}

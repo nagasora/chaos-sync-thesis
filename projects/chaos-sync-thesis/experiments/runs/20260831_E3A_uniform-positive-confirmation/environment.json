@@ -1,0 +1,18 @@
+{
+  "executed_at": "2026-08-31T15:46:29+09:00",
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\長松　蒼空\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "dependencies": [
+    "numpy==1.26.2"
+  ],
+  "execution_command": "python e3a_finite_size_sync.py --run-directory . --config config.json",
+  "script_sha256": "1a86e2aa1fa8c82c77b2f2cac00ae540ff971ea8dbf21690f98a2e3a6782b1ad",
+  "config_sha256": "83b924d59ddaae1baab42041357c5acb7e7fd0050d699da7ba2fe4c561040724",
+  "git_commit": "0de2c10c5f3617b922e7e5e58c9dda0df560144f",
+  "git_worktree_dirty": true,
+  "postprocessed_at": "2026-08-31T15:53:42+09:00",
+  "postprocessing_command": "python e3a_finite_size_sync.py --run-directory . --config config.json --assessment-scope confirmation --reassess-existing",
+  "postprocessor_script_sha256": "6c0b6d65ef283d687e4d17cf6e2c2c9bb79b5a86e9bba51a2bab7e46ef0588f4",
+  "postprocessed_metrics_sha256": "bb9d711478e1006798fc69cbf5cebb58248e40bd6439abf75d565fbfac563993"
+}

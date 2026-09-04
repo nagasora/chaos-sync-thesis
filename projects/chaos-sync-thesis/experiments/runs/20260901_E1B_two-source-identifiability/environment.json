@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-01T01:39:28.879462+09:00",
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\長松　蒼空\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "dependencies": [
+    "numpy==1.26.2",
+    "matplotlib==3.9.1"
+  ],
+  "execution_command": "python e1b_two_source_identifiability.py --run-directory .",
+  "notes": [
+    "実行時に依存パッケージと実コマンドを追記する。"
+  ],
+  "reuse_data_command": "python e1b_two_source_identifiability.py --run-directory . --reuse-data artifacts/source_trajectories.npz",
+  "reuse_features_command": "python e1b_two_source_identifiability.py --run-directory . --reuse-features artifacts/features.npz",
+  "reused_data_store": null,
+  "reused_feature_store": null,
+  "code_sha256": {
+    "e1b_two_source_identifiability.py": "44a61bfd243301a29919fb656f4c83f8b110bc622668a3a04c318b41be21f996",
+    "validate_results.py": "a454b735a6f7de6e2a74b32707606037c56f300ee08a4f5fead90fc2a2c61a96",
+    "e1a_matched_capacity_readout.py": "2798ea24147bcb451067fb4af0139c6643d98750d31642499b2c5a9fa15f733c",
+    "e1a_temporal_alpha_readout.py": "187ded094586225199fb01d3298be55d747ad4e6f6ebd4fda95b7b6c030bb1e8"
+  },
+  "data_provenance": {
+    "generator": "F_alpha(x)=alpha*(x-1/x)",
+    "source_data": "artifacts/source_trajectories.npz",
+    "source_identifiers": "artifacts/source_trajectory_manifest.csv",
+    "model_input_store": "artifacts/features.npz",
+    "observation_rule": {
+      "full_rank": [
+        [
+          1.0,
+          0.35
+        ],
+        [
+          0.25,
+          1.0
+        ]
+      ],
+      "rank_one": [
+        0.7071067811865475,
+        0.7071067811865475
+      ]
+    }
+  },
+  "artifact_sha256": {
+    "source_trajectories.npz": "a346b70e1659d6637c4b84fc2042520779cd1a4908c6bc2c021bc6f59ab81c63",
+    "features.npz": "8507bff52e231c7041d8ed10a659f6188f7f3e0c9c1a8928e4855f41b8211acd",
+    "source_trajectory_manifest.csv": "7d9549db0ca2ede990f969b81ae86a3d67cb55906ec13f569382ba3ae2cbc973",
+    "trajectory_manifest.csv": "e97e89c9e456534818ab1e4e7e2e15b9f149db9de96ec42d096996d18bd64442",
+    "fold_assignments.csv": "483c2a626ca47a1c5b92b1e3f6658b3750215d22e540be17301db7ab7ed5c63c",
+    "model_cv_metrics.csv": "1b095d1d5eee91a02569d8cbea3e2c700ebaf07df8c4bd3d18b894e881defa64",
+    "model_metrics.csv": "ea24d4d26047e63d5ca0e8a81248bcfae546b97a114c6c3a72b530d4ea144547",
+    "test_predictions.csv": "bddad52433634e362c2408b309a89b3548ecca89bd1f204e651377154d156acf",
+    "pair_metrics.csv": "085797905fcd6f389cfa958240ff734b48106aa3bb47f756c580dc965ca16cb6",
+    "seed_metrics.csv": "ce2b1bce2d2d679e8fca89fc8541b8080ab9da3aade86943d6fdb3bad58a16a4",
+    "collision_diagnostics.csv": "c69f135f7d51aa9a4a77a8ffdb0a98603ce2c8ab220126d8a6e510b79f64a8f5",
+    "identifiability_results.png": "858a6013db32f1bb6d3e14803362dd81f0f828408578ddade8f01f33ff66378f",
+    "prediction_scatter.png": "e27658e61552d58800671efc62e3fed80978f4753d7f6e2e19b137452cd3f577",
+    "summary.json": "17c21a83323a3f00813278b6f45695957be78c8c75c1306be41fc888be1fb0fa"
+  }
+}

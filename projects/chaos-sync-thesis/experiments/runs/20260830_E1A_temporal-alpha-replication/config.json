@@ -1,0 +1,205 @@
+{
+  "schema_version": 2,
+  "experiment_id": "20260830_E1A_temporal-alpha-replication",
+  "title": "TM時間遅延alpha回収の独立seed精度追試",
+  "stage": "E1A",
+  "created_at": "2026-08-30T14:33:32.068699+09:00",
+  "status": "completed",
+  "hypothesis": "pilotと同じTM時間遅延特徴のFourier baselineに対する小さなRMSE改善が再現するなら、独立test seedを48へ増やしたseed-cluster bootstrapでも差の95%区間下限が正になる。",
+  "data": {
+    "source": "generalized_boole_map",
+    "provenance": "exact_pilot_pipeline_with_new_test_seeds_only",
+    "train_alphas": [
+      0.34,
+      0.42,
+      0.5,
+      0.58,
+      0.66
+    ],
+    "test_alphas": [
+      0.38,
+      0.46,
+      0.54,
+      0.62
+    ],
+    "burn_in": 2048,
+    "observation_length": 4096,
+    "split_unit": "trajectory_seed_and_held_out_interpolation_alpha"
+  },
+  "seeds": [
+    20260830,
+    20261830,
+    20263830
+  ],
+  "feature_shuffle_seed": 20260830,
+  "features": [
+    "unchanged_from_20260830_E1A_temporal-alpha-readout"
+  ],
+  "baselines": [
+    "unchanged_from_20260830_E1A_temporal-alpha-readout"
+  ],
+  "training": {
+    "regime": "readout_only",
+    "trainable_parameters": [
+      "ridge_probe_weights",
+      "ridge_probe_intercept"
+    ],
+    "frozen_parameters": [
+      "pilot_pipeline",
+      "train_seeds",
+      "validation_seeds",
+      "alpha_sets",
+      "feature_definitions",
+      "ridge_penalty_grid"
+    ],
+    "state_time_index": "t",
+    "learning_time_index": "n",
+    "update_schedule": "after_fixed_trajectory_generation",
+    "optimizer": "same_closed_form_ridge_and_validation_selection_as_pilot",
+    "loss_terms": [
+      "alpha_recovery_squared_error"
+    ],
+    "coupling_constraints": [
+      "no_synchronization_coupling_in_E1A"
+    ],
+    "freeze_all_parameters_for_test": true
+  },
+  "metrics": {
+    "primary": [
+      "held_out_alpha_test_RMSE",
+      "paired_seed_bootstrap_RMSE_difference"
+    ],
+    "secondary": [
+      "per_alpha_RMSE",
+      "seed_win_count"
+    ]
+  },
+  "success_criteria": [
+    "baseline_minus_tm_test_RMSE_bootstrap_CI_95_lower_is_positive"
+  ],
+  "falsification_criteria": [
+    "confidence_interval_still_includes_zero",
+    "point_estimate_reverses_in_favor_of_fourier"
+  ],
+  "parent_experiment_ids": [
+    "20260830_E1A_temporal-alpha-readout"
+  ],
+  "actual_run_config": {
+    "train_alphas": [
+      0.34,
+      0.42,
+      0.5,
+      0.58,
+      0.66
+    ],
+    "test_alphas": [
+      0.38,
+      0.46,
+      0.54,
+      0.62
+    ],
+    "train_seeds": [
+      20260830,
+      20260831,
+      20260832,
+      20260833,
+      20260834,
+      20260835,
+      20260836,
+      20260837,
+      20260838,
+      20260839,
+      20260840,
+      20260841,
+      20260842,
+      20260843,
+      20260844,
+      20260845,
+      20260846,
+      20260847,
+      20260848,
+      20260849
+    ],
+    "validation_seeds": [
+      20261830,
+      20261831,
+      20261832,
+      20261833,
+      20261834,
+      20261835,
+      20261836,
+      20261837
+    ],
+    "test_seeds": [
+      20263830,
+      20263831,
+      20263832,
+      20263833,
+      20263834,
+      20263835,
+      20263836,
+      20263837,
+      20263838,
+      20263839,
+      20263840,
+      20263841,
+      20263842,
+      20263843,
+      20263844,
+      20263845,
+      20263846,
+      20263847,
+      20263848,
+      20263849,
+      20263850,
+      20263851,
+      20263852,
+      20263853,
+      20263854,
+      20263855,
+      20263856,
+      20263857,
+      20263858,
+      20263859,
+      20263860,
+      20263861,
+      20263862,
+      20263863,
+      20263864,
+      20263865,
+      20263866,
+      20263867,
+      20263868,
+      20263869,
+      20263870,
+      20263871,
+      20263872,
+      20263873,
+      20263874,
+      20263875,
+      20263876,
+      20263877
+    ],
+    "burn_in": 2048,
+    "observation_length": 4096,
+    "tm_max_order": 8,
+    "delay_lags": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "raw_window_length": 64,
+    "fourier_band_count": 8,
+    "ridge_penalties": [
+      1e-06,
+      0.0001,
+      0.01,
+      1.0,
+      100.0
+    ],
+    "bootstrap_repetitions": 5000,
+    "bootstrap_seed": 20263830,
+    "feature_shuffle_seed": 20260830
+  }
+}

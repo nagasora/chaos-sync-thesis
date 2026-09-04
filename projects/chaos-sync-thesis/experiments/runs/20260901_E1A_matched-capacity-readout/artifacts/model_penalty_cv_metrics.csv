@@ -1,0 +1,16 @@
+﻿feature_name,feature_dimension,penalty,cv_rmse,selected,model
+fourier_16,16,1e-06,0.0030964296465744836,False,fourier_16
+fourier_16,16,0.0001,0.0030963468034090323,False,fourier_16
+fourier_16,16,0.01,0.0030895639376107027,True,fourier_16
+fourier_16,16,1.0,0.005292439211064647,False,fourier_16
+fourier_16,16,100.0,0.013890941925005564,False,fourier_16
+tm_full_80,80,1e-06,0.0017600400749833726,False,tm_full_80
+tm_full_80,80,0.0001,0.001759843307607525,True,tm_full_80
+tm_full_80,80,0.01,0.0017617888099334712,False,tm_full_80
+tm_full_80,80,1.0,0.009998712161816227,False,tm_full_80
+tm_full_80,80,100.0,0.05791243820208345,False,tm_full_80
+tm_instant_16,16,1e-06,0.12262137609488642,False,tm_instant_16
+tm_instant_16,16,0.0001,0.12262128836217302,False,tm_instant_16
+tm_instant_16,16,0.01,0.1226125268290689,False,tm_instant_16
+tm_instant_16,16,1.0,0.12183648360883505,False,tm_instant_16
+tm_instant_16,16,100.0,0.11377514289295101,True,tm_instant_16

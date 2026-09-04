@@ -1,0 +1,166 @@
+{
+  "experiment_id": "E2A-BOOLE-OBSERVATION-ROBUSTNESS",
+  "status": "completed",
+  "config": {
+    "burn_in": 1024,
+    "length": 1024,
+    "train_pair_seeds": [
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115
+    ],
+    "test_pair_seeds": [
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519,
+      520,
+      521,
+      522,
+      523
+    ],
+    "train_alphas": [
+      0.34,
+      0.42,
+      0.5,
+      0.58,
+      0.66
+    ],
+    "test_alphas": [
+      0.38,
+      0.46,
+      0.54,
+      0.62
+    ],
+    "noise_levels": [
+      0.0,
+      0.01,
+      0.03,
+      0.1,
+      0.3
+    ],
+    "missing_rates": [
+      0.0,
+      0.05,
+      0.1,
+      0.2,
+      0.4
+    ],
+    "observation_lengths": [
+      128,
+      256,
+      512,
+      1024
+    ],
+    "mixing_matrix": [
+      [
+        1.0,
+        0.35
+      ],
+      [
+        0.25,
+        1.0
+      ]
+    ],
+    "seed": 20260904
+  },
+  "integrity_checks": {
+    "mixing_matrix_invertible": true,
+    "train_test_alpha_disjoint": true,
+    "matched_feature_dimension": true,
+    "all_metrics_finite": true,
+    "noise_degrades_oracle_tm": true
+  },
+  "clean_test_rmse": {
+    "oracle_tm": 0.012895214587390083,
+    "oracle_fourier": 0.003806482622215137,
+    "direct_tm": 0.022999982370827666,
+    "direct_fourier": 0.05226562103110272
+  },
+  "high_noise_test_rmse": {
+    "oracle_tm": 0.12499862411177141,
+    "oracle_fourier": 0.004722956426214112,
+    "direct_tm": 0.04221112184879782,
+    "direct_fourier": 0.052214516999368736
+  },
+  "paired_comparisons": [
+    {
+      "condition_type": "gaussian_noise_sigma",
+      "condition_value": 0.1,
+      "difference_tm_minus_fourier": 0.019069665531337297,
+      "ci95_lower": 0.01772123834601624,
+      "ci95_upper": 0.02039007229402614
+    },
+    {
+      "condition_type": "missing_rate",
+      "condition_value": 0.2,
+      "difference_tm_minus_fourier": -0.3145064439230928,
+      "ci95_lower": -0.33390618400135996,
+      "ci95_upper": -0.2952833958906582
+    },
+    {
+      "condition_type": "observation_length",
+      "condition_value": 256.0,
+      "difference_tm_minus_fourier": 0.010276238229334805,
+      "ci95_lower": 0.006233396253014373,
+      "ci95_upper": 0.013753814625943503
+    }
+  ],
+  "interpretation": {
+    "best_clean_model": "oracle_fourier",
+    "best_clean_rmse": 0.003806482622215137,
+    "tm_fourier_ci_statements": [
+      {
+        "condition_type": "gaussian_noise_sigma",
+        "condition_value": 0.1,
+        "difference_tm_minus_fourier": 0.019069665531337297,
+        "ci95_lower": 0.01772123834601624,
+        "ci95_upper": 0.02039007229402614
+      },
+      {
+        "condition_type": "missing_rate",
+        "condition_value": 0.2,
+        "difference_tm_minus_fourier": -0.3145064439230928,
+        "ci95_lower": -0.33390618400135996,
+        "ci95_upper": -0.2952833958906582
+      },
+      {
+        "condition_type": "observation_length",
+        "condition_value": 256.0,
+        "difference_tm_minus_fourier": 0.010276238229334805,
+        "ci95_lower": 0.006233396253014373,
+        "ci95_upper": 0.013753814625943503
+      }
+    ],
+    "scope": "既知混合行列、補間 alpha、Gaussian 観測ノイズ、線形 ridge probe に限定する。"
+  }
+}

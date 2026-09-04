@@ -1,0 +1,9 @@
+{
+  "paired_labels_per_group": true,
+  "group_split_disjoint": true,
+  "all_metrics_finite": true,
+  "critical_value_in_grid_neighborhood": true,
+  "postcritical_tm_above_0_65": false,
+  "postcritical_sync_below_uncoupled": true,
+  "deep_sync_information_loss": true
+}

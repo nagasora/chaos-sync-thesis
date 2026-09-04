@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "status": "completed",
+  "primary": {
+    "hypothesis_assessment": {
+      "H1_theory_reproduction": {
+        "status": "pilot_supported",
+        "uniform_local_sustained_sync_k50_max_n": 0.4875,
+        "uniform_local_tm_r50_max_n": 0.24894600448281798,
+        "theory_kc": 0.5,
+        "predefined_tolerance": 0.1,
+        "comparison_metric": "sustained synchronization success rate = 0.5"
+      },
+      "H2_absolute_moment_universality": {
+        "status": "pilot_inconclusive",
+        "sustained_sync_k50_times_absolute_mean": {
+          "uniform_positive": 0.4875
+        },
+        "tm_r50_times_absolute_mean": {
+          "uniform_positive": 0.24894600448281798,
+          "positive_binary": 0.45810180934402045,
+          "biased_sign": 0.5650731728415054
+        },
+        "range_if_all_sustained_sync_observed": null,
+        "all_distributions_reached_sustained_sync_k50": false
+      },
+      "H3_signed_mean_consistency": {
+        "status": "pilot_supported",
+        "local_mean_order_at_max_k": {
+          "uniform_positive": 1.0,
+          "positive_binary": 0.8096208798110696,
+          "biased_sign": 0.5781727953092697,
+          "rademacher": 0.053187427764191574
+        },
+        "note": "符号付き平均による置換は独立な整合性proxyであり、論文の解析式ではない。"
+      },
+      "H4_tm_order_parameter": {
+        "status": "pilot_supported",
+        "median_k0_order_times_sqrt_n": 0.6913960536966677,
+        "maximum_tm_modulus_error": 4.440892098500626e-16
+      }
+    },
+    "all_conditions_finite": true
+  },
+  "secondary": {
+    "per_run_metrics": "artifacts/per_run_metrics.csv",
+    "coupling_statistics": "artifacts/coupling_statistics.csv",
+    "order_curves": "artifacts/order_curves.csv",
+    "thresholds": "artifacts/thresholds.csv",
+    "representative_tm_phases": "artifacts/representative_tm_phases.npz",
+    "figures": [
+      "artifacts/theory_phase_diagram.png",
+      "artifacts/tm_order_curves.png",
+      "artifacts/finite_size_thresholds.png",
+      "artifacts/row_sum_vs_sync_residual.png",
+      "artifacts/tm_phase_heatmaps.png"
+    ]
+  },
+  "notes": [
+    "pilotの3 seed bootstrap区間は不確実性の粗い可視化であり、本実験の10-20 seedを代替しない。",
+    "TM R=0.5は位相の部分凝集クロスオーバーであり、論文のlambda_c=0と同一視しない。理論Kcとのpilot比較には事前定義した持続同期成功率50%点を用いる。",
+    "持続同期K50も有限K格子とmean R>=0.8かつq05 R>=0.5の判定規則に依存する。",
+    "符号付き平均によるKc置換は同期多様体整合性のproxyであり、解析的に証明した式ではない。",
+    "globalとlocalの差は局所安定性と吸引域を分けて解釈する。"
+  ]
+}

@@ -1,0 +1,522 @@
+{
+  "e2": {
+    "experiment_id": "E2A-BOOLE-OBSERVATION-ROBUSTNESS",
+    "status": "completed",
+    "config": {
+      "burn_in": 1024,
+      "length": 1024,
+      "train_pair_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "test_pair_seeds": [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523
+      ],
+      "train_alphas": [
+        0.34,
+        0.42,
+        0.5,
+        0.58,
+        0.66
+      ],
+      "test_alphas": [
+        0.38,
+        0.46,
+        0.54,
+        0.62
+      ],
+      "noise_levels": [
+        0.0,
+        0.01,
+        0.03,
+        0.1,
+        0.3
+      ],
+      "missing_rates": [
+        0.0,
+        0.05,
+        0.1,
+        0.2,
+        0.4
+      ],
+      "observation_lengths": [
+        128,
+        256,
+        512,
+        1024
+      ],
+      "mixing_matrix": [
+        [
+          1.0,
+          0.35
+        ],
+        [
+          0.25,
+          1.0
+        ]
+      ],
+      "seed": 20260904
+    },
+    "integrity_checks": {
+      "mixing_matrix_invertible": true,
+      "train_test_alpha_disjoint": true,
+      "matched_feature_dimension": true,
+      "all_metrics_finite": true,
+      "noise_degrades_oracle_tm": true
+    },
+    "clean_test_rmse": {
+      "oracle_tm": 0.012895214587390083,
+      "oracle_fourier": 0.003806482622215137,
+      "direct_tm": 0.022999982370827666,
+      "direct_fourier": 0.05226562103110272
+    },
+    "high_noise_test_rmse": {
+      "oracle_tm": 0.12499862411177141,
+      "oracle_fourier": 0.004722956426214112,
+      "direct_tm": 0.04221112184879782,
+      "direct_fourier": 0.052214516999368736
+    },
+    "paired_comparisons": [
+      {
+        "condition_type": "gaussian_noise_sigma",
+        "condition_value": 0.1,
+        "difference_tm_minus_fourier": 0.019069665531337297,
+        "ci95_lower": 0.01772123834601624,
+        "ci95_upper": 0.02039007229402614
+      },
+      {
+        "condition_type": "missing_rate",
+        "condition_value": 0.2,
+        "difference_tm_minus_fourier": -0.3145064439230928,
+        "ci95_lower": -0.33390618400135996,
+        "ci95_upper": -0.2952833958906582
+      },
+      {
+        "condition_type": "observation_length",
+        "condition_value": 256.0,
+        "difference_tm_minus_fourier": 0.010276238229334805,
+        "ci95_lower": 0.006233396253014373,
+        "ci95_upper": 0.013753814625943503
+      }
+    ],
+    "interpretation": {
+      "best_clean_model": "oracle_fourier",
+      "best_clean_rmse": 0.003806482622215137,
+      "tm_fourier_ci_statements": [
+        {
+          "condition_type": "gaussian_noise_sigma",
+          "condition_value": 0.1,
+          "difference_tm_minus_fourier": 0.019069665531337297,
+          "ci95_lower": 0.01772123834601624,
+          "ci95_upper": 0.02039007229402614
+        },
+        {
+          "condition_type": "missing_rate",
+          "condition_value": 0.2,
+          "difference_tm_minus_fourier": -0.3145064439230928,
+          "ci95_lower": -0.33390618400135996,
+          "ci95_upper": -0.2952833958906582
+        },
+        {
+          "condition_type": "observation_length",
+          "condition_value": 256.0,
+          "difference_tm_minus_fourier": 0.010276238229334805,
+          "ci95_lower": 0.006233396253014373,
+          "ci95_upper": 0.013753814625943503
+        }
+      ],
+      "scope": "既知混合行列、補間 alpha、Gaussian 観測ノイズ、線形 ridge probe に限定する。"
+    }
+  },
+  "e3b": {
+    "experiment_id": "E3B-TANGENT-TWO-NODE-BASIN",
+    "status": "completed",
+    "config": {
+      "betas": [
+        1.05,
+        1.1,
+        1.2,
+        1.3
+      ],
+      "output_couplings": [
+        0.0,
+        0.025,
+        0.05,
+        0.07500000000000001,
+        0.1,
+        0.125,
+        0.15000000000000002,
+        0.17500000000000002,
+        0.2,
+        0.225,
+        0.25,
+        0.275,
+        0.30000000000000004,
+        0.325,
+        0.35000000000000003,
+        0.375,
+        0.4,
+        0.42500000000000004,
+        0.45,
+        0.47500000000000003,
+        0.5
+      ],
+      "diffusive_couplings": [
+        0.0,
+        0.05,
+        0.1,
+        0.15000000000000002,
+        0.2,
+        0.25,
+        0.30000000000000004,
+        0.35000000000000003,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6000000000000001,
+        0.65,
+        0.7000000000000001,
+        0.75,
+        0.8,
+        0.8500000000000001,
+        0.9,
+        0.9500000000000001,
+        1.0
+      ],
+      "n_initial_pairs": 256,
+      "n_steps": 500,
+      "sustain": 50,
+      "tolerance": 1e-08,
+      "derivative_burn_in": 5000,
+      "derivative_length": 40000,
+      "seed": 20260904
+    },
+    "integrity_checks": {
+      "output_half_exact_sync": true,
+      "parallel_chaos_positive": true,
+      "metrics_finite_except_expected_minus_inf": true,
+      "both_coupling_forms_present": true
+    },
+    "fraction_of_locally_stable_grid_with_basin_below_0_9": 0.546875,
+    "worst_local_global_gap": {
+      "beta": 1.3,
+      "coupling_form": "state_diffusive",
+      "coupling": 0.65,
+      "lambda_parallel": 1.3709468261828823,
+      "lambda_perp_local": -0.3375295319388113,
+      "local_stable": true,
+      "basin_success_rate": 0.0234375,
+      "divergence_rate": 0.9765625,
+      "median_final_error": 0.0,
+      "p90_final_error": 0.0,
+      "stability_basin_gap": 0.9765625
+    },
+    "interpretation": {
+      "main": "局所横 Lyapunov 指数が負であることと、有限差初期値から高確率で同期することは同値ではない。",
+      "positive_control": "output-cross coupling=0.5 は1ステップで厳密同期する正対照である。",
+      "scope": "Cauchy 初期値、float64、有限500ステップ、指定閾値に限定する。"
+    }
+  },
+  "e3c": {
+    "experiment_id": "E3C-BOOLE-N8-INPUT-RETENTION",
+    "status": "completed",
+    "config": {
+      "alpha": 0.5,
+      "n_nodes": 8,
+      "couplings": [
+        0.0,
+        0.3,
+        0.45,
+        0.5,
+        0.52,
+        0.6,
+        0.8,
+        0.95
+      ],
+      "n_seed_groups": 360,
+      "n_steps": 80,
+      "late_window": 24,
+      "input_amplitude": 0.02,
+      "nuisance_amplitude": 0.002,
+      "train_fraction": 0.7,
+      "seed": 20260904
+    },
+    "theoretical_lambda_parallel": 0.6931471805599454,
+    "theoretical_output_mixing_critical_coupling": 0.5,
+    "integrity_checks": {
+      "paired_labels_per_group": true,
+      "group_split_disjoint": true,
+      "all_metrics_finite": true,
+      "critical_value_in_grid_neighborhood": true
+    },
+    "scientific_gates": {
+      "postcritical_tm_above_0_65": false,
+      "postcritical_sync_below_uncoupled": true,
+      "deep_sync_information_loss": true
+    },
+    "best_postcritical_tm": {
+      "coupling": 0.52,
+      "feature": "tm_graph_late",
+      "feature_dim": 32,
+      "cv_balanced_accuracy": 0.5716205837173579,
+      "selected_c": 10.0,
+      "test_accuracy": 0.591743119266055,
+      "test_balanced_accuracy": 0.591743119266055,
+      "median_sync_rms": 0.006210325855782429,
+      "p90_sync_rms": 0.2727153668451235,
+      "effective_rank": 7.842548775154761
+    },
+    "deepest_coupling_tm": {
+      "coupling": 0.95,
+      "feature": "tm_graph_late",
+      "feature_dim": 32,
+      "cv_balanced_accuracy": 0.5517153097798259,
+      "selected_c": 10.0,
+      "test_accuracy": 0.536697247706422,
+      "test_balanced_accuracy": 0.536697247706422,
+      "median_sync_rms": 0.0,
+      "p90_sync_rms": 0.0,
+      "effective_rank": 7.617910763280968
+    },
+    "interpretation": {
+      "main": "同期臨界直後の有限時間窓で、横方向冗長性の縮約と入力符号の線形読み出しを同時に評価した。",
+      "caution": "入力は二群コントラスト方向の微小摂動であり、一般画像・長期記憶へ直ちに一般化しない。"
+    }
+  },
+  "e4": {
+    "experiment_id": "E4A-BOOLE-SYNTHETIC-SIGNAL-RECONSTRUCTION",
+    "status": "completed",
+    "config": {
+      "alpha": 0.5,
+      "n_nodes": 8,
+      "length": 64,
+      "n_samples": 720,
+      "washout": 16,
+      "coupling_grid": [
+        0.3,
+        0.48,
+        0.52,
+        0.65,
+        0.85
+      ],
+      "input_gain_grid": [
+        0.02,
+        0.05,
+        0.1,
+        0.2
+      ],
+      "dimensions": [
+        4,
+        8,
+        16,
+        32
+      ],
+      "seed": 20260904
+    },
+    "selected_coupling": 0.85,
+    "selected_input_gain": 0.2,
+    "selected_validation_nmse": 1.029532787895036,
+    "integrity_checks": {
+      "split_disjoint": true,
+      "selected_only_on_validation": true,
+      "all_metrics_finite": true,
+      "all_representations_present": true
+    },
+    "scientific_gates": {
+      "tm_beats_raw_dct_d16": true,
+      "terminal_comparison_dimension": 8,
+      "tm_beats_terminal_common_dimension": true,
+      "tm_beats_terminal_d16": true,
+      "tm_matches_input_pca_within_25pct": false
+    },
+    "d16_metrics": [
+      {
+        "representation": "tm_spectrum",
+        "dimension": 16,
+        "alpha": 100.0,
+        "validation_nmse": 1.021200591337863,
+        "test_nmse": 1.0170265776341327,
+        "test_rmse": 0.6608310552401346,
+        "coupling": 0.85,
+        "input_gain": 0.2,
+        "median_sync_rms": 0.0
+      },
+      {
+        "representation": "raw_mean_dct",
+        "dimension": 16,
+        "alpha": 100.0,
+        "validation_nmse": 1.0226511765888138,
+        "test_nmse": 1.0204351789479724,
+        "test_rmse": 0.6619375284960572,
+        "coupling": 0.85,
+        "input_gain": 0.2,
+        "median_sync_rms": 0.0
+      },
+      {
+        "representation": "reservoir_flat",
+        "dimension": 16,
+        "alpha": 100.0,
+        "validation_nmse": 1.0407229806070577,
+        "test_nmse": 1.0147150212016616,
+        "test_rmse": 0.6600796406395757,
+        "coupling": 0.85,
+        "input_gain": 0.2,
+        "median_sync_rms": 0.0
+      },
+      {
+        "representation": "input_oracle",
+        "dimension": 16,
+        "alpha": 1e-05,
+        "validation_nmse": 0.004696667691397023,
+        "test_nmse": 0.006605797889707458,
+        "test_rmse": 0.05325825514468773,
+        "coupling": 0.85,
+        "input_gain": 0.2,
+        "median_sync_rms": 0.0
+      }
+    ],
+    "interpretation": {
+      "main": "入力波形64点を潜在4/8/16/32次元へ落とし、同一ridge decoderで rate–distortion を比較した。",
+      "caution": "入力PCAは力学系を通さないoracle線形圧縮であり、提案法の比較上限として扱う。"
+    }
+  },
+  "e5": {
+    "experiment_id": "E5A-BOOLE-SMALL-IMAGE-DIGITS",
+    "status": "pilot_completed",
+    "config": {
+      "alpha": 0.5,
+      "n_nodes": 8,
+      "washout": 16,
+      "dimensions": [
+        8,
+        16,
+        32
+      ],
+      "seed": 20260904
+    },
+    "transferred_coupling": 0.85,
+    "transferred_input_gain": 0.2,
+    "integrity_checks": {
+      "split_disjoint": true,
+      "e4_dynamics_frozen": true,
+      "all_metrics_finite": true,
+      "digits_shape_8x8": true
+    },
+    "scientific_gates": {
+      "terminal_comparison_dimension": 8,
+      "tm_beats_terminal_reconstruction_common_dimension": false,
+      "tm_beats_terminal_reconstruction_d16": false,
+      "tm_beats_raw_dct_reconstruction_d16": true,
+      "tm_classification_above_0_70_d16": false,
+      "tm_matches_input_pca_ssim_within_0_10": false
+    },
+    "d16_metrics": [
+      {
+        "representation": "tm_spectrum",
+        "dimension": 16,
+        "alpha": 100.0,
+        "validation_nmse": 1.0175972238425712,
+        "test_nmse": 1.012963053925703,
+        "test_rmse": 0.27464115235513675,
+        "test_psnr": 11.224706357511307,
+        "test_ssim": 0.5717575431117367,
+        "classification_accuracy": 0.10277777777777777,
+        "classification_balanced_accuracy": 0.10205276705276707,
+        "classification_c": 0.1,
+        "coupling": 0.85,
+        "input_gain": 0.2,
+        "median_sync_rms": 0.0
+      },
+      {
+        "representation": "raw_mean_dct",
+        "dimension": 16,
+        "alpha": 100.0,
+        "validation_nmse": 1.0575647597054572,
+        "test_nmse": 1.017459330842303,
+        "test_rmse": 0.2752500074332906,
+        "test_psnr": 11.235184385081995,
+        "test_ssim": 0.5726885355739467,
+        "classification_accuracy": 0.07777777777777778,
+        "classification_balanced_accuracy": 0.07651437151437153,
+        "classification_c": 0.01,
+        "coupling": 0.85,
+        "input_gain": 0.2,
+        "median_sync_rms": 0.0
+      },
+      {
+        "representation": "reservoir_flat",
+        "dimension": 16,
+        "alpha": 100.0,
+        "validation_nmse": 1.1352268776757823,
+        "test_nmse": 1.0299204137578513,
+        "test_rmse": 0.2769304064073586,
+        "test_psnr": 11.23075474973705,
+        "test_ssim": 0.5723277751077951,
+        "classification_accuracy": 0.09722222222222222,
+        "classification_balanced_accuracy": 0.09696053196053196,
+        "classification_c": 100.0,
+        "coupling": 0.85,
+        "input_gain": 0.2,
+        "median_sync_rms": 0.0
+      },
+      {
+        "representation": "input_oracle",
+        "dimension": 16,
+        "alpha": 1e-05,
+        "validation_nmse": 0.15627543052144535,
+        "test_nmse": 0.15326305542653676,
+        "test_rmse": 0.10682860310242727,
+        "test_psnr": 19.880482013787613,
+        "test_ssim": 0.9532044266903423,
+        "classification_accuracy": 0.9611111111111111,
+        "classification_balanced_accuracy": 0.9612441012441012,
+        "classification_c": 1.0,
+        "coupling": 0.85,
+        "input_gain": 0.2,
+        "median_sync_rms": 0.0
+      }
+    ],
+    "interpretation": {
+      "main": "E4で選んだ力学を再調整せず8×8 digitsへ転移し、復元とクラス保持を比較した。",
+      "scope": "これは小画像pilotであり、28×28 MNISTの確認実験とは区別する。"
+    }
+  }
+}

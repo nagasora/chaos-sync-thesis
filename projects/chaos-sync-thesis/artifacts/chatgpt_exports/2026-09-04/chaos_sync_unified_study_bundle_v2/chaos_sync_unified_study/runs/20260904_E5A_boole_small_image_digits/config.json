@@ -1,0 +1,13 @@
+{
+  "alpha": 0.5,
+  "n_nodes": 8,
+  "washout": 16,
+  "dimensions": [
+    8,
+    16,
+    32
+  ],
+  "seed": 20260904,
+  "coupling": 0.85,
+  "input_gain": 0.2
+}

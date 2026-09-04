@@ -1,0 +1,175 @@
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any
+
+import pandas as pd
+
+from .utils import write_csv, write_json
+
+
+def canonical_registry() -> list[dict[str, Any]]:
+    """How: 旧 E/T 番号を壊さず、研究質問に沿う単一 E 系統へ別名解決する。"""
+    return [
+        {
+            "canonical_id": "E0A-BOOLE-LOCAL-VALIDATION",
+            "stage": "E0 基礎力学",
+            "model_family": "generalized_boole",
+            "legacy_ids": ["E0", "20260806_E0_boole-invariant-measure"],
+            "status": "confirmed_existing",
+            "depends_on": [],
+            "question": "単一一般化Boole写像の不変Cauchy測度・Lyapunov指数・TM実装は整合するか",
+            "evidence": "3 alpha × 5 seed × 100000点、全ゲート、独立検証37項目",
+        },
+        {
+            "canonical_id": "E0B-TANGENT-FOUNDATION",
+            "stage": "E0 基礎力学",
+            "model_family": "tangent",
+            "legacy_ids": ["T0-*", "T1", "T2", "T3（理論ノート内の局所写像・Cauchy・TM節）"],
+            "status": "legacy_theory_grouped",
+            "depends_on": [],
+            "question": "タンジェント写像の局所力学・Cauchy座標・TMモードの成立条件は何か",
+            "evidence": "旧T系統の理論節。E0Bとして一群化し、実験IDではなく理論検証群として管理",
+        },
+        {
+            "canonical_id": "E1A-BOOLE-SINGLE-SOURCE-READOUT",
+            "stage": "E1 読み出し・識別可能性",
+            "model_family": "generalized_boole",
+            "legacy_ids": [
+                "E1A",
+                "20260830_E1A_temporal-alpha-readout",
+                "20260830_E1A_temporal-alpha-replication",
+                "20260901_E1A_matched-capacity-readout",
+            ],
+            "status": "confirmed_existing",
+            "depends_on": ["E0A-BOOLE-LOCAL-VALIDATION"],
+            "question": "周辺尺度を除いた有限軌道から未使用alphaをTM時間特徴で読めるか",
+            "evidence": "16次元TM RMSE 0.001342、Fourier 0.002614、差CI [0.000985,0.001560]",
+        },
+        {
+            "canonical_id": "E1B-BOOLE-TWO-SOURCE-IDENTIFIABILITY",
+            "stage": "E1 読み出し・識別可能性",
+            "model_family": "generalized_boole",
+            "legacy_ids": ["E1B", "20260901_E1B_two-source-identifiability"],
+            "status": "confirmed_existing",
+            "depends_on": ["E1A-BOOLE-SINGLE-SOURCE-READOUT"],
+            "question": "可逆2観測と対称rank-one観測で順序付き2源alphaの識別可能性はどう異なるか",
+            "evidence": "oracle TM 0.002083、rank-one理論下限0.073030、TM 0.073710、完全衝突差0",
+        },
+        {
+            "canonical_id": "E2A-BOOLE-OBSERVATION-ROBUSTNESS",
+            "stage": "E2 頑健性",
+            "model_family": "generalized_boole",
+            "legacy_ids": ["旧E2 noise/missing/length計画"],
+            "status": "new_completed_by_unified_suite",
+            "depends_on": ["E1B-BOOLE-TWO-SOURCE-IDENTIFIABILITY"],
+            "question": "clean-fit読出しは観測ノイズ・欠損・有限長にどこまで耐えるか",
+            "evidence": "runs/20260904_E2A_boole_observation_robustness",
+        },
+        {
+            "canonical_id": "E3A-BOOLE-FINITE-SIZE-SYNC",
+            "stage": "E3 同期力学",
+            "model_family": "generalized_boole_random_coupling",
+            "legacy_ids": [
+                "E3A",
+                "20260830_E3A_finite-size-sync-transition",
+                "20260831_E3A_uniform-positive-confirmation",
+            ],
+            "status": "confirmed_existing",
+            "depends_on": ["E0A-BOOLE-LOCAL-VALIDATION"],
+            "question": "有限Nで一様正結合の同期転移は理論Kc≈0.5へ近づくか",
+            "evidence": "N最大512、10 seed、K50 0.465625、95%CI [0.4625,0.475]",
+        },
+        {
+            "canonical_id": "E3B-TANGENT-TWO-NODE-BASIN",
+            "stage": "E3 同期力学",
+            "model_family": "tangent_two_node",
+            "legacy_ids": ["T4", "旧E2 2自由度タンジェント同期相図"],
+            "status": "new_completed_by_unified_suite",
+            "depends_on": ["E0B-TANGENT-FOUNDATION"],
+            "question": "局所横Lyapunov負と有限差初期値からの大域同期率は一致するか",
+            "evidence": "runs/20260904_E3B_tangent_two_node_basin",
+        },
+        {
+            "canonical_id": "E3C-BOOLE-N8-INPUT-RETENTION",
+            "stage": "E3 同期力学",
+            "model_family": "boole_output_mixing",
+            "legacy_ids": ["旧E3 小規模ネットワーク入力保持計画"],
+            "status": "new_completed_by_unified_suite",
+            "depends_on": ["E1A-BOOLE-SINGLE-SOURCE-READOUT", "E3A-BOOLE-FINITE-SIZE-SYNC"],
+            "question": "同期臨界直後に横方向冗長性を縮約しながら入力符号を読めるか",
+            "evidence": "runs/20260904_E3C_boole_n8_input_retention",
+        },
+        {
+            "canonical_id": "E4A-BOOLE-SYNTHETIC-SIGNAL-RECONSTRUCTION",
+            "stage": "E4 信号圧縮・復元",
+            "model_family": "boole_output_mixing_driven",
+            "legacy_ids": ["旧E4 合成信号計画"],
+            "status": "new_completed_by_unified_suite",
+            "depends_on": ["E3C-BOOLE-N8-INPUT-RETENTION"],
+            "question": "正弦波・chirp・混合波を低次TM表現から復元できるか",
+            "evidence": "runs/20260904_E4A_boole_synthetic_signal",
+        },
+        {
+            "canonical_id": "E5A-BOOLE-SMALL-IMAGE-DIGITS",
+            "stage": "E5 画像pilot",
+            "model_family": "boole_output_mixing_driven",
+            "legacy_ids": ["旧E5 MNIST/AE計画"],
+            "status": "pilot_completed_by_unified_suite",
+            "depends_on": ["E4A-BOOLE-SYNTHETIC-SIGNAL-RECONSTRUCTION"],
+            "question": "E4で選んだ力学は8×8小画像の再構成とクラス保持へ転移するか",
+            "evidence": "runs/20260904_E5A_boole_small_image_digits。28×28 MNIST確認は別run",
+        },
+        {
+            "canonical_id": "E5B-BOOLE-MNIST-CONFIRMATION",
+            "stage": "E5 画像確認",
+            "model_family": "boole_output_mixing_driven",
+            "legacy_ids": ["MNIST本確認"],
+            "status": "not_run_requires_external_dataset_compute",
+            "depends_on": ["E5A-BOOLE-SMALL-IMAGE-DIGITS"],
+            "question": "8×8 pilotの結論が28×28 MNISTとAE比較で再現するか",
+            "evidence": "未実行。pilotと本確認を混同しない",
+        },
+    ]
+
+
+def write_registry(root: Path) -> None:
+    """How: JSON正本と閲覧用CSV・Markdownを同時生成する。"""
+    registry = canonical_registry()
+    write_json(root / "experiment_registry.json", registry)
+    dataframe = pd.DataFrame(
+        [
+            {
+                **row,
+                "legacy_ids": " | ".join(row["legacy_ids"]),
+                "depends_on": " | ".join(row["depends_on"]),
+            }
+            for row in registry
+        ]
+    )
+    write_csv(root / "experiment_registry.csv", dataframe)
+    lines = [
+        "# 統一実験ID体系",
+        "",
+        "正規IDは `E0→E1→E2→E3→E4→E5` の研究依存順に固定する。旧E/T名は `legacy_ids` として残し、既存runフォルダは改名・上書きしない。",
+        "",
+        "| 正規ID | 段階 | family | 状態 | 旧ID |",
+        "|---|---|---|---|---|",
+    ]
+    for row in registry:
+        lines.append(
+            f"| {row['canonical_id']} | {row['stage']} | {row['model_family']} | {row['status']} | {'<br>'.join(row['legacy_ids'])} |"
+        )
+    lines.extend(
+        [
+            "",
+            "## 命名規則",
+            "",
+            "- run folder: `YYYYMMDD_<canonical short id>_<slug>`",
+            "- config内には `canonical_id`, `legacy_aliases`, `model_family`, `depends_on` を必須保存する。",
+            "- 既存runは不変。registryだけで別名解決し、履歴のSHA-256を壊さない。",
+            "- `completed` は数値artifact・予測・validator・hashを含む場合だけ用いる。",
+            "- `pilot_completed` と `confirmed_existing` を区別し、pilotを本確認として扱わない。",
+        ]
+    )
+    (root / "UNIFIED_EXPERIMENT_SCHEMA.md").write_text("\n".join(lines), encoding="utf-8")

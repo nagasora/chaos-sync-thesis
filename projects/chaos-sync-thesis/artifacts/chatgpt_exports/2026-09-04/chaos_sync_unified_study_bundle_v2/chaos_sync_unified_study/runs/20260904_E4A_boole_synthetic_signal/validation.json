@@ -1,0 +1,11 @@
+{
+  "split_disjoint": true,
+  "selected_only_on_validation": true,
+  "all_metrics_finite": true,
+  "all_representations_present": true,
+  "tm_beats_raw_dct_d16": true,
+  "terminal_comparison_dimension": 8,
+  "tm_beats_terminal_common_dimension": true,
+  "tm_beats_terminal_d16": true,
+  "tm_matches_input_pca_within_25pct": false
+}

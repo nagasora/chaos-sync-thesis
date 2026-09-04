@@ -1,0 +1,2649 @@
+\documentclass[a4paper,11pt,oneside,openany]{ltjsbook}
+
+% ============================================================
+% 日本語・書体
+% ============================================================
+\usepackage{luatexja-fontspec}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+\setmainjfont{Noto Serif CJK JP}
+\setsansjfont{Noto Sans CJK JP}
+\setmonojfont{Noto Sans Mono CJK JP}
+
+% ============================================================
+% 数式・表・図
+% ============================================================
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage{graphicx}
+\usepackage{caption,subcaption}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc,backgrounds}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage{bookmark}
+\usepackage{etoolbox}
+
+\geometry{top=23mm,bottom=24mm,left=24mm,right=24mm,headheight=16pt,headsep=8mm,footskip=14mm}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0.15em}
+\setlist[itemize]{topsep=0.4em,itemsep=0.15em,leftmargin=2.2em}
+\setlist[enumerate]{topsep=0.4em,itemsep=0.15em,leftmargin=2.4em}
+\renewcommand{\arraystretch}{1.18}
+\sisetup{detect-all,group-separator={,},group-minimum-digits=4}
+
+% ============================================================
+% 配色・見出し
+% ============================================================
+\definecolor{DeepNavy}{HTML}{17324D}
+\definecolor{Teal}{HTML}{177E89}
+\definecolor{Orange}{HTML}{D97706}
+\definecolor{Brick}{HTML}{A33A2B}
+\definecolor{Forest}{HTML}{2C6E49}
+\definecolor{Purple}{HTML}{6B4C9A}
+\definecolor{LightBlue}{HTML}{EDF5FA}
+\definecolor{LightTeal}{HTML}{EDF8F7}
+\definecolor{LightOrange}{HTML}{FFF6E8}
+\definecolor{LightRed}{HTML}{FCEFED}
+\definecolor{LightGray}{HTML}{F5F6F7}
+\definecolor{MidGray}{HTML}{68727D}
+\definecolor{DarkGray}{HTML}{2F343A}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=DeepNavy,
+  citecolor=Forest,
+  urlcolor=Teal,
+  pdftitle={カオス同期とTM読み出しによる情報圧縮 数値実験テキスト},
+  pdfauthor={長松蒼空},
+  pdfsubject={一般化Boole写像・Cauchy分布・TM基底・同期・情報圧縮},
+  pdfkeywords={chaotic synchronization, Cauchy distribution, Takenaka-Malmquist basis, Koopman, information compression}
+}
+
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries\color{DeepNavy}}
+  {\filleft\Large 第\thechapter 章}
+  {0.4ex}
+  {\titlerule[1.1pt]\vspace{1.1ex}\Huge}
+  [\vspace{0.8ex}\titlerule]
+\titleformat{\section}{\Large\sffamily\bfseries\color{DeepNavy}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\large\sffamily\bfseries\color{Teal}}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalsize\sffamily\bfseries\color{DarkGray}}{\thesubsubsection}{0.8em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily カオス同期・情報圧縮 数値実験テキスト}
+\fancyhead[R]{\small\sffamily\leftmark}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ============================================================
+% 記号・環境
+% ============================================================
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\median}{\operatorname{median}}
+\newcommand{\MAD}{\operatorname{MAD}}
+\newcommand{\IQR}{\operatorname{IQR}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Proj}{\operatorname{Proj}}
+\newcommand{\NMSE}{\ensuremath{\operatorname{NMSE}}}
+\newcommand{\PSNR}{\ensuremath{\operatorname{PSNR}}}
+\newcommand{\SSIM}{\ensuremath{\operatorname{SSIM}}}
+\newcommand{\effrank}{\ensuremath{\operatorname{erank}}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\ones}{\bm{1}}
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\mat}[1]{\bm{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\EID}[1]{\textsf{#1}}
+\newcommand{\Gate}{\textsf{Gate}}
+
+\newtcolorbox{purposebox}[1][]{
+  enhanced,breakable,colback=LightBlue,colframe=DeepNavy,boxrule=0.8pt,
+  title={この章の目的},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{theorybox}[1][]{
+  enhanced,breakable,colback=LightTeal,colframe=Teal,boxrule=0.7pt,
+  title={理論の要点},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{cautionbox}[1][]{
+  enhanced,breakable,colback=LightRed,colframe=Brick,boxrule=0.8pt,
+  title={重要な注意},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{taskbox}[1][]{
+  enhanced,breakable,colback=LightOrange,colframe=Orange,boxrule=0.8pt,
+  title={実験課題},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{gatebox}[1][]{
+  enhanced,breakable,colback=LightGray,colframe=Forest,boxrule=0.8pt,
+  title={事前に固定する合否条件},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{auditbox}[1][]{
+  enhanced,breakable,colback=white,colframe=Purple,boxrule=0.8pt,
+  title={主張監査},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{codebox}[1][]{
+  enhanced,breakable,colback=LightGray,colframe=MidGray,boxrule=0.5pt,
+  title={実装契約},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{reportbox}[1][]{
+  enhanced,breakable,colback=white,colframe=DeepNavy,boxrule=0.7pt,
+  title={レポートに必ず書くこと},fonttitle=\sffamily\bfseries,#1}
+
+\newcommand{\Known}{\textcolor{Forest}{\sffamily\bfseries [Known]}}
+\newcommand{\SourceClaim}{\textcolor{Brick}{\sffamily\bfseries [Source claim]}}
+\newcommand{\Derived}{\textcolor{Teal}{\sffamily\bfseries [Derived]}}
+\newcommand{\Numerical}{\textcolor{Purple}{\sffamily\bfseries [Numerical]}}
+\newcommand{\Hypothesis}{\textcolor{Orange}{\sffamily\bfseries [Hypothesis]}}
+
+\lstdefinestyle{pythonstyle}{
+  language=Python,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\bfseries\color{DeepNavy},
+  commentstyle=\itshape\color{Forest},
+  stringstyle=\color{Brick},
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  frame=single,
+  framerule=0.3pt,
+  rulecolor=\color{MidGray},
+  backgroundcolor=\color{LightGray},
+  breaklines=true,
+  tabsize=4,
+  numbers=left,
+  numberstyle=\tiny\color{MidGray},
+  xleftmargin=2em,
+  framexleftmargin=1.5em
+}
+
+\crefname{equation}{式}{式}
+\crefname{figure}{図}{図}
+\crefname{table}{表}{表}
+\crefname{chapter}{第}{第}
+\crefname{section}{節}{節}
+
+\begin{document}
+
+% ============================================================
+% 表紙
+% ============================================================
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[DeepNavy] (current page.north west) rectangle ([yshift=-52mm]current page.north east);
+    \fill[Teal] ([yshift=-52mm]current page.north west) rectangle ([yshift=-57mm]current page.north east);
+    \draw[DeepNavy,line width=1.2pt] ([xshift=18mm,yshift=18mm]current page.south west)
+      rectangle ([xshift=-18mm,yshift=-18mm]current page.north east);
+  \end{tikzpicture}
+
+  \vspace*{17mm}
+  {\color{white}\sffamily\bfseries\fontsize{26}{34}\selectfont
+    カオス同期とTM読み出しによる\\[2mm]
+    情報圧縮}
+
+  \vspace{9mm}
+  {\color{white}\sffamily\fontsize{17}{22}\selectfont
+    数値実験テキスト - E0からE5までを自分で実装するために}
+
+  \vspace{42mm}
+  \begin{center}
+    {\sffamily\bfseries\Large 一般化Boole写像・Cauchy安定分布・Cayley変換}\\[2mm]
+    {\sffamily\bfseries\Large Takenaka--Malmquist基底・同期転移・復号可能性}\\[17mm]
+
+    \begin{tcolorbox}[width=0.84\textwidth,colback=LightBlue,colframe=DeepNavy,boxrule=0.8pt]
+    \centering
+    本書の中心課題は、\textbf{同期による自由度縮約}と\textbf{入力情報を保持した圧縮}を分離して測り、\par
+    「どの条件なら両立し、どの条件では情報が潰れるか」を反証可能な実験へ落とすことである。
+    \end{tcolorbox}
+
+    \vfill
+    {\large 長松蒼空}\\[2mm]
+    {\small 研究用実験テキスト v1.0}\\[1mm]
+    {\small 2026年9月4日}
+  \end{center}
+\end{titlepage}
+
+\frontmatter
+
+\chapter*{本書の位置づけ}
+\addcontentsline{toc}{chapter}{本書の位置づけ}
+
+本書は、添付された「2024年度数理工学実験テキスト」の構成原則を参考に、カオス同期と情報圧縮に関する研究を、自分で数式を確認し、自分で実装し、自分で結果を解釈できるように再構成した実験書である。各実験は、\textbf{目的、原理、実験方法、保存物、評価指標、合否条件、考察課題}の順に記述する。科学的文書は、実験を知らない第三者が再現できる情報を含み、式・図・表を番号で参照し、結果と主観的感想を分ける、という方針を採用する\cite{mathlab2024}。
+
+研究の最上位目的は次である。
+
+\begin{quote}
+\textbf{神経系に見られる動的同期に着想を得て、カオス同期を情報圧縮へ応用できるかを検討する。}
+\end{quote}
+
+ただし、「同期した」ことだけを圧縮成功と呼ばない。完全同期により全入力が同じ軌道へ潰れた場合、幾何学的な自由度は減っていても、復号器に必要な情報は失われている。本書では、同期、局所安定性、入力識別、復元誤差、潜在次元を別々に測る。
+
+\begin{cautionbox}
+本書は、添付原稿に書かれた強い理論主張を無条件に事実として扱わない。特に、無限次元ランダム結合の厳密縮約、Perron--Frobenius固有関数、KMS状態、質量ギャップに関する主張は、\SourceClaim として区別する。卒業研究で確定事項として書けるのは、標準理論、独立導出、または自分の再現計算で確認した範囲である。
+\end{cautionbox}
+
+\section*{主張ラベル}
+本書では各主張の確度を次のように表す。
+
+\begin{longtable}{p{32mm}p{112mm}}
+\toprule
+ラベル & 意味 \\
+\midrule
+\Known & 標準的な数学、または信頼できる原典で確認できる事項。\\
+\SourceClaim & 添付資料に記載されているが、本研究では独立監査が必要な事項。\\
+\Derived & 本書で仮定を明示して導出した事項。\\
+\Numerical & 既存runまたは本実装で数値的に確認する事項。\\
+\Hypothesis & 今後の実験で支持・棄却する研究仮説。\\
+\bottomrule
+\end{longtable}
+
+\section*{使い方}
+\begin{enumerate}
+  \item 第\ref{chap:practice}章で、レポートと再現性の契約を先に固定する。
+  \item 第\ref{chap:foundation}章で、Cauchy分布、一般化Boole写像、Cayley変換、TM基底を紙と鉛筆で確認する。
+  \item \EID{E0A}から順に実装し、各章末の\Gate を通過するまで次段階へ進まない。
+  \item 数値結果が理論に合わなくても、clipやfallbackで隠さず、失敗条件を保存する。
+  \item 各実験終了後に「結果」と「考察」を同じrunフォルダへ保存する。
+\end{enumerate}
+
+\tableofcontents
+
+\mainmatter
+
+% ============================================================
+\chapter{実験の進め方と再現性契約}
+\label{chap:practice}
+% ============================================================
+
+\begin{purposebox}
+研究コードを書く前に、何を仮説とし、何を固定し、何を出力し、どの結果なら次へ進むかを決める。本章終了時には、一つのrunを第三者が再実行できる最小契約を説明できることを目標とする。
+\end{purposebox}
+
+\section{実験レポートの構成}
+
+本研究のレポートは、数理工学実験テキストの推奨構成に従い、少なくとも次の七項目を含める\cite{mathlab2024}。
+
+\begin{enumerate}
+  \item \textbf{はじめに}: 何を確かめたいか、なぜその問いが必要かを書く。
+  \item \textbf{原理・理論}: 使用する写像、分布、同期条件、評価量を自分の言葉で導出する。
+  \item \textbf{実験方法}: データ生成、パラメータ、seed、分割、前処理、アルゴリズムを再現可能に書く。
+  \item \textbf{結果}: 数値、図、表を提示する。採否判断はまだ混ぜない。
+  \item \textbf{考察}: 理論との一致・不一致、代替説明、数値誤差、限界を議論する。
+  \item \textbf{結論}: 何が支持され、何が未支持かを短くまとめる。
+  \item \textbf{参考文献}: どの主張が誰の結果に依存するかを明示する。
+\end{enumerate}
+
+\begin{reportbox}
+「同期誤差が小さくなった」という結果だけでは不十分である。少なくとも、同期誤差、入力復号性能、潜在次元、seed間分散を同じ条件表に載せる。理論値との比較では、式の仮定と実装したモデルが同じかを先に確認する。
+\end{reportbox}
+
+\section{一つのrunの標準構造}
+
+実験IDは研究上の依存関係を表す。旧E/T系列は、次の正規系列に統一する。
+
+\begin{table}[htbp]
+\centering
+\caption{正規実験系列。E0からE5へ進むほど応用側へ移る。}
+\label{tab:canonical_stages}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{14mm}p{43mm}X}
+\toprule
+段階 & 研究上の役割 & この段階で分離する失敗原因 \\
+\midrule
+E0 & 単一写像の数学・数値整合性 & 写像、分布、特異点処理、理論式の誤り \\
+E1 & TM時間特徴の読み出し・識別可能性 & 特徴量の不足、観測写像による情報損失 \\
+E2 & 雑音・欠測・有限長への頑健性 & 前処理と基底の脆弱性、有限標本誤差 \\
+E3 & 同期転移・basin・入力保持 & 局所安定性と大域挙動、同期と情報消失 \\
+E4 & 合成時系列の圧縮・復元 & 潜在座標と復号器、rate--distortion \\
+E5 & 画像の圧縮・復元 & 実データへの転移、baselineとの公平比較 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+正規IDは、例えば
+\begin{center}
+\code{E3B-TANGENT-TWO-NODE-BASIN},\quad
+\code{E3C-BOOLE-N8-INPUT-RETENTION}
+\end{center}
+のように、段階、写像族、対象、目的が名前から分かるようにする。実行フォルダは
+\begin{center}
+\code{YYYYMMDD\_<正規ID>\_<slug>}
+\end{center}
+とする。旧runは参照整合性やハッシュを壊すため改名せず、レジストリで正規IDへ対応付ける。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  node distance=8mm and 3.5mm,
+  stage/.style={rounded corners,draw=DeepNavy,fill=LightBlue,minimum width=22mm,minimum height=12mm,align=center,font=\sffamily\bfseries\small},
+  arrow/.style={-{Latex[length=2.6mm]},line width=0.8pt,DeepNavy}
+]
+\node[stage] (e0) {E0\\基礎力学};
+\node[stage,right=of e0] (e1) {E1\\読み出し};
+\node[stage,right=of e1] (e2) {E2\\頑健性};
+\node[stage,right=of e2] (e3) {E3\\同期と情報};
+\node[stage,right=of e3] (e4) {E4\\信号復元};
+\node[stage,right=of e4] (e5) {E5\\画像pilot};
+\draw[arrow] (e0)--(e1);
+\draw[arrow] (e1)--(e2);
+\draw[arrow] (e2)--(e3);
+\draw[arrow] (e3)--(e4);
+\draw[arrow] (e4)--(e5);
+\node[below=7mm of e2,align=center,font=\small] {各矢印は「前段の\Gate を通過してから進む」を意味する};
+\end{tikzpicture}
+\caption{実験の依存関係。いきなり画像へ進まず、失敗原因を一段ずつ切り分ける。}
+\label{fig:experiment_dependency}
+\end{figure}
+
+各runには最低限、次を保存する。
+
+\begin{longtable}{p{45mm}p{98mm}}
+\toprule
+保存物 & 内容 \\
+\midrule
+\code{config.yaml} & 実験前に固定した全パラメータ、seed、データ分割、\Gate。\\
+\code{environment.json} & Python、NumPy、SciPy、scikit-learn、PyTorch等のバージョンと計算機情報。\\
+\code{metrics.csv} & 条件別・seed別の未集約指標。平均だけを保存しない。\\
+\code{predictions.npz} & 全test予測、必要なら潜在表現とターゲット。\\
+\code{summary.json} & 集約値、信頼区間、採否、失敗理由。\\
+\code{figures/} & 図と、その元データ。画像だけを数値正本にしない。\\
+\code{validation.json} & 単体テスト、理論整合性テスト、有限値チェック。\\
+\code{sha256.txt} & 主要artifactのハッシュ。\\
+\path{experiment_note.md} & 目的、方法、結果、考察、次の一手。\\
+\bottomrule
+\end{longtable}
+
+\section{データ漏洩を防ぐ順序}
+
+前処理、PCA、ridge係数、閾値、結合強度の選択は、すべてtrainまたはvalidationだけで行う。testは最後に一度だけ評価する。標準手順は次である。
+
+\begin{enumerate}
+  \item seedとサンプル生成単位を決め、group単位でtrain/validation/testへ分ける。
+  \item trainだけでrobust scaler、PCA、decoderをfitする。
+  \item validationだけで力学パラメータや潜在次元候補を選ぶ。
+  \item 選択を固定し、testで一度だけ最終性能を測る。
+  \item testを見て選択を変えた場合は、そのtestをvalidationへ降格し、新しいtestを作る。
+\end{enumerate}
+
+\begin{cautionbox}
+同じ軌道から切り出した窓をランダムに分割すると、初期条件や長時間相関がtrainとtestに共有される。軌道seed、パラメータ値、元画像など、依存を生む最上位単位で分割する。
+\end{cautionbox}
+
+\section{実装規約}
+
+本プロジェクトでは、コードの責務を次のように分離する。
+
+\begin{itemize}
+  \item \code{maps.py}: 局所写像と解析式。
+  \item \code{coupling.py}: 結合行列、同期多様体、ネットワーク更新。
+  \item \code{features.py}: Cayley/TM、Fourier、graph mode、時間相関。
+  \item \code{metrics.py}: 同期誤差、Lyapunov推定、復元指標、effective rank。
+  \item \code{datasets.py}: 合成信号、二源観測、digits系列化。
+  \item \code{experiments/}: 各EIDの設定とrunner。
+\end{itemize}
+
+関数・クラスのdocstringには\textbf{How}、テスト名・docstringには\textbf{What}、コミットメッセージには\textbf{Why}、コードコメントには\textbf{Why not}を残す。例えば、特異点を単純clipしない理由は、clipにより元の写像とは異なる力学系になるためである。
+
+\begin{codebox}
+大規模runnerの前に、次の小テストを通す。
+\begin{enumerate}
+  \item 理論固定点を代入した残差が十分小さい。
+  \item 同期状態を入力すると同期状態のまま更新される。
+  \item TMモードの絶対値が浮動小数誤差の範囲で1である。
+  \item train統計がtestへ混入していない。
+  \item 非有限値、発散、特異点近傍通過率を数える。
+\end{enumerate}
+\end{codebox}
+
+\section{完了の定義}
+
+「completed」は仮説支持を意味しない。設定、全予測、未集約指標、環境、検証、採否理由が揃ったことを意味する。仮説が棄却されても、再現可能な負の結果なら完了である。一方、良い図が一枚できてもseed別結果や設定が失われていれば未完了である。
+
+\begin{taskbox}
+\textbf{課題 1.1}\quad 付属テンプレートを用い、\EID{E0A-BOOLE-LOCAL-VALIDATION}の\code{config.yaml}を作成せよ。まだコードは書かず、目的変数、操作変数、固定変数、出力、\Gate、失敗条件を文章化すること。
+
+\medskip
+\textbf{課題 1.2}\quad 自分の環境で\code{environment.json}を生成し、同じコードがGoogle ColabとKaggle Notebookでどの程度同じ結果を返すべきか、乱数・BLAS・GPU演算の観点から述べよ。
+\end{taskbox}
+
+% ============================================================
+\chapter{数学的準備: Cauchy分布・Boole写像・TM基底}
+\label{chap:foundation}
+% ============================================================
+
+\begin{purposebox}
+重い裾を持つCauchy分布、一般化Boole写像の不変尺度、Cayley変換、TM power basisを理解する。E0以降で使う数式を、実装可能な形まで導く。
+\end{purposebox}
+
+\section{Cauchy分布}
+
+位置\(\mu\in\R\)、尺度\(\gamma>0\)のCauchy分布を
+\begin{equation}
+  p_{\mu,\gamma}(x)
+  = \frac{1}{\pi}\frac{\gamma}{(x-\mu)^2+\gamma^2}
+  \label{eq:cauchy_density}
+\end{equation}
+で定義する。その特性関数は
+\begin{equation}
+  \varphi_{\mu,\gamma}(t)
+  = \E[\e^{\ii tX}]
+  = \exp\!\left(\ii\mu t-\gamma|t|\right)
+  \label{eq:cauchy_cf}
+\end{equation}
+である。
+
+\Known \cref{eq:cauchy_cf}から、独立な\(X_j\sim\mathrm{Cauchy}(\mu_j,\gamma_j)\)と実係数\(a_j\)に対し、
+\begin{equation}
+  \sum_{j=1}^{m}a_jX_j
+  \sim
+  \mathrm{Cauchy}\!\left(
+    \sum_{j=1}^{m}a_j\mu_j,
+    \sum_{j=1}^{m}|a_j|\gamma_j
+  \right)
+  \label{eq:cauchy_linear_stability}
+\end{equation}
+が成り立つ。これがCauchy分布の安定性である。
+
+Cauchy分布では通常の平均と分散が存在しない。そのため、実験では標本平均・標本分散を尺度推定の中心に置かない。中心にはmedian、尺度には
+\begin{equation}
+  \widehat\gamma_{\mathrm{MAD}}
+  = \median_t |x_t-\median_s x_s|
+  \label{eq:cauchy_mad}
+\end{equation}
+またはhalf-IQRを用いる。理想的なCauchy分布では、MADとhalf-IQRはいずれも\(\gamma\)に等しい。
+
+\begin{cautionbox}
+標本平均が有限の値を返しても、母平均が存在することを意味しない。軌道長を増やしたときに標本平均が安定しないこと自体が、実装の異常ではなくCauchy裾の性質である可能性がある。
+\end{cautionbox}
+
+\section{一般化Boole写像}
+
+本研究の基本局所写像を
+\begin{equation}
+  F_{\alpha}(x)
+  = \alpha\left(x-\frac{1}{x}\right),
+  \qquad 0<\alpha<1
+  \label{eq:boole_map}
+\end{equation}
+とする。\(x=0\)は特異点である。
+
+\subsection{Cauchy尺度の更新}
+
+\SourceClaim 添付の無限次元同期原稿では、\(X\sim\mathrm{Cauchy}(0,\gamma)\)に\cref{eq:boole_map}を作用させると、像の分布もCauchy型に保たれ、尺度が
+\begin{equation}
+  G_{\alpha}(\gamma)
+  = \alpha\left(\gamma+\frac{1}{\gamma}\right)
+  \label{eq:boole_scale_map}
+\end{equation}
+へ更新されるとする\cite{infinite_sync}。この写像の正固定点は、
+\begin{align}
+  \gamma_* &= \alpha\left(\gamma_*+\frac{1}{\gamma_*}\right),\\
+  (1-\alpha)\gamma_*^2 &= \alpha,
+\end{align}
+より
+\begin{equation}
+  \gamma_*
+  = \sqrt{\frac{\alpha}{1-\alpha}}
+  \label{eq:boole_gamma_star}
+\end{equation}
+である。尺度写像の微分は
+\begin{equation}
+  G'_{\alpha}(\gamma)
+  = \alpha-\frac{\alpha}{\gamma^2}
+\end{equation}
+であり、固定点では
+\begin{equation}
+  G'_{\alpha}(\gamma_*)=2\alpha-1.
+  \label{eq:scale_stability}
+\end{equation}
+したがって\(0<\alpha<1\)で\(|2\alpha-1|<1\)となり、尺度固定点は局所的に吸引的である。
+
+\subsection{Lyapunov指数}
+
+写像の微分は
+\begin{equation}
+  F'_{\alpha}(x)
+  = \alpha\left(1+\frac{1}{x^2}\right)
+  \label{eq:boole_derivative}
+\end{equation}
+である。不変Cauchy測度を仮定すると、Lyapunov指数は
+\begin{equation}
+  \lambda_F(\alpha)
+  = \int_{-\infty}^{\infty}
+    p_{0,\gamma_*}(x)
+    \log\left|F'_{\alpha}(x)\right|\dd x
+  \label{eq:boole_lyapunov_integral}
+\end{equation}
+で定義される。添付原稿の留数積分を用いると
+\begin{align}
+  \lambda_F(\alpha)
+  &= \log\alpha
+     +2\log\left(1+\frac{1}{\gamma_*}\right)\\
+  &=2\log\left(\sqrt\alpha+\sqrt{1-\alpha}\right)
+  \label{eq:boole_lyapunov_closed}
+\end{align}
+となる\cite{infinite_sync}。特に\(\alpha=1/2\)では
+\begin{equation}
+  \gamma_*=1,\qquad \lambda_F=\log 2.
+  \label{eq:maxchaos_boole}
+\end{equation}
+
+\begin{auditbox}
+\cref{eq:boole_scale_map,eq:boole_lyapunov_closed}は、E0Aで数値再現する対象である。コードが式をそのまま返すだけでは検証にならない。独立な軌道生成からMADと時間平均Lyapunov指数を推定し、理論値へ近づくかを調べる。
+\end{auditbox}
+
+\section{Cayley変換とTM power basis}
+
+複素極\(z_0=\mu+\ii\gamma\)に対し、Cayley変換
+\begin{equation}
+  q_{\mu,\gamma}(x)
+  = \frac{(x-\mu)-\ii\gamma}{(x-\mu)+\ii\gamma}
+  \label{eq:cayley}
+\end{equation}
+を定義する。実数\(x\)では分子と分母が共役なので
+\begin{equation}
+  |q_{\mu,\gamma}(x)|=1.
+  \label{eq:cayley_modulus}
+\end{equation}
+
+角度変数\(\theta\in(0,2\pi)\)を
+\begin{equation}
+  x=\mu+\gamma\cot\frac{\theta}{2}
+  \label{eq:cauchy_angle}
+\end{equation}
+で導入すると、向きを除いて
+\begin{equation}
+  p_{\mu,\gamma}(x)|\dd x|
+  =\frac{\dd\theta}{2\pi},
+  \qquad
+  q_{\mu,\gamma}(x)=\e^{-\ii\theta}.
+  \label{eq:cauchy_uniform_circle}
+\end{equation}
+したがって、Cauchy測度付き実直線は一様測度付き単位円へ移る。
+
+TM power basisを
+\begin{equation}
+  M_k^{(\mu,\gamma)}(x)
+  =q_{\mu,\gamma}(x)^k,
+  \qquad k\in\mathbb Z
+  \label{eq:tm_power_basis}
+\end{equation}
+と定義する。\cref{eq:cauchy_uniform_circle}より
+\begin{equation}
+  \left\langle M_k,M_{\ell}\right\rangle
+  =\int_{\R}\overline{M_k(x)}M_{\ell}(x)
+    p_{\mu,\gamma}(x)\dd x
+  =\delta_{k\ell}.
+  \label{eq:tm_orthonormal}
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  box/.style={rounded corners,draw=DeepNavy,fill=LightBlue,text width=30mm,minimum height=14mm,align=center,font=\sffamily\bfseries\small},
+  arrow/.style={-{Latex[length=2.6mm]},line width=0.9pt,Teal}
+]
+\node[box] (x) {重い裾の軌道\\\(x_t\in\R\)};
+\node[box,right=6mm of x] (q) {Cayley変換\\\(q_t\in\mathbb S^1\)};
+\node[box,right=6mm of q] (m) {TMモード\\\(M_k(t)=q_t^k\)};
+\node[box,right=6mm of m] (f) {時間相関・graph射影\\有限次元特徴};
+\draw[arrow] (x)--(q);
+\draw[arrow] (q)--(m);
+\draw[arrow] (m)--(f);
+\node[below=8mm of q,align=center,font=\small] {巨大な\(|x_t|\)を直接使わず、\(|q_t|=1\)の位相へ写す};
+\end{tikzpicture}
+\caption{Cauchy軌道からTM時間特徴を作る流れ。}
+\label{fig:cauchy_tm_pipeline}
+\end{figure}
+
+\section{Koopman作用が厳密に単純化する基準系}
+
+\SourceClaim 添付のK-fold原稿で、本研究に直接必要なのはKMS状態や質量ギャップではなく、K-fold cotangent写像
+\begin{equation}
+  H_K(x)=\cot\left(K\operatorname{arccot}x\right),
+  \qquad K=2,3,\dots
+  \label{eq:kfold_cotangent}
+\end{equation}
+とTM基底の対応である\cite{mass_gap}。標準Cauchy分布\((\mu,\gamma)=(0,1)\)に対し、Koopman作用素\(U_H f=f\circ H_K\)は
+\begin{equation}
+  U_H M_k=M_{Kk}
+  \label{eq:koopman_shift}
+\end{equation}
+と基底添字を移す。非線形写像が整数添字のシフトとして見えるため、実装の正対照に適している。
+
+\begin{cautionbox}
+\cref{eq:koopman_shift}が厳密に成り立つのは、\cref{eq:kfold_cotangent}のようなK-fold基準系である。任意の一般化Boole写像\(F_\alpha\)や、生の\(\tan(\beta x)\)へ同じ式をそのまま流用しない。また、K-fold tangent写像\(\tan(K\arctan x)\)と、生のtangent写像\(\tan(\beta x)\)は別の力学系である。
+\end{cautionbox}
+
+\section{時間相関としての読み出し}
+
+単一時刻のTM係数だけでなく、lag\(\ell\)の複素自己相関
+\begin{equation}
+  C_{k}(\ell)
+  =\frac{1}{T-\ell}
+   \sum_{t=0}^{T-\ell-1}
+   \overline{M_k(x_t)}M_k(x_{t+\ell})
+  \label{eq:tm_autocorrelation}
+\end{equation}
+を用いる。\(\Re C_k(\ell)\)と\(\Im C_k(\ell)\)を特徴とすれば、周辺分布をrobust標準化した後にも残る時間順序を読むことができる。
+
+\Hypothesis 本研究の中心的な読み出し仮説は、「TM基底が情報を作る」ではなく、\textbf{軌道に残っている入力依存の時間構造を、重い裾に頑健な有界座標で読む}ことである。観測写像が情報を捨てた場合、TM変換はそれを復元できない。
+
+\begin{taskbox}
+\textbf{課題 2.1}\quad \cref{eq:cauchy_cf}を用いて\cref{eq:cauchy_linear_stability}を導け。
+
+\medskip
+\textbf{課題 2.2}\quad \cref{eq:cauchy_angle}を微分し、\cref{eq:cauchy_uniform_circle}を確認せよ。また\cref{eq:tm_orthonormal}をFourier直交性へ帰着せよ。
+
+\medskip
+\textbf{課題 2.3}\quad \(\alpha\in\{0.25,0.5,0.75\}\)について、\(\gamma_*\)と\(\lambda_F\)を計算せよ。\(\lambda_F\)が\(\alpha=1/2\)で最大になることを微分または対称性から説明せよ。
+\end{taskbox}
+
+% ============================================================
+\chapter{E0: 単一写像と基底の数値検証}
+\label{chap:e0}
+% ============================================================
+
+\begin{purposebox}
+結合系へ進む前に、局所写像、特異点処理、不変Cauchy尺度、Lyapunov指数、TM基底の実装が理論と整合することを確認する。E0を通過しないコードで同期や圧縮を議論してはならない。
+\end{purposebox}
+
+\section{E0A-BOOLE-LOCAL-VALIDATION}
+
+\subsection{研究質問}
+
+\begin{quote}
+一般化Boole写像\(F_\alpha\)を浮動小数点で反復したとき、burn-in後の単一軌道は理論Cauchy尺度とLyapunov指数を再現するか。
+\end{quote}
+
+操作変数は\(\alpha\)、軌道長、初期分布、浮動小数精度である。主要出力は、尺度推定誤差、Lyapunov誤差、非有限値率、特異点近傍通過率である。
+
+\subsection{推奨条件}
+
+\begin{table}[htbp]
+\centering
+\caption{E0Aの標準条件。最初は小さく動かし、合格後に本条件へ増やす。}
+\label{tab:e0a_config}
+\begin{tabularx}{\textwidth}{p{37mm}X}
+\toprule
+項目 & 推奨値 \\
+\midrule
+\(\alpha\) & \(0.25,0.40,0.50,0.60,0.75\)。\(0.5\)を基準条件とする。\\
+seed & 最低5。初期値をCauchy、Gaussian、一様分布から生成する。\\
+burn-in & まず\(2\times10^4\)。尺度収束が遅い条件では増やす。\\
+標本長 & pilot \(10^4\)、本実験 \(10^5\)以上。\\
+精度 & float64を主、float32を監査。可能ならlong doubleも比較。\\
+特異点近傍 & \(|x|<10^{-12},10^{-10},10^{-8}\)の通過回数を保存。\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{実験手順}
+
+\begin{enumerate}
+  \item \(x_0\)を生成し、\cref{eq:boole_map}をburn-in回反復する。
+  \item burn-in後の軌道\(x_0,\dots,x_{T-1}\)を保存する。
+  \item median、MAD、half-IQRを計算し、\cref{eq:boole_gamma_star}と比較する。
+  \item \cref{eq:boole_derivative}から
+  \begin{equation}
+    \widehat\lambda_F
+    =\frac1T\sum_{t=0}^{T-1}
+      \log\left|\alpha\left(1+x_t^{-2}\right)\right|
+    \label{eq:empirical_boole_lyap}
+  \end{equation}
+  を計算する。
+  \item 理論密度とのヒストグラムだけでなく、Cauchy QQプロットを作る。
+  \item 軌道長を増やしたときの誤差曲線を描く。
+\end{enumerate}
+
+\begin{codebox}
+\textbf{How}: 更新関数は状態配列を受け取り、非有限値マスクと特異点近傍マスクを同時に返す。\par
+\textbf{Why not}: \(x=0\)付近を固定値へclipして計算を続けると、元のBoole写像とは異なる写像になる。発散や非有限値は失敗として記録し、clip版を使う場合は別EIDにする。
+\end{codebox}
+
+\subsection{図と表}
+
+必須図は次の四つである。
+
+\begin{enumerate}
+  \item 理論Cauchy密度と経験密度。
+  \item Cauchy QQプロット。
+  \item 理論\(\gamma_*\)対推定MADの散布図。破線は完全一致。
+  \item 理論\(\lambda_F\)対\(\widehat\lambda_F\)の散布図。破線は完全一致。
+\end{enumerate}
+
+表には、\(\alpha\)、seed、\(\gamma_*\)、\(\widehat\gamma\)、絶対誤差、\(\lambda_F\)、\(\widehat\lambda_F\)、非有限値率、実行時間を載せる。
+
+\begin{gatebox}
+\begin{enumerate}
+  \item 各\(\alpha\)でMAD相対誤差のseed中央値が5\%以内。
+  \item Lyapunov絶対誤差のseed中央値が\(2\times10^{-2}\)以内。
+  \item 軌道長を増やすと誤差が全体として減少する。
+  \item float32とfloat64で結論が反転しない。反転する場合は原因を特定する。
+  \item 数値安定化が元写像を変更していない。
+\end{enumerate}
+一つでも満たさなければ、結合系へ進まず、特異点処理、burn-in、引数型、乱数生成を監査する。
+\end{gatebox}
+
+\section{E0B-KFOLD-TM-SHIFT-CHECK}
+
+\subsection{目的}
+
+K-fold cotangent写像を基準系とし、Cauchy測度、Cayley変換、TM直交性、Koopman shiftを数値的に確認する。これは一般化Boole写像のすべての\(\alpha\)に対する証明ではなく、TM実装の正対照である。
+
+\subsection{手順}
+
+\begin{enumerate}
+  \item \(\theta_t\sim\mathrm{Uniform}(0,\pi)\)から\(x_t=\cot\theta_t\)を生成する。
+  \item \(K\in\{2,3,5\}\)、\(k\in\{1,2,3,4\}\)で\(H_K(x)\)と\(M_k(x)\)を実装する。
+  \item 各標本について
+  \begin{equation}
+    r_{K,k}(x)
+    =\left|M_k(H_K(x))-M_{Kk}(x)\right|
+    \label{eq:tm_shift_residual}
+  \end{equation}
+  を計算する。
+  \item Monte Carlo内積
+  \begin{equation}
+    \widehat G_{k\ell}
+    =\frac1T\sum_{t=1}^{T}\overline{M_k(x_t)}M_\ell(x_t)
+    \label{eq:tm_gram_empirical}
+  \end{equation}
+  を作り、単位行列との差を測る。
+\end{enumerate}
+
+\begin{cautionbox}
+\(\operatorname{arccot}\)の枝と\(\cot(K\operatorname{arccot}x)\)の実装はライブラリにより異なる。数値的には\(\theta=\operatorname{atan2}(1,x)\in(0,\pi)\)を用い、\(\cot(K\theta)=\cos(K\theta)/\sin(K\theta)\)として枝を固定する。
+\end{cautionbox}
+
+\begin{gatebox}
+\begin{enumerate}
+  \item \(\max r_{K,k}\)がfloat64の許容誤差内である。ただし極近傍は別集計する。
+  \item \(\|\widehat G-I\|_{\mathrm{F}}\)が標本長とともに減少する。
+  \item 乱数seedを変えても直交性の結論が変わらない。
+\end{enumerate}
+\end{gatebox}
+
+\section{E0の考察課題}
+
+\begin{taskbox}
+\textbf{課題 3.1}\quad 標本平均、標本標準偏差、MADを軌道長に対して描け。Cauchy分布において、なぜMADだけが安定するか説明せよ。
+
+\medskip
+\textbf{課題 3.2}\quad \(\alpha\to0\)または\(\alpha\to1\)で\(\gamma_*\)と\(\lambda_F\)がどう振る舞うか調べ、数値実験が難しくなる理由を述べよ。
+
+\medskip
+\textbf{課題 3.3}\quad 特異点近傍をclipした実装と、失敗を記録して停止する実装を比較せよ。密度、Lyapunov指数、再現性にどのような差が生じるかを示せ。
+\end{taskbox}
+
+% ============================================================
+\chapter{E1: TM時間特徴と識別可能性}
+\label{chap:e1}
+% ============================================================
+
+\begin{purposebox}
+TM特徴が、有限軌道に残るパラメータ情報を読めるかを検証する。同時に、観測写像が情報を失った場合には、どの特徴量でも復元できないという識別可能性境界を正対照・負対照で確認する。
+\end{purposebox}
+
+\section{E1A-BOOLE-SINGLE-SOURCE-READOUT}
+
+\subsection{研究質問}
+
+周辺Cauchy尺度をrobust標準化して除いた後にも、有限時間の軌道順序には\(\alpha\)依存情報が残るか。その情報を、同じ特徴次元のTM時間相関とFourier特徴のどちらが安定に読み出せるか。
+
+\subsection{データ生成}
+
+trainとtestで\(\alpha\)値を分け、補間能力を測る。推奨例は
+\begin{align}
+  \mathcal A_{\mathrm{train}}
+  &=\{0.34,0.42,0.50,0.58,0.66\},\\
+  \mathcal A_{\mathrm{test}}
+  &=\{0.38,0.46,0.54,0.62\}.
+  \label{eq:e1_alpha_split}
+\end{align}
+各\(\alpha\)について独立seedで複数軌道を生成する。軌道内で
+\begin{equation}
+  \widetilde x_t
+  =\frac{x_t-\median_s x_s}{\IQR(x)/2}
+  \label{eq:robust_orbit_standardization}
+\end{equation}
+と標準化し、周辺尺度だけで\(\alpha\)を当てる近道を抑える。
+
+\subsection{TM特徴}
+
+標準Cauchy極を用いて
+\begin{equation}
+  q_t=\frac{\widetilde x_t-\ii}{\widetilde x_t+\ii},
+  \qquad M_k(t)=q_t^k
+  \label{eq:e1_tm_modes}
+\end{equation}
+とし、\(k=1,\dots,4\)、\(\ell\in\{1,2\}\)について\cref{eq:tm_autocorrelation}を計算する。実部・虚部を連結すると
+\begin{equation}
+  4\text{ modes}\times2\text{ lags}\times2
+  =16
+  \label{eq:e1_tm_dim}
+\end{equation}
+次元となる。
+
+比較するFourier特徴も16次元へそろえる。例えば、窓関数を掛けたrFFTのパワーを16帯域に分け、各帯域の\(\log(\epsilon+\text{energy})\)を用いる。
+
+\subsection{負対照}
+
+時間順序を本当に読んでいるかを確認するため、次を入れる。
+
+\begin{enumerate}
+  \item \textbf{shuffle対照}: 各軌道の時刻順序をランダムに並べ替えて同じ特徴を作る。
+  \item \textbf{lagなし対照}: \(T^{-1}\sum_tM_k(t)\)のみを使う。
+  \item \textbf{quantile対照}: median、IQR、複数分位点だけを使う。
+\end{enumerate}
+
+\subsection{推定器と評価}
+
+同じ正則化候補を持つridge回帰で\(\alpha\)を推定する。正則化係数はtrain内CVまたはvalidationで選ぶ。主要指標はRMSE、MAE、\(R^2\)、seedごとの誤差差である。
+
+TMとFourierのpaired誤差差を
+\begin{equation}
+  \Delta_s
+  =\mathrm{RMSE}_{\mathrm{TM},s}
+   -\mathrm{RMSE}_{\mathrm{Fourier},s}
+  \label{eq:paired_rmse_difference}
+\end{equation}
+とし、seed単位bootstrapで95\%信頼区間を作る。
+
+\begin{gatebox}
+\begin{enumerate}
+  \item TMまたはFourierの少なくとも一方が、shuffle対照より有意に良い。
+  \item trainにない\(\alpha\)で性能を報告する。
+  \item 特徴次元、decoder、正則化探索予算をそろえる。
+  \item TM優位を主張する場合、\(\Delta\)の95\%上限が0未満である。
+  \item lagなしTMが同等なら、「時間相関が必要」という仮説は未支持とする。
+\end{enumerate}
+\end{gatebox}
+
+\begin{reportbox}
+既存runの参考値として、16次元容量一致条件でTM RMSE \(0.001342\)、Fourier RMSE \(0.002614\)が得られている。ただしこれは再現すべき正解値ではなく、データ生成、seed、実装を監査するためのベンチマークである。結果を近づけるためにtestを見て調整してはならない。
+\end{reportbox}
+
+\section{E1B-BOOLE-TWO-SOURCE-IDENTIFIABILITY}
+
+\subsection{目的}
+
+高性能な特徴量でも、観測が異なる源を同一のデータへ写す場合は復元不能である。この境界を、二源混合のfull-rank正対照とrank-one負対照で確認する。
+
+独立な二源を
+\begin{equation}
+  s_{j,t+1}=F_{\alpha_j}(s_{j,t}),
+  \qquad j\in\{1,2\}
+  \label{eq:two_source_dynamics}
+\end{equation}
+とし、観測を
+\begin{equation}
+  \vect y_t=\mat A\vect s_t,
+  \qquad
+  \vect s_t=(s_{1,t},s_{2,t})^\top
+  \label{eq:linear_mixing}
+\end{equation}
+とする。ターゲットは順序付き\((\alpha_1,\alpha_2)\)である。
+
+\subsection{二つの観測条件}
+
+\subsubsection*{full-rank正対照}
+\(\det\mat A\neq0\)の既知行列を用いる。oracle条件では\(\mat A^{-1}\vect y_t\)から各源を復元して特徴を作り、direct条件では混合チャネルから直接特徴を作る。
+
+\subsubsection*{rank-one負対照}
+例えば
+\begin{equation}
+  y_t=s_{1,t}+s_{2,t}
+  \label{eq:rank_one_observation}
+\end{equation}
+だけを観測する。源を入れ替えた\((\alpha_1,\alpha_2)\)と\((\alpha_2,\alpha_1)\)は同じ観測分布を持ち、順序付きターゲットを区別できない。
+
+\subsection{衝突から導く誤差下限}
+
+同じ観測\(y\)に二つのターゲット
+\begin{equation}
+  \vect a=(a,b),\qquad \vect b=(b,a)
+\end{equation}
+が対応し、同確率で現れるとする。二乗誤差を最小にする予測は条件付き平均
+\begin{equation}
+  \widehat{\vect t}(y)
+  =\frac{\vect a+\vect b}{2}
+  =\left(\frac{a+b}{2},\frac{a+b}{2}\right)
+  \label{eq:collision_optimal_predictor}
+\end{equation}
+である。各座標の二乗誤差は\((a-b)^2/4\)なので、座標平均RMSEの理論下限は
+\begin{equation}
+  \mathrm{RMSE}_{\min}
+  =\frac{|a-b|}{2}.
+  \label{eq:collision_rmse_lower_bound}
+\end{equation}
+複数ペアでは\(\sqrt{\E[(a-b)^2]/4}\)が対応する。
+
+\begin{theorybox}
+\cref{eq:collision_rmse_lower_bound}は、TM、Fourier、ニューラルネットなど手法に依存しない。観測写像が順序を捨てたために生じる情報論的下限である。特徴量を増やしても越えられない。
+\end{theorybox}
+
+\subsection{実験設計}
+
+\begin{enumerate}
+  \item \(\alpha_1\neq\alpha_2\)のペアでは、同じ二本の源軌道を順序だけ入れ替えたswap標本を作り、元標本とswap標本を必ず同じsplitへ入れる。これによりrank-one観測は標本ごとに厳密に一致する。
+  \item full-rank oracle、full-rank direct、rank-one directを比較する。
+  \item TMとFourierの特徴容量を一致させる。
+  \item rank-oneで、swapペアの特徴距離を直接測る。
+  \item 予測RMSEと\cref{eq:collision_rmse_lower_bound}を比較する。
+\end{enumerate}
+
+\begin{gatebox}
+\begin{enumerate}
+  \item full-rank oracleが低誤差であること。これがpipelineの正対照となる。
+  \item rank-oneのswap特徴距離が数値誤差内で0に近いこと。
+  \item rank-one誤差が理論下限を不自然に下回らないこと。下回れば漏洩を疑う。
+  \item rank-oneで低誤差が出た場合、target順序やsample IDが特徴へ漏れていないか確認する。
+\end{enumerate}
+\end{gatebox}
+
+\begin{reportbox}
+既存runでは、full-rank oracle TM RMSE \(0.002083\)、rank-one理論下限 \(0.073030\)、rank-one TM RMSE \(0.073710\)が報告され、swap特徴衝突が確認された。結論は「TMが失われた順序を回復した」ではなく、\textbf{回復不能性を理論下限まで再現した}ことである。
+\end{reportbox}
+
+\section{E1の考察課題}
+
+\begin{taskbox}
+\textbf{課題 4.1}\quad TMの\(k\)、lag、Fourier帯域数を変え、特徴次元と性能の関係を描け。最良値だけでなく、探索自由度を報告せよ。
+
+\medskip
+\textbf{課題 4.2}\quad rank-one観測のターゲットを順序なし集合\(\{\alpha_1,\alpha_2\}\)へ変えると、識別可能性はどう変わるか。適切な損失関数を定式化せよ。
+
+\medskip
+\textbf{課題 4.3}\quad full-rankだが条件数の大きい\(\mat A\)を用い、可逆性と数値安定性の違いを調べよ。
+\end{taskbox}
+
+% ============================================================
+\chapter{E2: 観測雑音・欠測・有限長への頑健性}
+\label{chap:e2}
+% ============================================================
+
+\begin{purposebox}
+E1で得た識別性が、現実的な観測劣化の下でも保たれるかを調べる。clean条件で学習した前処理・特徴・decoderを固定し、test時だけ観測条件を変える。
+\end{purposebox}
+
+\section{E2A-BOOLE-OBSERVATION-ROBUSTNESS}
+
+\subsection{研究質問}
+
+\begin{quote}
+二源Boole軌道のパラメータ読み出しは、Gaussian雑音、欠測、短い観測窓に対してどのように劣化するか。TMとFourierの差は、基底の性質によるのか、それとも欠測処理の違いによるのか。
+\end{quote}
+
+E2AはE1Bのfull-rank観測を引き継ぐ。独立源\(\vect s_t\)を軌道内でrobust標準化し、既知の可逆行列\(\mat A\)で
+\begin{equation}
+  \vect y_t=\mat A\vect s_t
+  \label{eq:e2_clean_observation}
+\end{equation}
+と観測する。
+
+\subsection{clean-fit契約}
+
+次をclean train/validationだけでfitし、その後は固定する。
+
+\begin{itemize}
+  \item median、half-IQR等の前処理規則。
+  \item TM次数・lag、Fourier帯域分割。
+  \item oracle/directの読み出し経路。
+  \item ridge正則化係数。
+  \item 欠測補完規則。
+\end{itemize}
+
+testで雑音強度や欠測率を見て再fitしてはならない。
+
+\section{劣化モデル}
+
+\subsection{加法Gaussian雑音}
+
+clean観測に対して
+\begin{equation}
+  \widetilde{\vect y}_t
+  =\vect y_t+\sigma\vect\epsilon_t,
+  \qquad
+  \vect\epsilon_t\sim\mathcal N(\vect0,\mat I)
+  \label{eq:e2_gaussian_noise}
+\end{equation}
+を加える。\(\sigma\in\{0,0.05,0.1,0.2,0.3\}\)を推奨する。標準化前後のどちらで\(\sigma\)を定義したかを明記する。
+
+\subsection{ランダム欠測}
+
+各チャネル・時刻を独立に確率\(r\)で欠測させる。
+\begin{equation}
+  m_{c,t}\sim\mathrm{Bernoulli}(1-r),
+  \qquad r\in\{0,0.1,0.2,0.4,0.6\}.
+  \label{eq:e2_missing_mask}
+\end{equation}
+
+TM相関では、\(t\)と\(t+\ell\)の両方が観測されたpairだけを平均する。
+\begin{equation}
+  \widehat C_k^{\mathrm{obs}}(\ell)
+  =\frac{\sum_t m_t m_{t+\ell}\overline{M_k(t)}M_k(t+\ell)}
+  {\sum_t m_tm_{t+\ell}}.
+  \label{eq:pairwise_complete_tm}
+\end{equation}
+分母が最小pair数を下回る場合は欠損特徴とし、indicatorを追加するか、その条件を失敗として記録する。
+
+Fourierは等間隔系列を要求するため、線形補間、zero-fill、Lomb--Scargle等の選択が必要である。E2Aの基本条件では線形補間を使ってよいが、比較には補間仮定が含まれる。
+
+\subsection{有限観測長}
+
+元の長さ\(T_{\max}\)から先頭またはランダム区間を切り出し、
+\begin{equation}
+  T\in\{64,128,256,512,1024\}
+  \label{eq:e2_observation_lengths}
+\end{equation}
+を比較する。同じ元軌道の異なる長さをpairedに評価すると分散を減らせる。
+
+\subsection{確認拡張}
+
+E2Bとして次を追加する。
+
+\begin{itemize}
+  \item 外れ値を含むimpulsive noise。
+  \item Cauchy観測雑音。
+  \item 連続block欠測。
+  \item 混合行列\(\mat A\)未知のblind条件。
+  \item 時刻揺らぎ、不等間隔サンプリング。
+\end{itemize}
+
+\section{比較モデル}
+
+\begin{table}[htbp]
+\centering
+\caption{E2Aの四つの主要経路。各チャネル16次元とし、合計32次元へそろえる。}
+\label{tab:e2_models}
+\begin{tabularx}{\textwidth}{p{36mm}p{31mm}X}
+\toprule
+モデル & 観測経路 & 特徴 \\
+\midrule
+oracle-TM & \(\mat A^{-1}\widetilde{\vect y}\) & \(k=1,\dots,4\)、lag 1,2の複素TM相関 \\
+oracle-Fourier & \(\mat A^{-1}\widetilde{\vect y}\) & 16帯域log-energy \\
+direct-TM & 混合チャネルを直接使用 & 同じTM相関 \\
+direct-Fourier & 混合チャネルを直接使用 & 同じFourier特徴 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+oracleは源分離が既知の上限対照、directは観測空間での実用条件である。oracleが常に強いとは限らない。\(\mat A^{-1}\)が雑音を増幅する場合、directが頑健になることもある。
+
+\section{評価と統計}
+
+各劣化レベル、モデル、seedについてRMSEを保存する。cleanからの相対劣化を
+\begin{equation}
+  D(\eta)
+  =\frac{\mathrm{RMSE}(\eta)-\mathrm{RMSE}(0)}
+  {\max(\mathrm{RMSE}(0),\epsilon)}
+  \label{eq:relative_degradation}
+\end{equation}
+で定義する。ここで\(\eta\)は\(\sigma\)、\(r\)、または\(T^{-1}\)を表す。
+
+TMとFourierの差は同じsample・seedでpaired比較する。平均だけでなく、中央値、95\%bootstrap区間、最悪seedを報告する。
+
+\begin{gatebox}
+\begin{enumerate}
+  \item clean性能を再現し、劣化を加える前からpipelineが壊れていない。
+  \item 中程度の条件\((\sigma=0.1,r=0.2,T=256)\)で、性能がchanceまたは定数予測まで崩壊しない。
+  \item TM優位を主張する場合、欠測処理を入れ替えた感度分析でも結論が保たれる。
+  \item oracleの悪化が大きい場合、\(\kappa(\mat A)\)と雑音増幅を報告する。
+  \item すべての条件で有効pair数と非有限特徴数を保存する。
+\end{enumerate}
+\end{gatebox}
+
+\begin{reportbox}
+既存runでは、欠測時にTMがFourierを大きく上回る条件があった一方、Gaussian雑音ではFourierが優位な条件もあった。これは「TMが普遍的に頑健」という結論ではない。TMはpairwise-complete平均、Fourierは線形補間という異なる欠測仮定を用いたため、基底と前処理の効果を分離する追加実験が必要である。
+\end{reportbox}
+
+\section{可視化}
+
+必須図は次の三つである。
+
+\begin{enumerate}
+  \item 横軸を劣化レベル、縦軸をtest RMSEとした曲線。seed区間を付ける。
+  \item cleanに対する相対劣化\(D(\eta)\)の曲線。
+  \item sampleごとのTM誤差対Fourier誤差の散布図。対角線を入れる。
+\end{enumerate}
+
+欠測では、有効pair数分布も図または表で示す。
+
+\begin{taskbox}
+\textbf{課題 5.1}\quad 同じ欠測maskに対し、TMにも線形補間、Fourierにもpairwise covarianceを使うなど、前処理を交換した2\(\times\)2実験を設計せよ。
+
+\medskip
+\textbf{課題 5.2}\quad \(\mat A\)の条件数を操作し、oracle逆混合が雑音を増幅する量を特異値分解から予測せよ。
+
+\medskip
+\textbf{課題 5.3}\quad iid欠測とblock欠測で、同じ欠測率でも時間相関推定の分散が異なる理由を説明せよ。
+\end{taskbox}
+
+% ============================================================
+\chapter{E3: 同期転移・大域basin・入力保持}
+\label{chap:e3}
+% ============================================================
+
+\begin{purposebox}
+同期を一つの数値だけで判定せず、\textbf{同期多様体の不変性、局所横安定性、有限差初期値からの大域到達、入力情報の保持}を分離して調べる。本章は研究の最小中核である。
+\end{purposebox}
+
+\section{同期を四つに分解する}
+
+ノード状態を\(\vect x_t\in\R^N\)、平均状態を
+\begin{equation}
+  \bar x_t=\frac1N\sum_{i=1}^{N}x_{i,t}
+\end{equation}
+とする。完全同期多様体は
+\begin{equation}
+  \mathcal S=\{\vect x:s\ones,\ s\in\R\}
+  \label{eq:synchronization_manifold}
+\end{equation}
+である。
+
+\subsubsection*{不変性}
+\(\vect x_t\in\mathcal S\)なら\(\vect x_{t+1}\in\mathcal S\)となる性質である。不変でない多様体に対して横Lyapunov指数を計算しても、完全同期の安定性を表さない。
+
+\subsubsection*{局所横安定性}
+\(\mathcal S\)の近傍の微小摂動が平均的に縮むこと、すなわち\(\lambda_\perp<0\)である。
+
+\subsubsection*{大域basin}
+有限差を持つ初期値が、極や別アトラクタを越えて実際に同期へ到達する割合である。\(\lambda_\perp<0\)だけでは大域到達を保証しない。
+
+\subsubsection*{情報保持}
+同期後または過渡軌道から入力\(u\)を識別・復元できることである。\(E_{\mathrm{sync}}\to0\)でも入力表現がcollapseすれば失敗である。
+
+\section{同期指標}
+
+通常のRMS同期誤差を
+\begin{equation}
+  E_{\mathrm{sync}}(t)
+  =\sqrt{\frac1N\sum_{i=1}^{N}(x_{i,t}-\bar x_t)^2}
+  \label{eq:sync_rms}
+\end{equation}
+とする。Cauchy裾の影響を見るため、robust指標
+\begin{equation}
+  E_{\mathrm{med}}(t)
+  =\median_i |x_{i,t}-\median_jx_{j,t}|
+  \label{eq:sync_robust}
+\end{equation}
+も併記する。
+
+同期成功は一時刻の閾値通過ではなく、終端窓\(\mathcal W\)で
+\begin{equation}
+  \max_{t\in\mathcal W}E_{\mathrm{sync}}(t)<\varepsilon_{\mathrm{sync}}
+  \label{eq:sustained_sync}
+\end{equation}
+と定義する。推奨は\(\varepsilon_{\mathrm{sync}}=10^{-8}\)だが、float32では別基準を事前に定める。
+
+\section{E3A: 無限次元ランダム結合原稿の監査}
+
+\subsection{原稿のモデルと主張}
+
+添付原稿は、一般化Boole写像を持つ加法的ランダム結合系
+\begin{equation}
+  x_i(t+1)
+  =F_\alpha(x_i(t))
+   +\frac{K}{N-1}\sum_{j\ne i}\varepsilon_{ij}x_j(t)
+  \label{eq:source_random_additive_gcm}
+\end{equation}
+を考え、Cauchy尺度の平均場方程式
+\begin{equation}
+  \gamma_{t+1}
+  =\alpha\left(\gamma_t+\frac1{\gamma_t}\right)
+   +Km\gamma_t,
+  \qquad m=\E|\varepsilon_{ij}|
+  \label{eq:source_scale_meanfield}
+\end{equation}
+を主張する\cite{infinite_sync}。固定点は
+\begin{equation}
+  \gamma_*^2
+  =\frac{\alpha}{1-\alpha-Km}
+  \label{eq:source_random_gamma}
+\end{equation}
+であり、実数正の尺度が存在するためには\(1-\alpha-Km>0\)が必要である。
+
+さらに条件付きLyapunov指数と臨界結合を
+\begin{align}
+  \lambda_c^{\mathrm{src}}
+  &=2\log\left[
+    \sqrt\alpha+\sqrt{1-\alpha-Km}
+  \right],
+  \label{eq:source_conditional_lyap}\\
+  K_c^{\mathrm{src}}
+  &=\frac{2\sqrt\alpha(1-\sqrt\alpha)}{m}
+  \label{eq:source_kc}
+\end{align}
+とする。
+
+\subsection{最初に行う不変性監査}
+
+\SourceClaim \cref{eq:source_random_additive_gcm}で全ノードを\(x_i=s\)と置くと
+\begin{equation}
+  x_i(t+1)
+  =F_\alpha(s)
+   +\frac{Ks}{N-1}\sum_{j\ne i}\varepsilon_{ij}.
+  \label{eq:row_sum_sync_update}
+\end{equation}
+したがって、完全同期多様体が厳密に不変であるには、行和
+\begin{equation}
+  r_i=\frac1{N-1}\sum_{j\ne i}\varepsilon_{ij}
+  \label{eq:row_mean}
+\end{equation}
+が全\(i\)で等しい必要がある。一般のi.i.d.有限\(N\)行列では、行和揺らぎが残る。
+
+\begin{auditbox}
+E3Aの最初の課題は、臨界値を走査することではなく、\cref{eq:row_sum_sync_update}をコードと数式で確認することである。無限次元で行和差が消えるという議論と、有限\(N\)で厳密な同期多様体が存在することは同じではない。
+\end{auditbox}
+
+\subsection{三つの実験プロトコル}
+
+\begin{table}[htbp]
+\centering
+\caption{E3Aで混同してはならない三つのモデル。}
+\label{tab:e3a_protocols}
+\begin{tabularx}{\textwidth}{p{24mm}p{45mm}X}
+\toprule
+Protocol & モデル & 目的 \\
+\midrule
+A & 原稿どおりの未正規化対称ランダム結合 & source claimを直接再現し、行和揺らぎと擬似同期を測る。\\
+B & 行和をそろえた対称結合またはregular weighted graph & 同期多様体を保った上で、結合分布の効果を比較する。\\
+C & 次節のrow-stochastic output-mixing & 同期理論と入力保持を明確に分離する主モデル。\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Protocol AとCの臨界式は異なる。特に\(\alpha=1/2,m=1\)では\cref{eq:source_kc}は約\(0.4142\)であるが、後述するoutput-mixing主モデルは\(K_c=0.5\)となる。同じ記号\(K\)でもモデルが違えば比較できない。
+
+\subsection{同じ\(m=\E|\varepsilon|\)を持つ分布比較}
+
+Protocol AまたはBでは、最低限、次を比較する。
+
+\begin{enumerate}
+  \item 一様正結合: \(\varepsilon=1\)。
+  \item 正の二点分布: \(\varepsilon\in\{0,2\}\)を同確率。
+  \item biased sign: \(P(\varepsilon=1)=0.875\)、\(P(\varepsilon=-1)=0.125\)。
+  \item Rademacher: \(P(\varepsilon=\pm1)=1/2\)。
+  \item 必要に応じ、\(\E|\varepsilon|=1\)へ正規化したGaussian。
+\end{enumerate}
+
+各行列について、\(m\)、\(\mu=\E\varepsilon\)、行和標準偏差
+\begin{equation}
+  \sigma_r(N)
+  =\operatorname{std}_i r_i
+  \label{eq:row_sum_std}
+\end{equation}
+を保存する。経験的閾値が\(m\)と\(\mu\)のどちらに整合するか、また\(\sigma_r(N)\)と同期誤差がどう関係するかを見る。
+
+\begin{gatebox}
+\begin{enumerate}
+  \item 同期多様体の不変性残差を、各protocolで明示する。
+  \item source式との一致を主張する場合、使用したモデルが\cref{eq:source_random_additive_gcm}と一致する。
+  \item \(N\)とseedを増やし、経験的閾値の区間を報告する。
+  \item \(m\)だけの普遍性を主張する前に、\(\mu\)、行和揺らぎ、符号構造を対照する。
+  \item 不一致を数値clipや行列再正規化で隠さない。再正規化は別protocolとする。
+\end{enumerate}
+\end{gatebox}
+
+\section{E3B-TANGENT-TWO-NODE-BASIN}
+
+\subsection{局所写像}
+
+生のtangent写像を
+\begin{equation}
+  T_\beta(x)=\tan(\beta x),
+  \qquad \beta>1
+  \label{eq:raw_tangent_map}
+\end{equation}
+とする。極は
+\begin{equation}
+  x=\frac{\pi/2+k\pi}{\beta},
+  \qquad k\in\mathbb Z
+  \label{eq:tangent_poles}
+\end{equation}
+にある。
+
+\Derived Cauchy型のポール力学を仮定すると、尺度は
+\begin{equation}
+  \gamma_{t+1}=\tanh(\beta\gamma_t)
+  \label{eq:tangent_scale_map}
+\end{equation}
+で更新され、\(\beta>1\)では正固定点
+\begin{equation}
+  \gamma_*=\tanh(\beta\gamma_*)
+  \label{eq:tangent_gamma_fixed}
+\end{equation}
+を持つ。Lyapunov指数の候補閉形式は
+\begin{equation}
+  \lambda_T(\beta)
+  =\log\beta+2\log(1+\gamma_*)
+  \label{eq:tangent_lyap}
+\end{equation}
+である。これはE3Bの前に単一軌道で数値照合する。
+
+\subsection{出力交差混合型}
+
+\begin{align}
+  x_{t+1}&=(1-\eta)T_\beta(x_t)+\eta T_\beta(y_t),\\
+  y_{t+1}&=\eta T_\beta(x_t)+(1-\eta)T_\beta(y_t).
+  \label{eq:output_cross_tangent}
+\end{align}
+同期軌道\(x_t=y_t=s_t\)では\(s_{t+1}=T_\beta(s_t)\)である。微小差\(\delta_t=x_t-y_t\)は
+\begin{equation}
+  \delta_{t+1}
+  \approx(1-2\eta)T'_\beta(s_t)\delta_t
+  \label{eq:output_cross_variational}
+\end{equation}
+に従うため、横Lyapunov指数は
+\begin{equation}
+  \lambda_\perp^{\mathrm{out}}
+  =\lambda_T(\beta)+\log|1-2\eta|.
+  \label{eq:output_cross_transverse}
+\end{equation}
+局所同期条件は
+\begin{equation}
+  |1-2\eta|<\e^{-\lambda_T(\beta)}.
+  \label{eq:output_cross_interval}
+\end{equation}
+特に\(\eta=1/2\)では一回の更新で\(x_{t+1}=y_{t+1}\)となる。これは同期判定コードの正対照である。
+
+\subsection{状態拡散型}
+
+\begin{align}
+  x_{t+1}&=T_\beta(x_t)+\kappa(y_t-x_t),\\
+  y_{t+1}&=T_\beta(y_t)+\kappa(x_t-y_t).
+  \label{eq:state_diffusive_tangent}
+\end{align}
+同期軌道は同じく\(s_{t+1}=T_\beta(s_t)\)であり、横方向は
+\begin{equation}
+  \delta_{t+1}
+  \approx\left[T'_\beta(s_t)-2\kappa\right]\delta_t
+  \label{eq:state_diffusive_variational}
+\end{equation}
+となる。したがって
+\begin{equation}
+  \lambda_\perp^{\mathrm{diff}}
+  =\lim_{T\to\infty}\frac1T
+    \sum_{t=0}^{T-1}
+    \log\left|\beta\sec^2(\beta s_t)-2\kappa\right|
+  \label{eq:state_diffusive_transverse}
+\end{equation}
+を同期軌道から推定する。
+
+\subsection{局所と大域の二段評価}
+
+\begin{enumerate}
+  \item \textbf{局所}: 同期軌道\(s_t\)を4万点以上生成し、\cref{eq:output_cross_transverse,eq:state_diffusive_transverse}を計算する。
+  \item \textbf{大域}: 独立なCauchy初期対\((x_0,y_0)\)を最低256組生成し、500ステップ反復する。
+  \item 終端50ステップすべてで\(|x_t-y_t|<10^{-8}\)なら成功とする。
+  \item 発散率、同期到達時間、一時最大誤差、同期後再離脱回数を保存する。
+\end{enumerate}
+
+推奨走査は
+\begin{equation}
+  \beta\in\{1.05,1.10,1.20,1.30\}
+  \label{eq:e3b_beta_grid}
+\end{equation}
+であり、\(\eta\)と\(\kappa\)は粗走査後、\(\lambda_\perp=0\)近傍を細かくする。
+
+\begin{cautionbox}
+GPUの高速\code{tan}、CPUのlibm、float32、float64では極近傍の引数還元が異なり得る。暗黙のmoduloやclipを入れず、計算精度とバックエンドごとにrunを分ける。発散した軌道を成功率の分母から除外してはならない。
+\end{cautionbox}
+
+\begin{gatebox}
+\begin{enumerate}
+  \item 出力混合の理論同期区間\cref{eq:output_cross_interval}を局所指数で再現する。
+  \item \(\eta=1/2\)の一ステップ同期が全seedで通る。
+  \item 状態拡散型で\(\lambda_\perp<0\)の領域と大域成功率を別図にする。
+  \item 局所安定だが大域失敗する領域を、発散率と極近傍通過で説明する。
+  \item 精度を変えても主要相図が定性的に保たれる。
+\end{enumerate}
+\end{gatebox}
+
+\begin{reportbox}
+既存runでは、局所的に\(\lambda_\perp<0\)であったgrid点のうち、大域成功率が0.9未満の割合が約0.55であった。これは「局所横安定性だけから任意の有限差初期値の同期を結論できない」という境界を示す。\(\eta=1/2\)は成功率1の正対照だが、情報圧縮モデルとしては強制的すぎる。
+\end{reportbox}
+
+\section{E3C-BOOLE-N8-INPUT-RETENTION}
+
+\subsection{同期多様体を保証する主モデル}
+
+以降の情報保持実験では、局所写像の\textbf{出力}をrow-stochastic行列で混合する。主実験ではgraph modeを直交基底として扱えるよう、\(\mat W\)を対称row-stochastic行列に限定する。非対称・非正規行列は固有ベクトルの非直交性を別に扱う拡張実験とする。
+\begin{equation}
+  \vect x_{t+1}
+  =\mat B_K F_\alpha(\vect x_t)
+   +g u_t\ones,
+  \qquad
+  \mat B_K=(1-K)\mat I+K\mat W,
+  \label{eq:output_mixing_network}
+\end{equation}
+ここで\(F_\alpha\)は成分ごとに作用し、\(\mat W\ones=\ones\)とする。全ノードが\(s_t\)なら
+\begin{equation}
+  \vect x_{t+1}
+  =\left(F_\alpha(s_t)+gu_t\right)\ones
+\end{equation}
+となるため、同期多様体は厳密に不変である。
+
+\subsection{graph modeごとの横指数}
+
+\(\mat W\)の固有値を\(\nu_q\)、固有ベクトルを\(\vect v_q\)とする。同期方向は\(\nu_0=1\)、\(\vect v_0\propto\ones\)である。同期軌道周りのgraph mode\(q\)の摂動\(a_{q,t}\vect v_q\)は
+\begin{equation}
+  a_{q,t+1}
+  \approx F'_\alpha(s_t)
+  \left(1-K+K\nu_q\right)a_{q,t}
+  \label{eq:graph_mode_variational}
+\end{equation}
+に従う。よって
+\begin{equation}
+  \lambda_q
+  =\lambda_\parallel
+   +\log|1-K+K\nu_q|
+  \label{eq:graph_mode_lyapunov}
+\end{equation}
+である。共通入力\(gu_t\ones\)は横方向差で相殺されるが、同期軌道\(s_t\)を変えるため、\(\lambda_\parallel\)は実際の駆動軌道から測る。
+
+\subsubsection*{全平均混合}
+\(\mat W=\ones\ones^\top/N\)なら、すべての横モードで\(\nu_q=0\)である。自律系では
+\begin{equation}
+  \lambda_\perp
+  =\lambda_F+\log|1-K|.
+  \label{eq:meanfield_output_transverse}
+\end{equation}
+\(0\le K\le1\)での下側臨界は
+\begin{equation}
+  K_c^{\mathrm{out}}
+  =1-\e^{-\lambda_F}.
+  \label{eq:output_mixing_kc}
+\end{equation}
+特に\(\alpha=1/2\)では\(\lambda_F=\log2\)なので
+\begin{equation}
+  K_c^{\mathrm{out}}=0.5.
+  \label{eq:output_mixing_kc_half}
+\end{equation}
+
+\begin{cautionbox}
+\cref{eq:output_mixing_kc}は\cref{eq:source_kc}とは別の式である。前者はrow-stochasticな出力混合、後者は添付原稿の加法的ランダム結合に対するsource claimである。モデル名を省略して「理論臨界値」とだけ書かない。
+\end{cautionbox}
+
+\subsection{入力の埋込み}
+
+E3Cでは\(N=8\)、\(\alpha=1/2\)とし、二値入力\(u\in\{-1,+1\}\)を初期横モードへ埋め込む。第一群と第二群に反対符号を持つ単位ベクトル
+\begin{equation}
+  v_i=
+  \begin{cases}
+    +1/\sqrt N,&i\le N/2,\\
+    -1/\sqrt N,&i>N/2
+  \end{cases},
+  \qquad \ones^\top\vect v=0
+  \label{eq:contrast_graph_mode}
+\end{equation}
+を作り、
+\begin{equation}
+  \vect x_0
+  =c\ones+a u\vect v+\vect\xi
+  \label{eq:e3c_initial_encoding}
+\end{equation}
+とする。\(c\)は共通Cauchy成分、\(a\)は小さい入力振幅、\(\vect\xi\)はzero-sum nuisanceである。E3Cでは入力を初期条件だけへ入れ、\(t\ge0\)の共通外場は\(g u_t=0\)とする。同じ\((c,\vect\xi)\)に対する\(u=-1,+1\)をpaired sampleとし、pair単位でsplitする。
+
+\subsection{TM--graph readout}
+
+終端\(L\)ステップの各ノードにTMモード
+\begin{equation}
+  M_{k,i}(t)
+  =\left(\frac{x_{i,t}-\ii\gamma_*}{x_{i,t}+\ii\gamma_*}\right)^k,
+  \qquad k=1,\dots,4
+  \label{eq:e3c_node_tm}
+\end{equation}
+を適用する。uniform modeとcontrast modeへ
+\begin{align}
+  z_{k,0}(t)&=\frac1{\sqrt N}\sum_iM_{k,i}(t),\\
+  z_{k,1}(t)&=\sum_i v_iM_{k,i}(t)
+  \label{eq:e3c_graph_projection}
+\end{align}
+と射影し、それぞれの時間平均とlag-1複素自己相関の実部・虚部を連結する。\(k=1,\dots,4\)、graph mode 2種、統計4実数で合計32次元である。
+
+比較は
+\begin{itemize}
+  \item TM--graph 32次元。
+  \item raw graph時間統計 32次元。
+  \item terminal state 8次元。
+\end{itemize}
+とする。decoderは同じlogistic regressionを用い、balanced accuracyとlog lossを報告する。
+
+\subsection{同期と情報のPareto評価}
+
+\(K\)ごとに
+\begin{equation}
+  \left(
+    \median E_{\mathrm{sync}},
+    \mathrm{BA}_{\mathrm{input}}
+  \right)
+  \label{eq:sync_info_pair}
+\end{equation}
+を描く。左上、すなわち低同期誤差・高識別性能が望ましい。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+\draw[-{Latex[length=2.5mm]},line width=0.8pt] (0,0)--(10.2,0) node[right]{\small 同期誤差};
+\draw[-{Latex[length=2.5mm]},line width=0.8pt] (0,0)--(0,6.2) node[above]{\small 入力識別性能};
+\fill[LightTeal] (0,4.6) rectangle (3.0,6.0);
+\node[Forest,align=center] at (1.5,5.3) {有用な\\同期縮約候補};
+\fill[LightRed] (0,0) rectangle (3.0,1.6);
+\node[Brick,align=center] at (1.5,0.8) {collapse\\低情報};
+\fill[LightOrange] (7.0,4.6) rectangle (10.0,6.0);
+\node[Orange,align=center] at (8.5,5.3) {高情報だが\\非同期reservoir};
+\draw[dashed,MidGray] (3,0)--(3,6);
+\draw[dashed,MidGray] (0,4.6)--(10,4.6);
+\fill[DeepNavy] (4.8,3.9) circle (2.4pt) node[above right]{\small 臨界近傍候補};
+\fill[DeepNavy] (1.0,1.1) circle (2.4pt) node[above right]{\small 深い同期};
+\fill[DeepNavy] (8.1,5.1) circle (2.4pt) node[below left]{\small 弱結合};
+\end{tikzpicture}
+\caption{同期誤差と入力情報を同じスカラーへ混ぜず、Pareto平面として評価する。}
+\label{fig:sync_information_pareto}
+\end{figure}
+
+\subsection{探索条件}
+
+\begin{equation}
+  K\in\{0,0.30,0.45,0.50,0.52,0.60,0.80,0.95\}
+  \label{eq:e3c_k_grid}
+\end{equation}
+を基準とし、\(K=0.5\)近傍を細かくする。終端窓は24ステップを基準とする。入力振幅\(a\)とnuisance尺度はvalidationで少数候補から選び、testを使わない。
+
+\begin{gatebox}
+\begin{enumerate}
+  \item \(K>K_c^{\mathrm{out}}\)で同期誤差が大きく低下する。
+  \item 入力BAの95\%下限が0.5を上回る同期側の点が存在する。
+  \item 強い主張にはBA\(\ge0.65\)を要求する。
+  \item 深い同期でBAがchanceへ戻るなら、情報collapseとして報告する。
+  \item effective rankと同期誤差を併記し、「低rankだから良い」とは結論しない。
+\end{enumerate}
+\end{gatebox}
+
+\subsection{effective rank}
+
+潜在特徴行列\(\mat Z\)の特異値を\(\sigma_1,\dots,\sigma_r\)とすると、participation ratio型のeffective rankを
+\begin{equation}
+  \effrank{}(\mat Z)
+  =\frac{\left(\sum_j\sigma_j^2\right)^2}
+  {\sum_j\sigma_j^4}
+  \label{eq:effective_rank}
+\end{equation}
+とする。値が小さければ分散が少数方向へ集中しているが、その方向が入力を表すとは限らない。
+
+\begin{reportbox}
+既存pilotでは、同期側の最良TM条件が\(K=0.52\)、balanced accuracy \(0.59174\)、median sync RMS \(0.00621\)であった。同期誤差低下は支持されたが、事前の強いBA\(\ge0.65\)は未支持であった。また深い同期では情報低下が見られた。この結果は「臨界近傍が常に最適」という証明ではなく、より良い入力注入とreadoutを必要とする反例・候補点である。
+\end{reportbox}
+
+\section{E3の考察課題}
+
+\begin{taskbox}
+\textbf{課題 6.1}\quad \(\mat W=\ones\ones^\top/N\)と、自己結合を除く\(\mat W=(\ones\ones^\top-\mat I)/(N-1)\)について、横固有値と臨界\(K\)を導け。
+
+\medskip
+\textbf{課題 6.2}\quad E3Cの入力を、(i)初期横モード、(ii)共通外場、(iii)結合係数変調の三方式へ入れ、同一budgetで比較するE3Dを設計せよ。
+
+\medskip
+\textbf{課題 6.3}\quad 完全同期ではなく2-cluster同期を目標にする結合行列を設計し、どのgraph固有モードを中立または弱収縮に残すべきか説明せよ。
+
+\medskip
+\textbf{課題 6.4}\quad E3AのProtocol Aで、行和揺らぎ\(\sigma_r(N)\)が\(N^{-1/2}\)程度に減るかを調べ、同期誤差との関係を回帰せよ。
+\end{taskbox}
+
+% ============================================================
+\chapter{E4: 合成時系列の圧縮・復元}
+\label{chap:e4}
+% ============================================================
+
+\begin{purposebox}
+同期系から得た低次元表現が、単なる入力分類ではなく波形そのものを復元できるかを調べる。潜在次元をrate、復元誤差をdistortionとして、TM、raw state、terminal state、入力PCAを公平に比較する。
+\end{purposebox}
+
+\section{E4A: 合成信号の復元}
+
+\noindent\textbf{正規実験ID:} \EID{E4A-BOOLE-SYNTHETIC-SIGNAL-RECONSTRUCTION}
+
+\subsection{研究質問}
+
+\begin{quote}
+共通入力で駆動された同期Booleネットワークの有限時間軌道は、元信号を少数次元から復元できるか。TM時間表現は、同じ潜在次元・同じridge decoderで、raw time featureや終端状態を上回るか。
+\end{quote}
+
+\section{合成信号}
+
+長さを\(L=64\)、正規化時刻を\(\tau_n=n/(L-1)\)とする。少なくとも次の三族を生成する。
+
+\subsection{正弦波}
+\begin{equation}
+  u_n=A\sin(2\pi f\tau_n+\phi).
+  \label{eq:e4_sine}
+\end{equation}
+推奨範囲は\(A\in[0.5,1.5]\)、\(f\in[1,8]\) cycles/window、\(\phi\in[0,2\pi)\)である。
+
+\subsection{chirp}
+\begin{equation}
+  u_n=A\sin\left[2\pi\left(f_0\tau_n+\frac12r\tau_n^2\right)+\phi\right].
+  \label{eq:e4_chirp}
+\end{equation}
+\(f_0\)と\(r\)を独立に変える。最終瞬時周波数がNyquistを越えない範囲に制約する。
+
+\subsection{二周波混合}
+\begin{equation}
+  u_n=A_1\sin(2\pi f_1\tau_n+\phi_1)
+      +A_2\sin(2\pi f_2\tau_n+\phi_2).
+  \label{eq:e4_two_tone}
+\end{equation}
+\(f_1\)と\(f_2\)の差が小さい条件と大きい条件を含める。
+
+各信号は最大絶対値またはtrain全体の尺度で正規化する。sampleごとの振幅正規化を行うと振幅情報が消えるため、何をターゲットとして残すかに応じて選ぶ。
+
+\section{駆動同期ネットワーク}
+
+E3Cと同じ出力混合系
+\begin{equation}
+  \vect x_{n+1}
+  =\mat B_KF_\alpha(\vect x_n)+g u_n\ones
+  \label{eq:e4_driven_network}
+\end{equation}
+を用いる。基準条件は\(N=8\)、\(\alpha=1/2\)である。
+
+共通入力はノード差から直接消えるが、同期軌道\(s_n\)を変える。したがって、自律系の\(K_c=0.5\)をそのまま保証として使わず、各\((K,g)\)で経験的横指数
+\begin{equation}
+  \widehat\lambda_\perp(K,g)
+  =\frac1L\sum_{n=0}^{L-1}
+    \log\left|F'_\alpha(s_n)(1-K)\right|
+  \label{eq:e4_driven_transverse}
+\end{equation}
+と同期誤差を測る。
+
+\begin{cautionbox}
+共通入力が横方向で相殺されることと、入力が同期安定性に影響しないことは同じではない。\(F'(s_n)\)が入力で変わるため、平均収縮率も変わり得る。
+\end{cautionbox}
+
+\section{データ分割}
+
+train/validation/testは信号族で層化し、元パラメータseed単位で分ける。より厳しいOOD試験として、testだけ周波数帯、chirp rate、振幅範囲をずらす。
+
+力学パラメータ\((K,g)\)は、validationのTM表現・潜在16次元のNMSEだけで選ぶ。testを使わない。画像へ進むE5Aでは、この\((K,g)\)を凍結する。
+
+\section{比較表現}
+
+\begin{table}[htbp]
+\centering
+\caption{E4Aで比較する表現。PCAとdecoderはtrainだけでfitする。}
+\label{tab:e4_representations}
+\begin{tabularx}{\textwidth}{p{35mm}X}
+\toprule
+表現 & 定義と役割 \\
+\midrule
+TM spectrum & ノード平均Cayley mode \(k=1,\dots,4\)の時間系列を作り、DCTまたは時間相関を連結する提案表現。\\
+raw mean DCT & ノード平均の生状態をrobust標準化し、DCT係数を使うTMなし時間baseline。\\
+reservoir flat & 全ノード\(\times\)全時刻をflattenし、PCAで圧縮する。軌道に残る情報の上限baseline。\\
+terminal state & 最終時刻の\(N\)状態。時間履歴なしbaseline。\\
+input oracle & 入力波形自身をPCAで圧縮する。力学を通さない線形上限baseline。\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+TM spectrumの一例として
+\begin{equation}
+  \bar M_k(n)=\frac1N\sum_iM_{k,i}(n)
+  \label{eq:e4_mean_tm_mode}
+\end{equation}
+を作り、\(\Re\bar M_k\)、\(\Im\bar M_k\)のDCT係数を連結する。どの係数を保持するかはtrain/validationだけで固定する。
+
+各表現\(\vect h\)をPCAで
+\begin{equation}
+  d_z\in\{4,8,16,32\}
+  \label{eq:e4_latent_dimensions}
+\end{equation}
+へ圧縮し、同じridge decoder
+\begin{equation}
+  \widehat{\vect u}
+  =\mat W_d\vect z+\vect b_d
+  \label{eq:e4_ridge_decoder}
+\end{equation}
+で64点を復元する。
+
+\section{指標}
+
+平均二乗誤差を入力分散で正規化した
+\begin{equation}
+  \NMSE{}
+  =\frac{\sum_{n}(u_n-\widehat u_n)^2}
+  {\sum_n(u_n-\bar u)^2+\epsilon}
+  \label{eq:nmse}
+\end{equation}
+を主要指標とする。併せてRMSE、相関係数、周波数領域誤差を報告する。
+
+潜在次元をrateのproxyとするが、次元はbit数ではない。確認実験では、各潜在座標を\(b\in\{4,8,16\}\) bitへ量子化し、
+\begin{equation}
+  R=\frac{d_zb}{L}
+  \quad\text{[bits/sample]}
+  \label{eq:bit_rate_proxy}
+\end{equation}
+を横軸にしたrate--distortion曲線も作る。
+
+\section{公平比較の条件}
+
+\begin{enumerate}
+  \item 全表現で同じtrain/validation/test splitを使う。
+  \item PCA次元とridgeの探索候補をそろえる。
+  \item reservoir flatだけ元次元が大きいため、計算量と保存量も併記する。
+  \item input oracleは提案法ではなく、入力が元々低次元かを示す対照である。
+  \item decoderを表現ごとに大幅に変えない。
+\end{enumerate}
+
+\begin{gatebox}
+\begin{enumerate}
+  \item TMがterminal stateを同じ\(d_z\)で上回る。これは時間履歴の必要性を示す。
+  \item TMがraw mean DCTを上回る場合にのみ、TM座標固有の利点を主張する。
+  \item TMがreservoir flatを少ない元特徴・計算量で近似できるかを調べる。
+  \item input oracleの25\%以内のNMSEを強い成功基準とする。
+  \item 入力PCAが圧倒的に良い場合、「合成族が元々低次元で力学が不要」という代替説明を採用する。
+\end{enumerate}
+\end{gatebox}
+
+\begin{reportbox}
+既存pilotの潜在16次元では、input oracleのtest NMSEが\(0.00661\)で最良であり、reservoir flat、TM spectrum、raw mean DCTはいずれも約1.0であった。TMはraw DCTとterminalを一部条件で上回ったが、input PCAには遠く及ばなかった。これは、現在の入力注入またはreadoutが波形情報を保持できていない負の結果である。
+\end{reportbox}
+
+\section{失敗時の切り分け}
+
+\begin{table}[htbp]
+\centering
+\caption{E4でNMSEが高いときの診断。}
+\label{tab:e4_failure_diagnosis}
+\begin{tabularx}{\textwidth}{p{42mm}X}
+\toprule
+観測結果 & 有力な原因と次の確認 \\
+\midrule
+reservoir flatも悪い & 力学へ入力情報が入っていない。入力gain、注入位置、初期状態を見直す。\\
+reservoir flatは良いがTMが悪い & 軌道には情報が残るが、現在のTM統計が読めていない。高次mode、delay、cross-node特徴を追加する。\\
+TMは良いが同期しない & 表現はreservoirとして有用だが、同期圧縮の仮説は未支持。\\
+同期するが全表現が悪い & 入力が横・縦両方向で消え、collapseしている可能性。\\
+input oracleだけ良い & 入力族が低次元で、非線形力学を通す利点がない。より複雑な信号または別目的を検討する。\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{taskbox}
+\textbf{課題 7.1}\quad 分枝記号、TM高次mode、delay embeddingを一つずつ追加するE4B ablationを設計せよ。一度に複数変更しないこと。
+
+\medskip
+\textbf{課題 7.2}\quad 共通入力、ノード別入力、初期条件入力について、横方向と縦方向のどちらへ情報が入るかを変分方程式で比較せよ。
+
+\medskip
+\textbf{課題 7.3}\quad 復元NMSEだけでなく、周波数、振幅、位相の推定誤差へ分解し、どの属性が失われているかを調べよ。
+\end{taskbox}
+
+% ============================================================
+\chapter{E5: 画像pilotと確認実験}
+\label{chap:e5}
+% ============================================================
+
+\begin{purposebox}
+E4で固定した力学を小画像へ転移し、波形以外の入力でも潜在表現が機能するかを確認する。pilotと本確認を区別し、8\(\times\)8 digitsからMNISTや一般画像への過度な一般化を防ぐ。
+\end{purposebox}
+
+\section{E5A-BOOLE-SMALL-IMAGE-DIGITS}
+
+\subsection{データ}
+
+scikit-learnのdigitsデータセットを用いる。1797枚、8\(\times\)8、10クラスである。画素を\([0,1]\)へ正規化し、基本条件ではrow-majorで長さ64の系列
+\begin{equation}
+  u_0,u_1,\dots,u_{63}
+  \label{eq:digits_sequence}
+\end{equation}
+へ変換する。
+
+train/validation/testはクラス層化し、元画像単位で分ける。複数seedで分割し、同じ画像が別splitへ入らないようにする。
+
+\subsection{転移契約}
+
+E4Aで選んだ\(K\)とinput gain\(g\)を凍結し、画像testに合わせて再調整しない。再学習してよいのは、各表現のtrain-only PCA、ridge decoder、logistic probeである。この契約により、画像を見て力学を選ぶ楽観バイアスを避ける。
+
+\section{二つの評価課題}
+
+\subsubsection*{再構成}
+潜在\(\vect z\)から64画素をridgeで復元し、\NMSE{}、\PSNR{}、\SSIM{}を測る。画素最大値を1とすると
+\begin{equation}
+  \PSNR{}
+  =10\log_{10}\frac{1}{\mathrm{MSE}}
+  \label{eq:psnr}
+\end{equation}
+である。
+
+\subsubsection*{クラス保持}
+同じ潜在\(\vect z\)からlogistic regressionで数字クラスを予測し、balanced accuracy、macro-F1、log lossを測る。再構成と分類は別decoderで評価する。
+
+\begin{cautionbox}
+分類精度が高くても画像が復元できるとは限らず、復元が良くてもクラス境界が線形に読めるとは限らない。二つを別の問いとして報告する。
+\end{cautionbox}
+
+\section{比較表現}
+
+E4と同じTM spectrum、raw mean DCT、reservoir flat、terminal state、input oracleを使う。潜在次元も\(d_z\in\{4,8,16,32\}\)へそろえる。画像用に新しい特殊特徴を追加する場合はE5Cとして分離する。
+
+\section{入力走査順の監査}
+
+row-majorは、二次元近傍の一部しか保存しない。次の走査を追加し、力学以前の表現差を調べる。
+
+\begin{enumerate}
+  \item row-major。
+  \item column-major。
+  \item serpentine scan。
+  \item Hilbert curveまたはZ-order。
+  \item 8系列のrow並列入力。
+\end{enumerate}
+
+走査順をvalidationで選ぶ場合、選択自由度として明示する。E5Aの基本再現はrow-majorに固定する。
+
+\begin{gatebox}
+\begin{enumerate}
+  \item TMがterminal stateを共通\(d_z\)で上回る。
+  \item TMがraw DCTを上回る場合にのみTM固有の画像利点を主張する。
+  \item class balanced accuracy \(\ge0.70\)をpilotの強い成功基準とする。
+  \item input PCAとのSSIM差が0.10以内なら、線形上限への接近とみなす。
+  \item どの提案表現もchance分類・NMSE約1なら、画像への転移は未支持とする。
+\end{enumerate}
+\end{gatebox}
+
+\begin{reportbox}
+既存pilotの潜在16次元では、input oracleがNMSE \(0.15326\)、PSNR約\(19.88\)、SSIM \(0.9532\)、balanced accuracy \(0.96124\)で最良であった。TM spectrumはNMSE約\(1.013\)、SSIM約\(0.572\)、balanced accuracy約\(0.102\)で、強いgateは未支持であった。これはE5Aの負の結果であり、MNISTへ進む前に入力注入とreadoutを再設計する根拠となる。
+\end{reportbox}
+
+\section{E5B-BOOLE-MNIST-CONFIRMATORY}
+
+E5Bは28\(\times\)28 MNISTを用いる確認実験であり、E5Aとは別EIDにする。E5Aが失敗している状態で、規模だけ増やして実行する優先度は低い。実行する場合は、次を同一budgetで比較する。
+
+\begin{table}[htbp]
+\centering
+\caption{E5Bで必要なbaseline。}
+\label{tab:e5b_baselines}
+\begin{tabularx}{\textwidth}{p{36mm}X}
+\toprule
+モデル & 公平比較条件 \\
+\midrule
+input PCA & 同じ潜在bit数。線形圧縮上限。\\
+linear AE & 同じ潜在次元と線形decoder。PCAとの整合確認。\\
+small AE & decoderパラメータ数と学習stepを合わせる。\\
+VAE & \(\beta\)、潜在次元、decoder容量、seedを明示。\\
+non-chaotic reservoir & ノード数、時間step、readout容量を合わせる。\\
+TM-chaos model & 力学パラメータ選択をvalidationだけで行う。\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+比較では、潜在次元だけでなく、bit数、decoderパラメータ数、学習FLOPs、推論時間、seed数をそろえる。画像圧縮を主張するなら、復元品質に加えて実際のrateを測る。
+
+\section{E5の考察課題}
+
+\begin{taskbox}
+\textbf{課題 8.1}\quad row-majorとHilbert走査で、隣接画素が系列上で離れる距離分布を比較せよ。復元差が力学によるものか走査によるものか議論せよ。
+
+\medskip
+\textbf{課題 8.2}\quad E5Aの失敗が、(i)入力gain、(ii)共通入力による空間情報消失、(iii)TM統計の過度な時間平均、(iv)線形decoder容量のどれによるか、一要因ずつ切り分ける計画を作れ。
+
+\medskip
+\textbf{課題 8.3}\quad 画像を一つの長系列へ潰さず、各rowまたはpatchをノードへ対応させる二次元結合設計を定式化せよ。
+\end{taskbox}
+
+% ============================================================
+\chapter{先行実装AKOrNとの比較と学習可能な拡張}
+\label{chap:akorn}
+% ============================================================
+
+\begin{purposebox}
+同期をニューラル表現へ組み込んだ先行例AKOrNを、カオス同期エンコーダの設計参考として読む。共通点と相違点を明確にし、単純な模倣ではなく、何を借り、何を独自検証するかを定める。
+\end{purposebox}
+
+\section{AKOrNの基本式}
+
+AKOrNは各ニューロンを単位球面上のベクトル\(\vect x_i\in\R^d\)、\(\|\vect x_i\|_2=1\)として表し、一般化Kuramoto型の連続時間更新
+\begin{equation}
+  \dot{\vect x}_i
+  =\mat\Omega_i\vect x_i
+   +\Proj_{\vect x_i}\left(
+      \vect c_i+\sum_j\mat J_{ij}\vect x_j
+    \right)
+  \label{eq:akorn_continuous}
+\end{equation}
+を用いる\cite{akorn}。射影は
+\begin{equation}
+  \Proj_{\vect x}(\vect y)
+  =\vect y-\langle\vect y,\vect x\rangle\vect x
+  \label{eq:akorn_projection}
+\end{equation}
+であり、球面の接空間へ更新方向を移す。\(\mat\Omega_i\)は反対称な自然回転、\(\vect c_i\)は入力依存刺激、\(\mat J_{ij}\)は結合である。
+
+離散時間では
+\begin{align}
+  \Delta\vect x_i^{(t)}
+  &=\mat\Omega_i\vect x_i^{(t)}
+   +\Proj_{\vect x_i^{(t)}}\left(
+     \vect c_i+\sum_j\mat J_{ij}\vect x_j^{(t)}
+   \right),\\
+  \vect x_i^{(t+1)}
+  &=\Pi\left[\vect x_i^{(t)}+h\Delta\vect x_i^{(t)}\right],
+  \qquad \Pi(\vect y)=\frac{\vect y}{\|\vect y\|_2}
+  \label{eq:akorn_discrete}
+\end{align}
+と有限回更新する。readoutでは相対方向を読むため、線形結合のノルム
+\begin{equation}
+  m_k=\left\|\sum_i\mat U_{ki}\vect x_i^{(T)}\right\|_2
+  \label{eq:akorn_readout}
+\end{equation}
+を用い、global rotationに不変な特徴を作る。
+
+\section{本研究との対応}
+
+\begin{table}[htbp]
+\centering
+\caption{AKOrNと本研究の対応。}
+\label{tab:akorn_comparison}
+\begin{tabularx}{\textwidth}{p{31mm}p{53mm}X}
+\toprule
+観点 & AKOrN & 本研究 \\
+\midrule
+局所状態 & 球面上の有限次元ベクトル & 実直線上のCauchy型カオス状態 \\
+力学 & Kuramoto型回転・同期 & 一般化Booleまたはtangent写像 \\
+入力 & symmetry-breaking stimulus \(\vect c_i\) & 初期条件、共通外場、横モード、結合変調 \\
+結合 & 学習可能なconv/attentionを含む & まず解析可能な固定結合、後に学習可能化 \\
+readout & 相対方向のノルム & Cayley/TM時間相関、graph mode、decoder \\
+主評価 & 物体binding、数独、頑健性 & 同期、識別可能性、rate--distortion、復元 \\
+理論基盤 & 球面幾何とLyapunov energy & Cauchy安定性、複素極、横Lyapunov \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+AKOrNは、同期を分散的・連続的クラスタリングとして機械学習へ利用できる先行例である。添付論文では、object discovery、Sudoku、adversarial/common corruptionへの頑健性、calibrationが報告される\cite{akorn}。一方、AKOrNはカオス同期、Cauchy不変測度、TM復号を扱わない。
+
+\section{借りる設計原理}
+
+本研究がAKOrNから借りるべき要素は次である。
+
+\begin{enumerate}
+  \item \textbf{有限時間の力学ブロック}: 収束後の一点だけでなく、数stepの過渡を表現として使う。
+  \item \textbf{入力刺激と状態の二流}: 入力\(C\)と動的状態\(X\)を分ける。
+  \item \textbf{不変量を読むreadout}: global phaseや共通方向に依存しない関係量を読む。
+  \item \textbf{ablation}: 射影、正規化、結合、readoutを一つずつ外し、何が性能を生むか調べる。
+  \item \textbf{test-time dynamics}: 難しい入力では反復stepを増やしたときの性能変化を見る。
+\end{enumerate}
+
+\section{そのまま借りない要素}
+
+\begin{cautionbox}
+AKOrNの性能向上を、カオス同期エンコーダの性能証拠として使ってはならない。AKOrNの球面正規化は振幅情報を捨てるため、著者らも事象の存在や長期記憶に弱い可能性を述べている。逆に本研究の実直線カオスは極と発散を持ち、AKOrNの数値安定性をそのまま期待できない。
+\end{cautionbox}
+
+\section{学習可能な最小拡張}
+
+固定力学のE0--E5を通過した後、次の形へ拡張する。
+\begin{equation}
+  \vect x_{t+1}
+  =\mat B_{\theta}(u)
+    F_{\alpha_\theta(u)}(\vect x_t)
+   +\vect c_{\theta}(u),
+  \qquad t=0,\dots,T-1
+  \label{eq:learnable_chaos_block}
+\end{equation}
+readoutは
+\begin{equation}
+  \vect z
+  =R_{\phi}\left(
+    \{M_k(x_{i,t})\}_{i,k,t}
+  \right),
+  \qquad
+  \widehat{\vect u}=D_\psi(\vect z)
+  \label{eq:learnable_tm_encoder}
+\end{equation}
+とする。
+
+最初から\(\theta,\phi,\psi\)を同時学習すると、どの要素が効いたか分からない。次の順で解凍する。
+
+\begin{enumerate}
+  \item 固定力学 + 固定TM + 線形decoder。
+  \item 固定力学 + 学習readout + 小decoder。
+  \item 学習入力写像 + 固定結合。
+  \item 対称性・row-stochastic制約付き学習結合。
+  \item 最後に局所パラメータ\(\alpha\)を学習する。
+\end{enumerate}
+
+\begin{gatebox}
+学習可能化は、固定系の失敗原因が特定されてから行う。学習decoderを大きくしただけで復元できる場合、カオス同期表現の利点とはみなさない。パラメータ数、FLOPs、反復step、メモリ、baselineをそろえる。
+\end{gatebox}
+
+\begin{taskbox}
+\textbf{課題 9.1}\quad AKOrNの\cref{eq:akorn_readout}と本研究のTM--graph readoutを、「どの群作用に不変か」という観点で比較せよ。
+
+\medskip
+\textbf{課題 9.2}\quad \cref{eq:learnable_chaos_block}で同期多様体を保つための\(\mat B_\theta(u)\)の制約を三つ挙げよ。
+
+\medskip
+\textbf{課題 9.3}\quad 反復stepをtest時に増やしたとき、復元が改善する場合と情報collapseする場合を予測し、検証曲線を設計せよ。
+\end{taskbox}
+
+% ============================================================
+\chapter{実行ロードマップと卒論最小スコープ}
+\label{chap:roadmap}
+% ============================================================
+
+\begin{purposebox}
+実装順、時間配分、停止条件を固定する。研究の価値を「すべて成功したこと」ではなく、「どの仮説がどこまで成立するかを切り分けたこと」に置く。
+\end{purposebox}
+
+\section{推奨実装順}
+
+\begin{table}[htbp]
+\centering
+\caption{自分で実装する推奨順。}
+\label{tab:implementation_order}
+\begin{tabularx}{\textwidth}{p{15mm}p{42mm}X}
+\toprule
+順 & 実験 & 完了時に言えること \\
+\midrule
+1 & E0A & Boole写像とCauchy/Lyapunov実装が正しい。\\
+2 & E0B & Cayley/TM基底とK-fold正対照が正しい。\\
+3 & E1A & 有限軌道の時間順序にパラメータ情報が残るか。\\
+4 & E1B & 観測が情報を捨てたときの回復不能境界。\\
+5 & E2A & 読み出しの雑音・欠測・有限長頑健性。\\
+6 & E3A & 無限次元原稿の有限\(N\)監査と結合分布比較。\\
+7 & E3B & 局所横安定性と大域basinの差。\\
+8 & E3C & 同期と入力保持のPareto関係。\\
+9 & E4A & 合成信号のrate--distortion。\\
+10 & E5A & 小画像への凍結転移。\\
+11 & E5B & 条件が整った場合のみMNIST確認。\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{卒論最小スコープ}
+
+最小スコープはE0--E3である。次の四点が揃えば、E4/E5が未成功でも卒論として一貫した主張を作れる。
+
+\begin{enumerate}
+  \item 一般化Boole写像の不変Cauchy尺度とLyapunov指数を再現した。
+  \item TM時間特徴の可読性と識別可能性限界を正負対照で示した。
+  \item 局所横安定性と大域同期成功率が一致しない条件を示した。
+  \item 同期誤差と入力保持がtrade-offを持つことをN=8系で示した。
+\end{enumerate}
+
+E4/E5は「有用な圧縮」まで到達するための拡張であり、基礎仮説が通らない場合は優先度を下げる。
+
+\section{十日間の実装例}
+
+\begin{longtable}{p{15mm}p{37mm}p{88mm}}
+\toprule
+日 & 主作業 & 終了条件 \\
+\midrule
+Day 1 & repositoryとE0A & config、型、テスト、1条件の軌道図。\\
+Day 2 & E0A本実験 & Cauchy QQ、尺度、Lyapunov、精度監査。\\
+Day 3 & E0B/E1A pilot & TM直交・shift、alpha readout小実験。\\
+Day 4 & E1A/E1B & 容量一致比較、rank-one下限。\\
+Day 5 & E2A & clean-fit、雑音・欠測・長さ曲線。\\
+Day 6 & E3A audit & 行和不変性、uniform/random pilot。\\
+Day 7 & E3B & 局所指数とbasin map。\\
+Day 8 & E3C & K走査、同期-情報Pareto。\\
+Day 9 & E4A pilot & 三信号族、五表現、d=8/16。\\
+Day 10 & レポート & 図表、失敗原因、次仮説、再現コマンド。\\
+\bottomrule
+\end{longtable}
+
+\section{停止条件}
+
+次の場合は、規模を増やす前に止まる。
+
+\begin{itemize}
+  \item E0の理論値を再現しない。
+  \item rank-one負対照が理論下限を不自然に破る。
+  \item 同期多様体が不変でないのに横指数を議論している。
+  \item 主要結論が1 seedまたは1精度だけで成立する。
+  \item decoderを大きくしたときだけ性能が出る。
+  \item testを見て力学パラメータを選んでいる。
+  \item clipやfallbackを外すと全結果が消える。
+\end{itemize}
+
+\section{研究仮説の更新規則}
+
+当初の強い仮説
+\begin{quote}
+カオス同期すれば情報圧縮できる。
+\end{quote}
+は広すぎる。実験を通じて検証する更新仮説は次である。
+
+\begin{quote}
+\textbf{観測写像が識別可能性を保ち、横方向だけが有限時間で収縮し、入力が同期多様体内または遅い過渡モードへ入り、readoutが残存モードに整合するときに限り、同期縮約は復号可能な低次元表現となる。}
+\end{quote}
+
+この四条件のどれが欠けたかを、E1--E5が順に切り分ける。
+
+\section{最終レポートの主要図}
+
+最低限、次の六図を揃える。
+
+\begin{enumerate}
+  \item E0: 理論対数値のCauchy尺度・Lyapunov一致図。
+  \item E1: TM/Fourier/shuffleのalpha readout比較。
+  \item E1B: full-rankとrank-oneの識別可能性図。
+  \item E3B: 局所\(\lambda_\perp\)と大域basin成功率の二段相図。
+  \item E3C: 同期誤差と入力BAのK依存、またはPareto図。
+  \item E4/E5: rate--distortionと復元例。未実行なら次実験計画図。
+\end{enumerate}
+
+\begin{reportbox}
+図のcaptionだけで、データ、パラメータ、線・点・誤差帯の意味が分かるように書く。縦軸・横軸、単位、対数軸、seed数、集約方法を省略しない。本文では図番号で参照する。
+\end{reportbox}
+
+\begin{taskbox}
+\textbf{課題 10.1}\quad 自分の実装予定を\cref{tab:implementation_order}に合わせてIssueへ分割せよ。一つのIssueは一つの反証可能な問いにする。
+
+\medskip
+\textbf{課題 10.2}\quad 最初の二週間でどこまで到達するかを、必須、余力、延期の三段階に分けて書け。
+\end{taskbox}
+
+\appendix
+
+% ============================================================
+\chapter{実装アーキテクチャとAPI契約}
+\label{app:architecture}
+% ============================================================
+
+\section{推奨ディレクトリ}
+
+\begin{Verbatim}[fontsize=\small,frame=single]
+projects/chaos-sync-thesis/
+|-- pyproject.toml
+|-- src/chaos_sync_textbook/
+|   |-- configs.py
+|   |-- maps.py
+|   |-- coupling.py
+|   |-- features.py
+|   |-- metrics.py
+|   |-- datasets.py
+|   `-- runners/
+|       |-- e0a.py
+|       |-- e1a.py
+|       `-- ...
+|-- configs/
+|   |-- e0a.yaml
+|   |-- e1a.yaml
+|   `-- ...
+|-- tests/
+|   |-- test_maps.py
+|   |-- test_features.py
+|   |-- test_coupling.py
+|   `-- test_metrics.py
+|-- runs/
+|-- reports/
+`-- references/
+\end{Verbatim}
+
+\section{データクラス}
+
+設定と結果を辞書のまま渡さず、責務ごとにdataclassへ分ける。最低限、次を持つ。
+
+\begin{lstlisting}[style=pythonstyle,caption={設定クラスの最小例。}]
+from dataclasses import dataclass
+from pathlib import Path
+
+@dataclass(frozen=True)
+class OrbitConfig:
+    """How: Store an immutable single-orbit simulation contract."""
+    alpha: float
+    burn_in: int
+    n_steps: int
+    seed: int
+    dtype: str = "float64"
+
+@dataclass(frozen=True)
+class RunPaths:
+    """How: Centralize all artifact paths for one run."""
+    root: Path
+    metrics_csv: Path
+    summary_json: Path
+    predictions_npz: Path
+\end{lstlisting}
+
+\section{局所写像API}
+
+\begin{lstlisting}[style=pythonstyle,caption={局所写像APIの契約。}]
+import numpy as np
+from numpy.typing import NDArray
+
+FloatArray = NDArray[np.float64]
+
+def generalized_boole(x: FloatArray, alpha: float) -> FloatArray:
+    """How: Apply F_alpha(x)=alpha*(x-1/x) elementwise."""
+    # Why not: silently clipping x near zero changes the map itself.
+    raise NotImplementedError
+
+def boole_derivative(x: FloatArray, alpha: float) -> FloatArray:
+    """How: Evaluate alpha*(1+1/x**2) elementwise."""
+    raise NotImplementedError
+
+def simulate_orbit(config: OrbitConfig, x0: float) -> FloatArray:
+    """How: Simulate burn-in and return only the measured trajectory."""
+    raise NotImplementedError
+\end{lstlisting}
+
+更新関数は、状態だけでなく、非有限値、特異点近傍、最大絶対値を診断情報として返す設計でもよい。例外と欠損を区別する。
+
+\section{特徴API}
+
+\begin{lstlisting}[style=pythonstyle,caption={TM特徴APIの契約。}]
+def cayley_mode(
+    x: FloatArray,
+    mu: float,
+    gamma: float,
+    order: int,
+) -> NDArray[np.complex128]:
+    """How: Map a heavy-tailed orbit to the bounded TM power mode."""
+    raise NotImplementedError
+
+def complex_lag_correlation(
+    z: NDArray[np.complex128],
+    lags: tuple[int, ...],
+    mask: NDArray[np.bool_] | None = None,
+) -> NDArray[np.complex128]:
+    """How: Estimate pairwise-complete complex lag correlations."""
+    raise NotImplementedError
+
+def tm_feature_vector(
+    x: FloatArray,
+    orders: tuple[int, ...],
+    lags: tuple[int, ...],
+) -> FloatArray:
+    """How: Concatenate real and imaginary parts in a fixed order."""
+    raise NotImplementedError
+\end{lstlisting}
+
+特徴の並び順をコード内の偶然に任せず、metadataへ保存する。例えば
+\begin{center}
+\code{channel=0, order=1, lag=1, part=real}
+\end{center}
+のようなfeature nameを生成する。
+
+\section{結合API}
+
+\begin{lstlisting}[style=pythonstyle,caption={row-stochastic出力混合のAPI契約。}]
+def output_mixing_step(
+    state: FloatArray,
+    alpha: float,
+    coupling: float,
+    weight: FloatArray,
+    common_input: float = 0.0,
+) -> FloatArray:
+    """How: Apply B_K F_alpha(state) plus a common scalar drive."""
+    raise NotImplementedError
+
+def assert_row_stochastic(weight: FloatArray, atol: float = 1e-12) -> None:
+    """How: Validate nonnegative rows and row sums before simulation."""
+    raise NotImplementedError
+\end{lstlisting}
+
+\section{runnerの責務}
+
+各runnerは次だけを行う。
+
+\begin{enumerate}
+  \item configを読み、出力先を一意に作る。
+  \item seedを設定し、データを生成する。
+  \item pure function群を呼び出す。
+  \item 未集約結果を保存する。
+  \item 集約・図・validationを作る。
+  \item configと主要artifactのhashを保存する。
+\end{enumerate}
+
+runner内へ理論式や特徴計算を直接書かない。再利用・単体テストができなくなるためである。
+
+% ============================================================
+\chapter{テスト仕様}
+\label{app:tests}
+% ============================================================
+
+\section{E0テスト}
+
+\begin{lstlisting}[style=pythonstyle,caption={理論整合性テストの例。}]
+def test_boole_scale_fixed_point() -> None:
+    """What: gamma_star satisfies gamma=alpha*(gamma+1/gamma)."""
+    alpha = 0.5
+    gamma = boole_gamma_star(alpha)
+    residual = gamma - alpha * (gamma + 1.0 / gamma)
+    assert abs(residual) < 1e-12
+
+
+def test_cayley_mode_is_unimodular() -> None:
+    """What: Every finite real input maps to the unit circle."""
+    x = np.array([-10.0, -1.0, 0.0, 1.0, 10.0])
+    z = cayley_mode(x, mu=0.0, gamma=1.0, order=3)
+    assert np.allclose(np.abs(z), 1.0, atol=1e-12)
+\end{lstlisting}
+
+\section{同期多様体テスト}
+
+\begin{lstlisting}[style=pythonstyle,caption={同期不変性テストの例。}]
+def test_output_mixing_preserves_sync_manifold() -> None:
+    """What: Identical nodes remain identical after one update."""
+    n_nodes = 8
+    state = np.full(n_nodes, 0.7)
+    weight = np.full((n_nodes, n_nodes), 1.0 / n_nodes)
+    nxt = output_mixing_step(
+        state=state,
+        alpha=0.5,
+        coupling=0.52,
+        weight=weight,
+        common_input=0.1,
+    )
+    assert np.max(np.abs(nxt - nxt[0])) < 1e-12
+\end{lstlisting}
+
+添付原稿型のランダム加法結合には、逆に「行和が異なると同期状態が一stepで崩れる」負対照テストを作る。
+
+\section{識別可能性テスト}
+
+rank-one観測ではswapペアの特徴が一致することを検証する。targetやIDを渡さず、観測系列だけから特徴を作る。
+
+\begin{lstlisting}[style=pythonstyle,caption={rank-one衝突の負対照。}]
+def test_rank_one_features_collide_under_source_swap() -> None:
+    """What: A symmetric one-channel observation loses source order."""
+    y_ab = source_a + source_b
+    y_ba = source_b + source_a
+    f_ab = tm_feature_vector(y_ab, orders=(1, 2, 3, 4), lags=(1, 2))
+    f_ba = tm_feature_vector(y_ba, orders=(1, 2, 3, 4), lags=(1, 2))
+    assert np.allclose(f_ab, f_ba, atol=1e-12)
+\end{lstlisting}
+
+\section{漏洩テスト}
+
+\begin{enumerate}
+  \item scalerのfit indexとtest indexが交差しない。
+  \item PCAのfitはtrainのみ。
+  \item paired sampleは同じsplitに入る。
+  \item 同じ軌道seedから切り出した窓は同じsplitに入る。
+  \item test metricを使うmodel selection関数を作らない。
+\end{enumerate}
+
+\section{artifactテスト}
+
+run終了時に次を自動検査する。
+
+\begin{enumerate}
+  \item 必須ファイルが存在する。
+  \item CSVの条件数・seed数がconfigと一致する。
+  \item すべての指標が有限、または失敗理由を持つ。
+  \item 図の元データが保存される。
+  \item hash再計算が一致する。
+\end{enumerate}
+
+% ============================================================
+\chapter{主要導出の補足}
+\label{app:derivations}
+% ============================================================
+
+\section{Cauchy線形安定性}
+
+\(X_j\)の特性関数が\(\varphi_j(t)=\exp(\ii\mu_jt-\gamma_j|t|)\)なら、独立性より
+\begin{align}
+  \E\exp\left(\ii t\sum_ja_jX_j\right)
+  &=\prod_j\varphi_j(a_jt)\\
+  &=\exp\left[
+      \ii t\sum_ja_j\mu_j
+      -|t|\sum_j|a_j|\gamma_j
+    \right].
+\end{align}
+これは\cref{eq:cauchy_linear_stability}のCauchy特性関数である。
+
+\section{Boole尺度固定点}
+
+\cref{eq:boole_scale_map}の固定点は
+\begin{align}
+  \gamma&=\alpha\gamma+\frac{\alpha}{\gamma},\\
+  (1-\alpha)\gamma^2&=\alpha.
+\end{align}
+尺度は正なので正根だけを採用し、\cref{eq:boole_gamma_star}を得る。
+
+\section{出力混合ネットワークの横指数}
+
+同期軌道を\(\vect x_t=s_t\ones\)、微小摂動を\(\vect\delta_t\)とする。\cref{eq:output_mixing_network}を一次展開すると
+\begin{equation}
+  \vect\delta_{t+1}
+  \approx F'_\alpha(s_t)\mat B_K\vect\delta_t.
+\end{equation}
+\(\mat W\vect v_q=\nu_q\vect v_q\)なら、\(\mat B_K\vect v_q=(1-K+K\nu_q)\vect v_q\)である。したがってmode振幅は\cref{eq:graph_mode_variational}に従い、対数成長率を時間平均すると\cref{eq:graph_mode_lyapunov}を得る。
+
+\section{自己結合を除く全結合}
+
+\begin{equation}
+  \mat W_{\mathrm{no\ self}}
+  =\frac{\ones\ones^\top-\mat I}{N-1}
+\end{equation}
+とする。同期方向では\(\nu_0=1\)、zero-sum横方向では
+\begin{equation}
+  \nu_\perp=-\frac1{N-1}.
+\end{equation}
+よって横混合倍率は
+\begin{equation}
+  1-K+K\nu_\perp
+  =1-\frac{N}{N-1}K.
+\end{equation}
+下側臨界は
+\begin{equation}
+  K_{c,\mathrm{low}}
+  =\frac{N-1}{N}\left(1-\e^{-\lambda_F}\right)
+\end{equation}
+となる。\(N\to\infty\)で自己結合を含む全平均混合の式へ近づく。
+
+\section{rank-one衝突のBayes誤差}
+
+同じ観測に\(\vect a\)と\(\vect b\)が同確率で対応する場合、二乗誤差の条件付きリスク
+\begin{equation}
+  R(\vect z)
+  =\frac12\|\vect z-\vect a\|_2^2
+   +\frac12\|\vect z-\vect b\|_2^2
+\end{equation}
+を\(\vect z\)で微分すると、最適解は\((\vect a+\vect b)/2\)である。\(\vect a=(a,b)\)、\(\vect b=(b,a)\)を代入すれば、各座標MSEは\((a-b)^2/4\)となる。
+
+% ============================================================
+\chapter{主張監査表}
+\label{app:audit}
+% ============================================================
+
+\begin{longtable}{p{44mm}p{27mm}p{72mm}}
+\caption{本研究での主張状態。}\label{tab:claim_audit}\\
+\toprule
+主張 & 状態 & 本研究での扱い \\
+\midrule
+\endfirsthead
+\toprule
+主張 & 状態 & 本研究での扱い \\
+\midrule
+\endhead
+Cauchy特性関数と独立線形和の安定性 & \Known & E0の数学的基礎として使用。\\
+Cauchyから単位円へのCayley変換とTM直交性 & \Known & 紙上導出とE0B数値検証。\\
+一般化Boole写像のCauchy尺度写像 & \SourceClaim & E0Aで独立軌道から数値再現。\\
+Boole写像のLyapunov閉形式 & \SourceClaim & E0Aで時間平均と照合。\\
+無限次元ランダム結合の一変数尺度縮約 & \SourceClaim & 独立性、quenched disorder、row sum、有限\(N\)を監査。\\
+臨界値が\(\E|\varepsilon|\)だけで決まる & \SourceClaim & E3Aで同じ絶対一次moment・異なる符号分布を比較。\\
+K-fold cotangentの\(UM_k=M_{Kk}\) & \SourceClaim/基準系 & E0Bの正対照として使う。\\
+PF prime-factor spectrum、KMS、mass gap & \SourceClaim & 卒論の中核実験では仮定しない。\\
+AKOrNが同期を学習表現へ利用できる & 先行研究の実験結果 & 動的block・stimulus・readout設計の参考。カオス性能の証拠にはしない。\\
+output-mixingのgraph mode横指数 & \Derived & E3Cで数値照合。\\
+rank-one観測のswap誤差下限 & \Derived & E1Bの負対照。\\
+臨界近傍で同期と情報保持が両立する & \Hypothesis & E3C以降で検証。\\
+TMが全baselineより優れる & \Hypothesis & E1/E2/E4/E5で条件別に検証し、普遍主張を避ける。\\
+\bottomrule
+\end{longtable}
+
+% ============================================================
+\chapter{実験ノートとレポートのテンプレート}
+\label{app:templates}
+% ============================================================
+
+\section{実験前}
+
+\begin{enumerate}
+  \item EIDと一文の研究質問。
+  \item 帰無仮説と対立仮説。
+  \item 操作変数、固定変数、乱数単位。
+  \item train/validation/testの生成規則。
+  \item 主要指標、副指標、失敗率。
+  \item \Gate と停止条件。
+  \item 予定図表。
+  \item 計算budget。
+\end{enumerate}
+
+\section{実験後}
+
+\begin{enumerate}
+  \item 実行日時、commit hash、環境。
+  \item configからの変更。変更がなければ「なし」。
+  \item 未集約結果ファイルへの参照。
+  \item 主要数値と95\%区間。
+  \item \Gate ごとの支持・未支持。
+  \item 理論との一致・不一致。
+  \item 数値誤差、漏洩、選択バイアスの監査。
+  \item 次に検証する単一仮説。
+\end{enumerate}
+
+\section{レポート本文の骨格}
+
+\begin{Verbatim}[fontsize=\small,frame=single]
+1. はじめに
+   1.1 背景
+   1.2 研究質問と仮説
+2. 原理
+   2.1 局所写像と不変測度
+   2.2 同期多様体と横Lyapunov指数
+   2.3 TM読み出しと識別可能性
+3. 実験方法
+   3.1 データ生成と分割
+   3.2 実装・パラメータ・seed
+   3.3 評価指標と事前Gate
+4. 結果
+   4.1 正対照・負対照
+   4.2 主要結果
+   4.3 感度分析
+5. 考察
+   5.1 理論との比較
+   5.2 代替説明
+   5.3 限界
+6. 結論
+7. 参考文献
+\end{Verbatim}
+
+\section{図captionの例}
+
+\begin{quote}
+図X.X: \(\alpha=1/2\)、\(N=8\)の出力混合Boole系における結合強度\(K\)と入力保持性能。左は終端24stepの同期RMS中央値、右はgroup split testにおけるTM--graph logistic probeのbalanced accuracyである。点は10 seed平均、帯はseed bootstrap 95\%区間を表す。縦破線は本モデルの局所臨界値\(K_c=0.5\)である。
+\end{quote}
+
+% ============================================================
+\chapter{記号表}
+\label{app:symbols}
+% ============================================================
+
+\begin{longtable}{p{28mm}p{113mm}}
+\toprule
+記号 & 意味 \\
+\midrule
+\(\alpha\) & 一般化Boole写像の局所パラメータ。\\
+\(\beta\) & 生tangent写像\(\tan(\beta x)\)のパラメータ。\\
+\(K\) & 結合強度。モデルごとに意味が異なるためモデル名を併記する。\\
+\(N\) & ノード数。\\
+\(\mu,\gamma\) & Cauchy分布の位置・尺度。\\
+\(\gamma_*\) & 尺度写像の正固定点。\\
+\(F_\alpha\) & 一般化Boole写像。\\
+\(T_\beta\) & 生tangent写像。\\
+\(H_K\) & K-fold cotangent写像。\\
+\(q_{\mu,\gamma}\) & Cayley変換。\\
+\(M_k\) & TM power basisの第\(k\)モード。\\
+\(\lambda_F\) & 単一Boole写像のLyapunov指数。\\
+\(\lambda_\parallel\) & 同期多様体に沿うLyapunov指数。\\
+\(\lambda_\perp\) & 同期多様体に横断するLyapunov指数。\\
+\(E_{\mathrm{sync}}\) & ノード間RMS同期誤差。\\
+\(\nu_q\) & 結合行列\(\mat W\)の第\(q\)固有値。\\
+\(d_z\) & 潜在次元。\\
+\(\NMSE{}\) & 分散正規化平均二乗誤差。\\
+\(\effrank{}\) & 特異値participation ratioによるeffective rank。\\
+\bottomrule
+\end{longtable}
+
+% ============================================================
+\backmatter
+\chapter*{参考文献}
+\addcontentsline{toc}{chapter}{参考文献}
+\begin{thebibliography}{99}
+
+\bibitem{mathlab2024}
+京都大学 工学部情報学科 数理工学コース 実験演習ワーキンググループ編,
+『数理工学実験 2024年度版』, 2024.
+
+\bibitem{infinite_sync}
+K. Umeno,
+``Infinite Dimensional Chaotic Synchronization for Randomly Coupling Systems and Dynamical Phase Transition,''
+manuscript dated July 5, 2026.
+
+\bibitem{mass_gap}
+K. Umeno,
+``Universal Mass Gap Formula $\Delta m=m_0\ln K$: Spontaneous Kubo--Martin--Schwinger State Emergence with Maximal Quantum Chaos,''
+manuscript dated July 30, 2026.
+
+\bibitem{akorn}
+T. Miyato, S. L\"owe, A. Geiger, and M. Welling,
+``Artificial Kuramoto Oscillatory Neurons,''
+International Conference on Learning Representations, 2025.
+
+\bibitem{umeno1998}
+K. Umeno,
+``Superposition of chaotic processes with convergence to L\'evy's stable law,''
+Physical Review E, Vol. 58, p. 2644, 1998.
+
+\bibitem{umeno_okubo2016}
+K. Umeno and K.-i. Okubo,
+``Exact Lyapunov exponents of the generalized Boole transformations,''
+Progress of Theoretical and Experimental Physics, 2016, 021A01, 2016.
+
+\bibitem{kano_umeno2022}
+T. Kano and K. Umeno,
+``Chaotic synchronization of mutually coupled systems with arbitrary proportional linear relations,''
+Chaos, Vol. 32, 113137, 2022.
+
+\bibitem{kaneko1990}
+K. Kaneko,
+``Clustering, coding, switching, hierarchical ordering, and control in a network of chaotic elements,''
+Physica D, Vol. 41, pp. 137--172, 1990.
+
+\bibitem{kuramoto1984}
+Y. Kuramoto,
+Chemical Oscillations, Waves, and Turbulence,
+Springer, 1984.
+
+\bibitem{wood2006}
+木下是雄,
+『理科系の作文技術』,
+中央公論新社, 1981.
+
+\end{thebibliography}
+
+\chapter*{最後に}
+\addcontentsline{toc}{chapter}{最後に}
+
+本研究で最も重要なのは、同期、カオス、圧縮、復号を一つの魅力的な言葉へまとめないことである。各概念を別の式と別の指標で測り、その間の論理を実験でつなぐ。理論値に合わない結果、TMがbaselineに負ける結果、深い同期で情報が消える結果も、原因を切り分けて保存すれば研究成果である。
+
+最初の実装は\EID{E0A-BOOLE-LOCAL-VALIDATION}である。\cref{eq:boole_map,eq:boole_gamma_star,eq:empirical_boole_lyap}を自分で実装し、Cauchy QQ、MAD、Lyapunov一致図の三つを出すところから始める。
+
+\end{document}

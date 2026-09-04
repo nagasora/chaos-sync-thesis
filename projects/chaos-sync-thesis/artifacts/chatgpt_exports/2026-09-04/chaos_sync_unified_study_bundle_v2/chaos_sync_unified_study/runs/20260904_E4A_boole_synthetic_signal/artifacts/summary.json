@@ -1,0 +1,97 @@
+{
+  "experiment_id": "E4A-BOOLE-SYNTHETIC-SIGNAL-RECONSTRUCTION",
+  "status": "completed",
+  "config": {
+    "alpha": 0.5,
+    "n_nodes": 8,
+    "length": 64,
+    "n_samples": 720,
+    "washout": 16,
+    "coupling_grid": [
+      0.3,
+      0.48,
+      0.52,
+      0.65,
+      0.85
+    ],
+    "input_gain_grid": [
+      0.02,
+      0.05,
+      0.1,
+      0.2
+    ],
+    "dimensions": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "seed": 20260904
+  },
+  "selected_coupling": 0.85,
+  "selected_input_gain": 0.2,
+  "selected_validation_nmse": 1.029532787895036,
+  "integrity_checks": {
+    "split_disjoint": true,
+    "selected_only_on_validation": true,
+    "all_metrics_finite": true,
+    "all_representations_present": true
+  },
+  "scientific_gates": {
+    "tm_beats_raw_dct_d16": true,
+    "terminal_comparison_dimension": 8,
+    "tm_beats_terminal_common_dimension": true,
+    "tm_beats_terminal_d16": true,
+    "tm_matches_input_pca_within_25pct": false
+  },
+  "d16_metrics": [
+    {
+      "representation": "tm_spectrum",
+      "dimension": 16,
+      "alpha": 100.0,
+      "validation_nmse": 1.021200591337863,
+      "test_nmse": 1.0170265776341327,
+      "test_rmse": 0.6608310552401346,
+      "coupling": 0.85,
+      "input_gain": 0.2,
+      "median_sync_rms": 0.0
+    },
+    {
+      "representation": "raw_mean_dct",
+      "dimension": 16,
+      "alpha": 100.0,
+      "validation_nmse": 1.0226511765888138,
+      "test_nmse": 1.0204351789479724,
+      "test_rmse": 0.6619375284960572,
+      "coupling": 0.85,
+      "input_gain": 0.2,
+      "median_sync_rms": 0.0
+    },
+    {
+      "representation": "reservoir_flat",
+      "dimension": 16,
+      "alpha": 100.0,
+      "validation_nmse": 1.0407229806070577,
+      "test_nmse": 1.0147150212016616,
+      "test_rmse": 0.6600796406395757,
+      "coupling": 0.85,
+      "input_gain": 0.2,
+      "median_sync_rms": 0.0
+    },
+    {
+      "representation": "input_oracle",
+      "dimension": 16,
+      "alpha": 1e-05,
+      "validation_nmse": 0.004696667691397023,
+      "test_nmse": 0.006605797889707458,
+      "test_rmse": 0.05325825514468773,
+      "coupling": 0.85,
+      "input_gain": 0.2,
+      "median_sync_rms": 0.0
+    }
+  ],
+  "interpretation": {
+    "main": "入力波形64点を潜在4/8/16/32次元へ落とし、同一ridge decoderで rate–distortion を比較した。",
+    "caution": "入力PCAは力学系を通さないoracle線形圧縮であり、提案法の比較上限として扱う。"
+  }
+}

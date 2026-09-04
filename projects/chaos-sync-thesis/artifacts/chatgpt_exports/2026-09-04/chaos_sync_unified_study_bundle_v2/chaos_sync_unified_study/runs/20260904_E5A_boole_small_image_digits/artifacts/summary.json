@@ -1,0 +1,101 @@
+{
+  "experiment_id": "E5A-BOOLE-SMALL-IMAGE-DIGITS",
+  "status": "pilot_completed",
+  "config": {
+    "alpha": 0.5,
+    "n_nodes": 8,
+    "washout": 16,
+    "dimensions": [
+      8,
+      16,
+      32
+    ],
+    "seed": 20260904
+  },
+  "transferred_coupling": 0.85,
+  "transferred_input_gain": 0.2,
+  "integrity_checks": {
+    "split_disjoint": true,
+    "e4_dynamics_frozen": true,
+    "all_metrics_finite": true,
+    "digits_shape_8x8": true
+  },
+  "scientific_gates": {
+    "terminal_comparison_dimension": 8,
+    "tm_beats_terminal_reconstruction_common_dimension": false,
+    "tm_beats_terminal_reconstruction_d16": false,
+    "tm_beats_raw_dct_reconstruction_d16": true,
+    "tm_classification_above_0_70_d16": false,
+    "tm_matches_input_pca_ssim_within_0_10": false
+  },
+  "d16_metrics": [
+    {
+      "representation": "tm_spectrum",
+      "dimension": 16,
+      "alpha": 100.0,
+      "validation_nmse": 1.0175972238425712,
+      "test_nmse": 1.012963053925703,
+      "test_rmse": 0.27464115235513675,
+      "test_psnr": 11.224706357511307,
+      "test_ssim": 0.5717575431117367,
+      "classification_accuracy": 0.10277777777777777,
+      "classification_balanced_accuracy": 0.10205276705276707,
+      "classification_c": 0.1,
+      "coupling": 0.85,
+      "input_gain": 0.2,
+      "median_sync_rms": 0.0
+    },
+    {
+      "representation": "raw_mean_dct",
+      "dimension": 16,
+      "alpha": 100.0,
+      "validation_nmse": 1.0575647597054572,
+      "test_nmse": 1.017459330842303,
+      "test_rmse": 0.2752500074332906,
+      "test_psnr": 11.235184385081995,
+      "test_ssim": 0.5726885355739467,
+      "classification_accuracy": 0.07777777777777778,
+      "classification_balanced_accuracy": 0.07651437151437153,
+      "classification_c": 0.01,
+      "coupling": 0.85,
+      "input_gain": 0.2,
+      "median_sync_rms": 0.0
+    },
+    {
+      "representation": "reservoir_flat",
+      "dimension": 16,
+      "alpha": 100.0,
+      "validation_nmse": 1.1352268776757823,
+      "test_nmse": 1.0299204137578513,
+      "test_rmse": 0.2769304064073586,
+      "test_psnr": 11.23075474973705,
+      "test_ssim": 0.5723277751077951,
+      "classification_accuracy": 0.09722222222222222,
+      "classification_balanced_accuracy": 0.09696053196053196,
+      "classification_c": 100.0,
+      "coupling": 0.85,
+      "input_gain": 0.2,
+      "median_sync_rms": 0.0
+    },
+    {
+      "representation": "input_oracle",
+      "dimension": 16,
+      "alpha": 1e-05,
+      "validation_nmse": 0.15627543052144535,
+      "test_nmse": 0.15326305542653676,
+      "test_rmse": 0.10682860310242727,
+      "test_psnr": 19.880482013787613,
+      "test_ssim": 0.9532044266903423,
+      "classification_accuracy": 0.9611111111111111,
+      "classification_balanced_accuracy": 0.9612441012441012,
+      "classification_c": 1.0,
+      "coupling": 0.85,
+      "input_gain": 0.2,
+      "median_sync_rms": 0.0
+    }
+  ],
+  "interpretation": {
+    "main": "E4で選んだ力学を再調整せず8×8 digitsへ転移し、復元とクラス保持を比較した。",
+    "scope": "これは小画像pilotであり、28×28 MNISTの確認実験とは区別する。"
+  }
+}

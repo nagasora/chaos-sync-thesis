@@ -1,0 +1,244 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "question": "既知full-rank 2観測では2源alphaを回収でき、対称1観測では順序付き目標が識別不能になるか。",
+  "config": {
+    "fit_alphas": [
+      0.34,
+      0.42,
+      0.5,
+      0.58,
+      0.66
+    ],
+    "test_alphas": [
+      0.38,
+      0.46,
+      0.54,
+      0.62
+    ],
+    "fit_pair_seeds": [
+      20265830,
+      20265831,
+      20265832,
+      20265833,
+      20265834,
+      20265835,
+      20265836,
+      20265837,
+      20265838,
+      20265839,
+      20265840,
+      20265841,
+      20265842,
+      20265843,
+      20265844,
+      20265845
+    ],
+    "test_pair_seeds": [
+      20266830,
+      20266831,
+      20266832,
+      20266833,
+      20266834,
+      20266835,
+      20266836,
+      20266837,
+      20266838,
+      20266839,
+      20266840,
+      20266841,
+      20266842,
+      20266843,
+      20266844,
+      20266845,
+      20266846,
+      20266847,
+      20266848,
+      20266849,
+      20266850,
+      20266851,
+      20266852,
+      20266853,
+      20266854,
+      20266855,
+      20266856,
+      20266857,
+      20266858,
+      20266859,
+      20266860,
+      20266861
+    ],
+    "right_source_seed_offset": 1000000,
+    "burn_in": 2048,
+    "observation_length": 4096,
+    "mixing_matrix": [
+      [
+        1.0,
+        0.35
+      ],
+      [
+        0.25,
+        1.0
+      ]
+    ],
+    "tm_coordinates": [
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        4,
+        1
+      ]
+    ],
+    "fourier_band_count": 8,
+    "cv_folds": 4,
+    "selection_seed": 20265820,
+    "ridge_penalties": [
+      1e-06,
+      0.0001,
+      0.01,
+      1.0,
+      100.0
+    ],
+    "oracle_tm_rmse_threshold": 0.005,
+    "collision_tolerance": 1e-12
+  },
+  "sample_counts": {
+    "source_collision_pairs": 352,
+    "fit_rows": 320,
+    "test_rows": 384
+  },
+  "mixing_matrix_determinant": 0.9125,
+  "theoretical_collision_floor": 0.07302967433402215,
+  "rank_one_collision_feature_max_abs_difference": 0.0,
+  "per_model": [
+    {
+      "model": "oracle_tm_full_rank",
+      "observation_rank": 2,
+      "feature_dimension": 32,
+      "selected_penalty": 1.0,
+      "cv_ordered_rmse": 0.002428738280635927,
+      "cv_permutation_invariant_rmse": 0.002428738280635927,
+      "fit_ordered_rmse": 0.0019278122797527766,
+      "fit_permutation_invariant_rmse": 0.0019278122797527766,
+      "test_ordered_rmse": 0.002083314369515024,
+      "test_permutation_invariant_rmse": 0.002083314369515024
+    },
+    {
+      "model": "oracle_fourier_full_rank",
+      "observation_rank": 2,
+      "feature_dimension": 32,
+      "selected_penalty": 0.01,
+      "cv_ordered_rmse": 0.0031087888624117986,
+      "cv_permutation_invariant_rmse": 0.0031087888624117986,
+      "fit_ordered_rmse": 0.0022465183166569445,
+      "fit_permutation_invariant_rmse": 0.002246518316656945,
+      "test_ordered_rmse": 0.003050688721131833,
+      "test_permutation_invariant_rmse": 0.003050688721131833
+    },
+    {
+      "model": "direct_tm_full_rank",
+      "observation_rank": 2,
+      "feature_dimension": 32,
+      "selected_penalty": 0.01,
+      "cv_ordered_rmse": 0.009502300792099181,
+      "cv_permutation_invariant_rmse": 0.009502300792099181,
+      "fit_ordered_rmse": 0.008211927129326942,
+      "fit_permutation_invariant_rmse": 0.008211927129326942,
+      "test_ordered_rmse": 0.007740222490239181,
+      "test_permutation_invariant_rmse": 0.00774022249023918
+    },
+    {
+      "model": "direct_fourier_full_rank",
+      "observation_rank": 2,
+      "feature_dimension": 32,
+      "selected_penalty": 1.0,
+      "cv_ordered_rmse": 0.011008320994620447,
+      "cv_permutation_invariant_rmse": 0.011008320994620447,
+      "fit_ordered_rmse": 0.009817869375793873,
+      "fit_permutation_invariant_rmse": 0.009817869375793873,
+      "test_ordered_rmse": 0.00906970888669749,
+      "test_permutation_invariant_rmse": 0.00906970888669749
+    },
+    {
+      "model": "direct_tm_rank_one",
+      "observation_rank": 1,
+      "feature_dimension": 16,
+      "selected_penalty": 1.0,
+      "cv_ordered_rmse": 0.09001370975540281,
+      "cv_permutation_invariant_rmse": 0.09001370975540281,
+      "fit_ordered_rmse": 0.08989450340876647,
+      "fit_permutation_invariant_rmse": 0.08989450340876645,
+      "test_ordered_rmse": 0.07371025666935448,
+      "test_permutation_invariant_rmse": 0.07371025666935448
+    },
+    {
+      "model": "direct_fourier_rank_one",
+      "observation_rank": 1,
+      "feature_dimension": 16,
+      "selected_penalty": 1.0,
+      "cv_ordered_rmse": 0.09033544803814768,
+      "cv_permutation_invariant_rmse": 0.09033544803814768,
+      "fit_ordered_rmse": 0.09014788893029116,
+      "fit_permutation_invariant_rmse": 0.09014788893029116,
+      "test_ordered_rmse": 0.07389114491748885,
+      "test_permutation_invariant_rmse": 0.07389114491748885
+    }
+  ],
+  "success_components": {
+    "oracle_tm_below_threshold": true,
+    "rank_one_collision_exact": true,
+    "rank_one_ordered_floor_tm": true,
+    "rank_one_ordered_floor_fourier": true
+  },
+  "success": true,
+  "artifacts": {
+    "source_data": "artifacts/source_trajectories.npz",
+    "feature_store": "artifacts/features.npz",
+    "source_manifest": "artifacts/source_trajectory_manifest.csv",
+    "trajectory_manifest": "artifacts/trajectory_manifest.csv",
+    "fold_assignments": "artifacts/fold_assignments.csv",
+    "model_cv_metrics": "artifacts/model_cv_metrics.csv",
+    "model_metrics": "artifacts/model_metrics.csv",
+    "test_predictions": "artifacts/test_predictions.csv",
+    "pair_metrics": "artifacts/pair_metrics.csv",
+    "seed_metrics": "artifacts/seed_metrics.csv",
+    "collision_diagnostics": "artifacts/collision_diagnostics.csv",
+    "plots": [
+      "artifacts/identifiability_results.png",
+      "artifacts/prediction_scatter.png"
+    ]
+  },
+  "caveats": [
+    "既知Aのoracle逆変換はblind source separationではない。",
+    "源ごとの混合前標準化を使う理想化実験であり、未知混合の実データでは直接利用できない。",
+    "test alphaはfit範囲内の未使用補間点であり、外挿ではない。",
+    "識別可能性と情報圧縮、同期、画像復号は別問題である。",
+    "rank-oneの非識別可能性は順序付き目標に対する主張であり、unordered pair推定を否定しない。"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "status": "planned",
+  "execution_scope": "local finite-size numerical pilot",
+  "seeds": [
+    20260830,
+    20260831,
+    20260832
+  ],
+  "executed_at": "2026-08-31T14:58:19+09:00",
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\長松　蒼空\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "dependencies": [
+    "numpy==1.26.2"
+  ],
+  "execution_command": "python e3a_finite_size_sync.py --run-directory . --config config.json",
+  "script_sha256": "43f8b64951d99347c04225445027d1491c961335e960c1fc6d4c93d6bac4cb57",
+  "config_sha256": "c136892bf5c01da9fe0b012f7fafdd731881a7fdcde3ec4e4ad9a81de0eea3a9",
+  "git_commit": "0de2c10c5f3617b922e7e5e58c9dda0df560144f",
+  "git_worktree_dirty": true,
+  "postprocessed_at": "2026-08-31T15:26:10+09:00",
+  "postprocessing_command": "python e3a_finite_size_sync.py --run-directory . --config config.json --reassess-existing",
+  "postprocessor_script_sha256": "59b8715f4059167bb91d2d8389196771dcf6f9ee7658f113123042b3f8e02d77",
+  "postprocessed_metrics_sha256": "c45cc5a2d2b89fc846059106e459197ad09cffd76a9440430fcd67ded7ea2eed"
+}

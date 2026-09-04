@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "question": "周辺Cauchy尺度を軌道ごとに除去しても、TM時間遅延特徴から未使用alphaを回収できるか。",
+  "config": {
+    "train_alphas": [
+      0.34,
+      0.42,
+      0.5,
+      0.58,
+      0.66
+    ],
+    "test_alphas": [
+      0.38,
+      0.46,
+      0.54,
+      0.62
+    ],
+    "train_seeds": [
+      20260830,
+      20260831,
+      20260832,
+      20260833,
+      20260834,
+      20260835,
+      20260836,
+      20260837,
+      20260838,
+      20260839,
+      20260840,
+      20260841,
+      20260842,
+      20260843,
+      20260844,
+      20260845,
+      20260846,
+      20260847,
+      20260848,
+      20260849
+    ],
+    "validation_seeds": [
+      20261830,
+      20261831,
+      20261832,
+      20261833,
+      20261834,
+      20261835,
+      20261836,
+      20261837
+    ],
+    "test_seeds": [
+      20263830,
+      20263831,
+      20263832,
+      20263833,
+      20263834,
+      20263835,
+      20263836,
+      20263837,
+      20263838,
+      20263839,
+      20263840,
+      20263841,
+      20263842,
+      20263843,
+      20263844,
+      20263845,
+      20263846,
+      20263847,
+      20263848,
+      20263849,
+      20263850,
+      20263851,
+      20263852,
+      20263853,
+      20263854,
+      20263855,
+      20263856,
+      20263857,
+      20263858,
+      20263859,
+      20263860,
+      20263861,
+      20263862,
+      20263863,
+      20263864,
+      20263865,
+      20263866,
+      20263867,
+      20263868,
+      20263869,
+      20263870,
+      20263871,
+      20263872,
+      20263873,
+      20263874,
+      20263875,
+      20263876,
+      20263877
+    ],
+    "burn_in": 2048,
+    "observation_length": 4096,
+    "tm_max_order": 8,
+    "delay_lags": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "raw_window_length": 64,
+    "fourier_band_count": 8,
+    "ridge_penalties": [
+      1e-06,
+      0.0001,
+      0.01,
+      1.0,
+      100.0
+    ],
+    "bootstrap_repetitions": 5000,
+    "bootstrap_seed": 20263830,
+    "feature_shuffle_seed": 20260830
+  },
+  "sample_counts": {
+    "train": 100,
+    "validation": 40,
+    "test": 192
+  },
+  "per_feature": [
+    {
+      "feature": "robust_quantiles",
+      "feature_dimension": 7,
+      "selected_penalty": 100.0,
+      "train_rmse": 0.11208533140569153,
+      "validation_rmse": 0.11341498679271408,
+      "test_rmse": 0.08942326760302824
+    },
+    {
+      "feature": "raw_window",
+      "feature_dimension": 128,
+      "selected_penalty": 100.0,
+      "train_rmse": 0.06214045138335952,
+      "validation_rmse": 0.10917971616307552,
+      "test_rmse": 0.10065676016895427
+    },
+    {
+      "feature": "fourier_bands",
+      "feature_dimension": 16,
+      "selected_penalty": 0.01,
+      "train_rmse": 0.0026410313208400818,
+      "validation_rmse": 0.002911857623186852,
+      "test_rmse": 0.0023558115284938222
+    },
+    {
+      "feature": "cayley_delay_k1",
+      "feature_dimension": 10,
+      "selected_penalty": 1.0,
+      "train_rmse": 0.009932818990303918,
+      "validation_rmse": 0.011756720232662393,
+      "test_rmse": 0.012180735042736106
+    },
+    {
+      "feature": "tm_no_delay",
+      "feature_dimension": 16,
+      "selected_penalty": 100.0,
+      "train_rmse": 0.10727551327864308,
+      "validation_rmse": 0.10938307104283863,
+      "test_rmse": 0.09029062696921422
+    },
+    {
+      "feature": "tm_delay_shuffled",
+      "feature_dimension": 80,
+      "selected_penalty": 100.0,
+      "train_rmse": 0.08212910256788028,
+      "validation_rmse": 0.12654343460232859,
+      "test_rmse": 0.09922815752732933
+    },
+    {
+      "feature": "tm_delay",
+      "feature_dimension": 80,
+      "selected_penalty": 0.01,
+      "train_rmse": 0.0003647860082115615,
+      "validation_rmse": 0.0018809905403797582,
+      "test_rmse": 0.002096141582799823
+    }
+  ],
+  "best_baseline_selected_on_validation": "fourier_bands",
+  "paired_seed_bootstrap": {
+    "point_difference": 0.00025966994569399937,
+    "ci_95_lower": -2.3386435860683587e-05,
+    "ci_95_upper": 0.0005612665938632742
+  },
+  "success": false,
+  "observations": {
+    "tm_delay_test_rmse": 0.002096141582799823,
+    "tm_no_delay_test_rmse": 0.09029062696921422,
+    "shuffled_tm_delay_test_rmse": 0.09922815752732933,
+    "best_baseline_test_rmse": 0.0023558115284938222
+  },
+  "caveats": [
+    "本pilotは単一源のalpha回収だけを扱い、2源分離と識別不能対照は未実行である。",
+    "軌道ごとのロバスト標準化は周辺尺度差を抑えるが、有限標本の尺度推定誤差を完全には消さない。",
+    "bootstrapはtest seedをクラスタとして再標本化した工学的区間で、理論的保証ではない。",
+    "test alphaは学習範囲内の未使用補間点であり、範囲外外挿は検証していない。"
+  ]
+}

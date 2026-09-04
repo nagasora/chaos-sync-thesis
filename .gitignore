@@ -50,3 +50,14 @@ projects/*/references/papers/
 *.pptx
 *.png
 *.npz
+
+# E1A容量一致runでは、再利用特徴と結果図を数値証拠としてリポジトリに残す。
+!projects/chaos-sync-thesis/experiments/runs/20260901_E1A_matched-capacity-readout/artifacts/features.npz
+!projects/chaos-sync-thesis/experiments/runs/20260901_E1A_matched-capacity-readout/artifacts/matched_capacity_results.png
+!projects/chaos-sync-thesis/experiments/runs/20260901_E1A_matched-capacity-readout/artifacts/tm_candidate_selection.png
+
+# E1Bでは実使用の標準化済み源軌道、モデル入力、結果図を再利用可能な証拠として残す。
+!projects/chaos-sync-thesis/experiments/runs/20260901_E1B_two-source-identifiability/artifacts/source_trajectories.npz
+!projects/chaos-sync-thesis/experiments/runs/20260901_E1B_two-source-identifiability/artifacts/features.npz
+!projects/chaos-sync-thesis/experiments/runs/20260901_E1B_two-source-identifiability/artifacts/identifiability_results.png
+!projects/chaos-sync-thesis/experiments/runs/20260901_E1B_two-source-identifiability/artifacts/prediction_scatter.png

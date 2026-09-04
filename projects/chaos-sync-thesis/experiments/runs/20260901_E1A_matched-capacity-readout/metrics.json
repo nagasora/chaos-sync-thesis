@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "primary": {
+    "success": true,
+    "selected_tm_candidate": "short_lag_orders",
+    "tm_selected_16_test_rmse": 0.0013424366436820892,
+    "fourier_16_test_rmse": 0.002614089997720455,
+    "fourier_minus_tm_ci_95": [
+      0.0009851505463246988,
+      0.001559634505576595
+    ]
+  },
+  "secondary": {
+    "model_metrics": [
+      {
+        "model": "tm_selected_16",
+        "feature_name": "tm16_short_lag_orders",
+        "feature_dimension": 16,
+        "selected_penalty": 1e-06,
+        "cv_rmse": 0.0018259833278783792,
+        "fit_rmse": 0.0015518090219968888,
+        "test_rmse": 0.0013424366436820892
+      },
+      {
+        "model": "fourier_16",
+        "feature_name": "fourier_16",
+        "feature_dimension": 16,
+        "selected_penalty": 0.01,
+        "cv_rmse": 0.0030895639376107027,
+        "fit_rmse": 0.0026936699778765546,
+        "test_rmse": 0.002614089997720455
+      },
+      {
+        "model": "tm_full_80",
+        "feature_name": "tm_full_80",
+        "feature_dimension": 80,
+        "selected_penalty": 0.0001,
+        "cv_rmse": 0.001759843307607525,
+        "fit_rmse": 0.000549029151462919,
+        "test_rmse": 0.0013175256595460646
+      },
+      {
+        "model": "tm_instant_16",
+        "feature_name": "tm_instant_16",
+        "feature_dimension": 16,
+        "selected_penalty": 100.0,
+        "cv_rmse": 0.11377514289295101,
+        "fit_rmse": 0.10589443557768499,
+        "test_rmse": 0.09465949355470438
+      }
+    ]
+  },
+  "artifacts": {
+    "feature_store": "artifacts/features.npz",
+    "trajectory_manifest": "artifacts/trajectory_manifest.csv",
+    "test_predictions": "artifacts/test_predictions.csv",
+    "model_metrics": "artifacts/model_metrics.csv",
+    "candidate_cv_metrics": "artifacts/candidate_cv_metrics.csv",
+    "alpha_metrics": "artifacts/alpha_metrics.csv",
+    "seed_metrics": "artifacts/seed_metrics.csv",
+    "bootstrap_differences": "artifacts/bootstrap_differences.csv",
+    "plots": [
+      "artifacts/matched_capacity_results.png",
+      "artifacts/tm_candidate_selection.png"
+    ]
+  },
+  "notes": [
+    "単一源alpha回収であり、同期、源分離、圧縮・復号を検証していない。",
+    "test alphaはfit範囲内の未使用補間点であり、外挿ではない。",
+    "TM候補選択の自由度はFourierの固定帯域より大きいため、成功しても基底固有の普遍的優位を意味しない。",
+    "軌道ごとの尺度推定誤差が有限時間情報へ残る可能性を排除していない。"
+  ]
+}

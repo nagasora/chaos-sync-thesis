@@ -1,0 +1,6 @@
+{
+  "output_half_exact_sync": true,
+  "parallel_chaos_positive": true,
+  "metrics_finite_except_expected_minus_inf": true,
+  "both_coupling_forms_present": true
+}

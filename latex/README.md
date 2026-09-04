@@ -17,6 +17,7 @@
 | 卒業論文 | `thesis/main.tex` | `build/main/` |
 | 研究発表 | `slides/chaos-sync-presentation.tex` | `build/chaos-sync-presentation/` |
 | 理論ノート・想定問答 | `notes/research-topic-qa.tex` | `build/research-topic-qa/` |
+| E0・E1定式化と結果 | `notes/e0-e1-formulation-results.tex` | `build/e0-e1-formulation-results/` |
 | 研究発表テンプレート | `templates/research-presentation-template.tex` | `build/research-presentation-template/` |
 | B4輪読 2026-05-27 | `seminars/b4-2026-05-27.tex` | `build/b4-2026-05-27/` |
 

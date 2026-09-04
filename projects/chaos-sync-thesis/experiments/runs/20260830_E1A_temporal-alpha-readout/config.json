@@ -1,0 +1,180 @@
+{
+  "schema_version": 2,
+  "experiment_id": "20260830_E1A_temporal-alpha-readout",
+  "title": "周辺尺度除去後のTM時間遅延特徴によるBoole写像パラメータ回収",
+  "stage": "E1A",
+  "created_at": "2026-08-30T14:23:16.958233+09:00",
+  "status": "completed",
+  "hypothesis": "軌道ごとの中央値とCauchy尺度を除いても、TM高次モードの時間遅延相関には写像パラメータalphaに依存する有限時間構造が残り、未使用alphaの回収RMSEを基準特徴より下げる。",
+  "data": {
+    "source": "generalized_boole_map",
+    "provenance": "synthetic_from_E0_validated_generator",
+    "map": "F_alpha(x)=alpha*(x-1/x)",
+    "train_alphas": [
+      0.34,
+      0.42,
+      0.5,
+      0.58,
+      0.66
+    ],
+    "test_alphas": [
+      0.38,
+      0.46,
+      0.54,
+      0.62
+    ],
+    "burn_in": 2048,
+    "observation_length": 4096,
+    "split_unit": "trajectory_seed_and_held_out_interpolation_alpha",
+    "marginal_normalization": "per_trajectory_median_and_half_IQR"
+  },
+  "seeds": [
+    20260830,
+    20261830,
+    20262830
+  ],
+  "feature_shuffle_seed": 20260830,
+  "features": [
+    "tm_orders_1_to_8",
+    "tm_delay_lags_1_2_4_8"
+  ],
+  "baselines": [
+    "robust_quantiles",
+    "raw_cayley_window",
+    "fourier_bands",
+    "cayley_delay_k1",
+    "tm_no_delay",
+    "tm_delay_after_time_shuffle"
+  ],
+  "training": {
+    "regime": "readout_only",
+    "trainable_parameters": [
+      "ridge_probe_weights",
+      "ridge_probe_intercept"
+    ],
+    "frozen_parameters": [
+      "generalized_boole_map",
+      "trajectory_preprocessing",
+      "feature_definitions",
+      "train_validation_test_split"
+    ],
+    "state_time_index": "t",
+    "learning_time_index": "n",
+    "update_schedule": "after_fixed_trajectory_generation",
+    "optimizer": "closed_form_ridge_selected_by_validation_RMSE",
+    "loss_terms": [
+      "alpha_recovery_squared_error"
+    ],
+    "coupling_constraints": [
+      "no_synchronization_coupling_in_E1A"
+    ],
+    "freeze_all_parameters_for_test": true
+  },
+  "metrics": {
+    "primary": [
+      "held_out_alpha_test_RMSE",
+      "paired_seed_bootstrap_RMSE_difference"
+    ],
+    "secondary": [
+      "validation_RMSE",
+      "feature_dimension",
+      "tm_no_delay_test_RMSE",
+      "time_shuffled_tm_delay_test_RMSE"
+    ]
+  },
+  "success_criteria": [
+    "best_baseline_is_selected_on_validation_only",
+    "baseline_minus_tm_test_RMSE_bootstrap_CI_95_lower_is_positive"
+  ],
+  "falsification_criteria": [
+    "tm_delay_does_not_outperform_validation_selected_baseline_on_held_out_alpha",
+    "time_shuffle_preserves_the_apparent_improvement",
+    "improvement_requires_timepoint_level_split"
+  ],
+  "parent_experiment_ids": [
+    "20260806_E0_boole-invariant-measure",
+    "20260806_E1A_tm-linear-mixture"
+  ],
+  "actual_run_config": {
+    "train_alphas": [
+      0.34,
+      0.42,
+      0.5,
+      0.58,
+      0.66
+    ],
+    "test_alphas": [
+      0.38,
+      0.46,
+      0.54,
+      0.62
+    ],
+    "train_seeds": [
+      20260830,
+      20260831,
+      20260832,
+      20260833,
+      20260834,
+      20260835,
+      20260836,
+      20260837,
+      20260838,
+      20260839,
+      20260840,
+      20260841,
+      20260842,
+      20260843,
+      20260844,
+      20260845,
+      20260846,
+      20260847,
+      20260848,
+      20260849
+    ],
+    "validation_seeds": [
+      20261830,
+      20261831,
+      20261832,
+      20261833,
+      20261834,
+      20261835,
+      20261836,
+      20261837
+    ],
+    "test_seeds": [
+      20262830,
+      20262831,
+      20262832,
+      20262833,
+      20262834,
+      20262835,
+      20262836,
+      20262837,
+      20262838,
+      20262839,
+      20262840,
+      20262841
+    ],
+    "burn_in": 2048,
+    "observation_length": 4096,
+    "tm_max_order": 8,
+    "delay_lags": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "raw_window_length": 64,
+    "fourier_band_count": 8,
+    "ridge_penalties": [
+      1e-06,
+      0.0001,
+      0.01,
+      1.0,
+      100.0
+    ],
+    "bootstrap_repetitions": 2000,
+    "bootstrap_seed": 20260830,
+    "feature_shuffle_seed": 20260830
+  }
+}

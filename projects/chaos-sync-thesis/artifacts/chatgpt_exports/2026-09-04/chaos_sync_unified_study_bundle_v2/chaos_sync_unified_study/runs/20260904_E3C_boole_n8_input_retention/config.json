@@ -1,0 +1,21 @@
+{
+  "alpha": 0.5,
+  "n_nodes": 8,
+  "couplings": [
+    0.0,
+    0.3,
+    0.45,
+    0.5,
+    0.52,
+    0.6,
+    0.8,
+    0.95
+  ],
+  "n_seed_groups": 360,
+  "n_steps": 80,
+  "late_window": 24,
+  "input_amplitude": 0.02,
+  "nuisance_amplitude": 0.002,
+  "train_fraction": 0.7,
+  "seed": 20260904
+}

@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "question": "有限サイズで論文のKc(abs)を再現でき、同一E|eps|・異なるEepsの結合が同じ同期曲線を持つか。",
+  "config": {
+    "alpha": 0.25,
+    "node_counts": [
+      64,
+      128,
+      256
+    ],
+    "matrix_seeds": [
+      20260830,
+      20260831,
+      20260832
+    ],
+    "coupling_distributions": [
+      "uniform_positive",
+      "positive_binary",
+      "biased_sign",
+      "rademacher"
+    ],
+    "k_values": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7
+    ],
+    "burn_in": 300,
+    "evaluation_steps": 300,
+    "local_growth_steps": 30,
+    "local_perturbation": 1e-08,
+    "near_zero_threshold": 1e-12,
+    "bootstrap_repetitions": 500,
+    "bootstrap_seed": 20260901,
+    "success_mean_order": 0.8,
+    "success_q05_order": 0.5,
+    "phase_heatmap_k_values": [
+      0.4,
+      0.65
+    ],
+    "save_figures": true
+  },
+  "theory": {
+    "paper_critical_coupling_for_nominal_m_1": 0.5,
+    "paper_cauchy_existence_upper_k_for_nominal_m_1": 0.75,
+    "source_scope": "infinite-dimensional independent-Cauchy scale closure",
+    "signed_mean_proxy_is_not_paper_theory": true
+  },
+  "execution": {
+    "metric_row_count": 792,
+    "coupling_matrix_count": 36,
+    "nonfinite_condition_count": 0,
+    "all_conditions_finite": true
+  },
+  "hypothesis_assessment": {
+    "H1_theory_reproduction": {
+      "status": "pilot_supported",
+      "uniform_local_sustained_sync_k50_max_n": 0.4875,
+      "uniform_local_tm_r50_max_n": 0.24894600448281798,
+      "theory_kc": 0.5,
+      "predefined_tolerance": 0.1,
+      "comparison_metric": "sustained synchronization success rate = 0.5"
+    },
+    "H2_absolute_moment_universality": {
+      "status": "pilot_inconclusive",
+      "sustained_sync_k50_times_absolute_mean": {
+        "uniform_positive": 0.4875
+      },
+      "tm_r50_times_absolute_mean": {
+        "uniform_positive": 0.24894600448281798,
+        "positive_binary": 0.45810180934402045,
+        "biased_sign": 0.5650731728415054
+      },
+      "range_if_all_sustained_sync_observed": null,
+      "all_distributions_reached_sustained_sync_k50": false
+    },
+    "H3_signed_mean_consistency": {
+      "status": "pilot_supported",
+      "local_mean_order_at_max_k": {
+        "uniform_positive": 1.0,
+        "positive_binary": 0.8096208798110696,
+        "biased_sign": 0.5781727953092697,
+        "rademacher": 0.053187427764191574
+      },
+      "note": "符号付き平均による置換は独立な整合性proxyであり、論文の解析式ではない。"
+    },
+    "H4_tm_order_parameter": {
+      "status": "pilot_supported",
+      "median_k0_order_times_sqrt_n": 0.6913960536966677,
+      "maximum_tm_modulus_error": 4.440892098500626e-16
+    }
+  },
+  "finite_size_diagnostics": {
+    "row_mean_std_scaling": {
+      "uniform_positive": {
+        "per_node_count": [
+          {
+            "node_count": 64,
+            "mean_row_mean_std": 0.0
+          },
+          {
+            "node_count": 128,
+            "mean_row_mean_std": 0.0
+          },
+          {
+            "node_count": 256,
+            "mean_row_mean_std": 0.0
+          }
+        ],
+        "log_log_exponent": null
+      },
+      "positive_binary": {
+        "per_node_count": [
+          {
+            "node_count": 64,
+            "mean_row_mean_std": 0.12288867648889906
+          },
+          {
+            "node_count": 128,
+            "mean_row_mean_std": 0.08962370271458908
+          },
+          {
+            "node_count": 256,
+            "mean_row_mean_std": 0.060914233291155896
+          }
+        ],
+        "log_log_exponent": -0.5062503555132465
+      },
+      "biased_sign": {
+        "per_node_count": [
+          {
+            "node_count": 64,
+            "mean_row_mean_std": 0.08167072487268114
+          },
+          {
+            "node_count": 128,
+            "mean_row_mean_std": 0.05403026969256843
+          },
+          {
+            "node_count": 256,
+            "mean_row_mean_std": 0.04096919005207813
+          }
+        ],
+        "log_log_exponent": -0.4976398304993255
+      },
+      "rademacher": {
+        "per_node_count": [
+          {
+            "node_count": 64,
+            "mean_row_mean_std": 0.12463709953514719
+          },
+          {
+            "node_count": 128,
+            "mean_row_mean_std": 0.0862453760668906
+          },
+          {
+            "node_count": 256,
+            "mean_row_mean_std": 0.06179504865899927
+          }
+        ],
+        "log_log_exponent": -0.5060852069533173
+      }
+    },
+    "local_residual_correlation_at_max_k": 0.1536747078607698,
+    "correlation_sample_count": 27,
+    "correlation_is_descriptive_only": true
+  },
+  "artifacts": {
+    "per_run_metrics": "artifacts/per_run_metrics.csv",
+    "coupling_statistics": "artifacts/coupling_statistics.csv",
+    "order_curves": "artifacts/order_curves.csv",
+    "thresholds": "artifacts/thresholds.csv",
+    "representative_tm_phases": "artifacts/representative_tm_phases.npz",
+    "figures": [
+      "artifacts/theory_phase_diagram.png",
+      "artifacts/tm_order_curves.png",
+      "artifacts/finite_size_thresholds.png",
+      "artifacts/row_sum_vs_sync_residual.png",
+      "artifacts/tm_phase_heatmaps.png"
+    ]
+  },
+  "caveats": [
+    "pilotの3 seed bootstrap区間は不確実性の粗い可視化であり、本実験の10-20 seedを代替しない。",
+    "TM R=0.5は位相の部分凝集クロスオーバーであり、論文のlambda_c=0と同一視しない。理論Kcとのpilot比較には事前定義した持続同期成功率50%点を用いる。",
+    "持続同期K50も有限K格子とmean R>=0.8かつq05 R>=0.5の判定規則に依存する。",
+    "符号付き平均によるKc置換は同期多様体整合性のproxyであり、解析的に証明した式ではない。",
+    "globalとlocalの差は局所安定性と吸引域を分けて解釈する。"
+  ],
+  "analysis_revision": 2,
+  "analysis_correction": {
+    "reason": "TM R=0.5 coherence crossover was incorrectly compared directly with lambda_c=0.",
+    "theory_comparison_metric": "sustained synchronization success rate = 0.5",
+    "raw_metrics_sha256": "c45cc5a2d2b89fc846059106e459197ad09cffd76a9440430fcd67ded7ea2eed"
+  }
+}

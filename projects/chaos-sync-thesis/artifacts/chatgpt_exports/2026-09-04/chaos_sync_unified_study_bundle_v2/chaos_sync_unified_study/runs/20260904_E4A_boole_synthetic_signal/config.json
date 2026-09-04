@@ -1,0 +1,27 @@
+{
+  "alpha": 0.5,
+  "n_nodes": 8,
+  "length": 64,
+  "n_samples": 720,
+  "washout": 16,
+  "coupling_grid": [
+    0.3,
+    0.48,
+    0.52,
+    0.65,
+    0.85
+  ],
+  "input_gain_grid": [
+    0.02,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "dimensions": [
+    4,
+    8,
+    16,
+    32
+  ],
+  "seed": 20260904
+}
