@@ -1,0 +1,107 @@
+{
+  "experiment_id": "E1B-FIXED-IDENTIFIABILITY",
+  "train_alphas": [
+    0.34,
+    0.42,
+    0.5,
+    0.58,
+    0.66
+  ],
+  "test_alphas": [
+    0.38,
+    0.46,
+    0.54,
+    0.62
+  ],
+  "train_seeds": [
+    710000,
+    710001,
+    710002,
+    710003,
+    710004,
+    710005,
+    710006,
+    710007,
+    710008,
+    710009,
+    710010,
+    710011,
+    710012,
+    710013,
+    710014,
+    710015,
+    710016,
+    710017,
+    710018,
+    710019,
+    710020,
+    710021,
+    710022,
+    710023
+  ],
+  "validation_seeds": [
+    720000,
+    720001,
+    720002,
+    720003,
+    720004,
+    720005,
+    720006,
+    720007
+  ],
+  "test_seeds": [
+    730000,
+    730001,
+    730002,
+    730003,
+    730004,
+    730005,
+    730006,
+    730007,
+    730008,
+    730009,
+    730010,
+    730011,
+    730012,
+    730013,
+    730014,
+    730015,
+    730016,
+    730017,
+    730018,
+    730019,
+    730020,
+    730021,
+    730022,
+    730023
+  ],
+  "burn_in": 20000,
+  "observation_length": 4096,
+  "mixing_matrix": [
+    [
+      1.0,
+      0.35
+    ],
+    [
+      -0.2,
+      1.0
+    ]
+  ],
+  "feature_dimension": 16,
+  "ridge_penalties": [
+    1e-06,
+    0.0001,
+    0.01,
+    1.0,
+    100.0
+  ],
+  "bootstrap_seed": 740000,
+  "bootstrap_repetitions": 10000,
+  "gates": {
+    "oracle_tm_rmse_max": 0.02,
+    "collision_tolerance": 1e-12,
+    "loss_identity_tolerance": 1e-12,
+    "max_repeated_sources": 0
+  },
+  "selection": "train-only fit; independent validation seeds select penalty; models frozen before unseen-alpha test generation"
+}
