@@ -1,0 +1,27 @@
+{
+  "started_utc": "2026-09-05T16:08:34.422311+00:00",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "numpy": "1.26.2",
+  "matplotlib": "3.9.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "threads": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "source_sha256": {
+    "experiments/E1/run_dynamics.py": "29c659b1834a30185e10311571a53b0e5866a13bbd7c0e33f00de2c67bfa7c31",
+    "experiments/E1/validate_results.py": "18f9099ab8a2b0ec66f1b6372ec4a51030cdafc3cb3e6f8d60345dedc3e5dfa1",
+    "experiments/E1/TM_DYNAMICS.md": "d63f77943da7b2c9e34a6e8a95a1e52f70336ee1e6dbbba61e5efa7589b3b4ad",
+    "experiments/E1/config_dynamics.json": "826e07ddc48df4002a5d25cad29006c8daed51252a3ac3c7ed74bf9dfc822169",
+    "experiments/src/readout.py": "8f43246e62c2bec4113b6cfee1b78ab1dd49a6c419ce924c3bdad07fc613848b",
+    "experiments/src/core.py": "a450133c0a1ff1d3ae80a92390d4b88793c269d7ee8cf16c4e0050cb57638a51",
+    "experiments/E0/run_e0.py": "c3f9fcc444191fa2db8c88223e3ca473fb91b128af3f28d1cf457af851c80f6f",
+    "experiments/tests/test_e1a_temporal_alpha_readout.py": "f438b4a264ee0583ea652ae2a791225ed0cb319e78381da363366a18ae6bfea0"
+  },
+  "request_sha256": "f45e7508c231fc7b57fb1bb2ce8c81e4f1ba0bdc86f934d60801a45be433adf4",
+  "reference_sha256": {
+    "experiments/chaos-sync-tm-self-implementation/docs/chaos_sync_tm_experiment_textbook_main.tex": "a0fffca53a7645e73db9ac42b948d0a388eb7066d860fa272391923f21fa7646"
+  },
+  "test_generation_started_utc": "2026-09-05T16:08:43.559224+00:00",
+  "completed_utc": "2026-09-05T16:08:56.705568+00:00"
+}

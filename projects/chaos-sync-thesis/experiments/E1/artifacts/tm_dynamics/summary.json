@@ -1,0 +1,26 @@
+{
+  "experiment_id": "E1-TMA-DYNAMICS-AUDIT",
+  "scientific_gates": {
+    "angle_fourier_identity": true,
+    "low_modes_representable": true,
+    "finite_dictionary_half_loss": true,
+    "four_step_escape": true,
+    "tm_uniform_advantage": false,
+    "finite_no_repeats": true
+  },
+  "alpha_half": {
+    "alpha": 0.5,
+    "dictionary": "tm",
+    "gram_condition": 1.0666751201040579,
+    "stable_rank": 8.000229050120238,
+    "energy_rank90": 8,
+    "nonzero_fraction": 0.09765625,
+    "own_dictionary_nmse": 0.5004150037040318,
+    "first8_nmse": 1.6575121146019115e-09
+  },
+  "horizon4_cayley_nmse": 1.0009192650163259,
+  "angle_equivalence_max": 9.936496070395151e-15,
+  "prediction_equivalence_max": 7.771561172376096e-16,
+  "trajectory_count": 168,
+  "interpretation": "Finite dictionary closure and common-target prediction; no synchronization/input-retention/compression claim."
+}

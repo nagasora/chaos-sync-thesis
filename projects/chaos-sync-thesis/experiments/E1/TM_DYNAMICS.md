@@ -1,6 +1,6 @@
 # E1再検討: TMを使う理由と力学適合性の検証
 
-状態: 事前仕様固定・未実行。既存[E1A](README.md)の固定TM優位不成立を維持する。
+状態: **2026-09-06 JST、方針再検討とTM-A本実験・独立検証完了。TM-B拡張/TM-Cは仕様化済み・未実行。**既存[E1A](README.md)の固定TM優位不成立を維持する。
 
 ## 方針と添付内容の主張監査
 
@@ -60,6 +60,96 @@ q=(z−i)/(z+i)、r=2α−1なら q(Gα(z))=q(q+r)/(1+rq)。α=.5だけq'=q²。
 
 原理はsnapshot pairと観測辞書からの有限作用素近似である。詳細の参照は [Williams et al., EDMD](https://arxiv.org/abs/1408.4408)。今回は固有関数・真のKoopmanスペクトルの回収は主張しない。
 
-## 結果・考察
+## 実験結果
 
-未実行。添付の原文はartifactへ保存し、そのSHA-256と今回の事前仕様・実行コードを固定する。
+事前コミット `5deccfc` で仮説・辞書・分割・実装を固定。本実験はJST 2026-09-06 01:08に一度実行した。168軌道（train72、validation24、test72）、観測172,704点を保存。18辞書条件×3penaltyの54候補をvalidationで比較し、全モデルをtest生成前に凍結した。全軌道が有限で、観測窓内の厳密再訪は0件。
+
+### H0: 同値性と測度適合性
+
+TMと角度Fourierの最大座標差は **9.94e−15**、全horizon・seedにわたる予測NMSE差の最大は **7.77e−16**。別名の座標にTMが勝つという主張は成立しない。
+
+Cauchy角度の等間隔quadrature16,384点で、適合尺度のGram誤差 ||G−I||F は **1.73e−15**、極尺度を2倍にすると **1.86246**。これは独立IID標本の収束実験ではなく、測度対応を確認する決定論的積分である。実Booleのtrain標準化Gram条件数はTMでα=.25/.5/.75の順に **1.051 / 1.067 / 1.223**。RBFでは約1.8〜2.0e12であり、16列あっても独立に使える数値方向が同等とは限らない。
+
+### H1: 疎な射影と有限次元の打切り
+
+α=.5の解析射影は16×16行列の8成分だけ非零（3.125%）、rank8、4乗するとゼロになる。推定TMのstable rankは **8.00023**、特異値エネルギー90%のrankは8。一方、推定行列の通常の数値rankは16だった。有限標本の小さな係数を含むためであり、母射影のrank8と同一視しない。
+
+推定TMの1-step自己辞書NMSEは **0.500415**（理論0.5）、表現内の低4複素モードは **1.6575e−9**（gate<.01）。標準化行列の |B|>0.01 max|B| の割合は **9.765625%**。閾値を変えれば疎性の値も変わる。
+
+| h | 理論: 全16モードの射影NMSE | 理論: q1のNMSE | 実測: 共通Cayley targetのNMSE |
+|---:|---:|---:|---:|
+
+| 1 | 0.5 | 0 | 6.62466905e-09 |
+| 2 | 0.75 | 0 | 1.49035868e-08 |
+| 3 | 0.875 | 0 | 2.64986196e-08 |
+| 4 | 1 | 1 | 1.00091927 |
+
+事前固定の低次モード・半分の射影損失・4-step逸脱の全ゲートを通過した。これは**有限の線形辞書での予測限界**であり、元の状態から未来が決まらないという意味でも、同期によって入力が消えた証拠でもない。未来は元の非線形写像で計算できるが、q1→q2→q4→q8→q16の最後は今回の辞書に入らない。
+
+### H2: 共通ターゲットによる1-step比較
+
+全24比較を通したTM優位のゲートは **false**。α=.5の例を示す。
+
+| 辞書（全て16実数） | 共通Cayley target NMSE | 共通CDF target NMSE |
+|---|---:|---:|
+| TM | 6.62466905e-09 | 0.137200 |
+| 角度Fourier（同値対照） | 6.62466905e-09 | 0.137200 |
+| 実数状態Fourier | 0.457379388 | 0.768484 |
+| CDF cosine | 0.000568513841 | 0.076492 |
+| CDF Legendre | 6.72051044e-09 | 0.115845 |
+| CDF RBF | 5.05386144e-07 | 0.095954 |
+
+例えばα=.5のTM−CDF cosineのseed平均差はCayley targetで **−0.0005685**（95%区間[−0.0005964, −0.0005400]）、CDF targetで **+0.060708**（[0.056194, 0.064946]）。同じα・同じ16次元でも予測対象によって比較が反転した。α=.25/.75でもCDF targetではCDF cosineがTMを上回った。
+
+区間はtest24 seed、学習/選択を固定した点ごとのbootstrapであり、24比較の同時95%区間ではない。誤差差1e−10等の極小値が0を跨がないことを、実用的な優位と解釈しない。独立照合の許容差内の微小な順位も、優位の根拠にしない。全α・全targetの未集約値と区間はmetrics.csv / contrasts.csvに保存している。
+
+## 図の見方
+
+![共通ターゲット予測](artifacts/tm_dynamics/figures/common_prediction.png)
+
+横軸は先の何stepを予測するか、縦軸はNMSE（小さいほど良い）。上段がCayley座標、下段がCDF座標、各列はα。同じ段内で基底を比較する。破線1はtrain分散の規格化スケールであり、test分布での定数予測誤差が厳密に1という意味ではない。TMと角度Fourierは重なるため同値対照の線を省略した。中央上段のTMは3stepまで小さく、4stepで約1へ上がる。
+
+![有限作用素の構造](artifacts/tm_dynamics/figures/operator_structure.png)
+
+左はα=.5の解析射影、中央は推定TM、右は推定CDF cosine。行が現在の観測関数、列が次時刻の観測関数、赤/青は係数の符号。中央は左の主要8成分を再現しているが、左自体が未来の高次成分を辞書外へ捨てる。白い成分が多いことだけから圧縮や記憶を結論しない。全要素と特異値はNPZ、指標はstructure.csvに保存。両図を目視確認した。
+
+## 考察: 何が分かり、何は分からないか
+
+TMの意義として、Cauchy測度で良好なGram条件と、可解点の次数移動を解釈できることを今回支持した。しかし、それは有限16次元で閉じた力学が得られることや、全targetで最良の予測が得られることを意味しない。α≠.5では一般の有理位相写像になり、E0Bの単純shiftをそのまま使わない。
+
+RBFは自己辞書NMSEが小さい一方、Gram条件数が非常に大きくstable rankも小さかった。自己辞書の予測誤差やrankだけで基底を選ぶと、情報の少ない/冗長な観測関数を高く評価し得る。共通ターゲット評価と測度適合性を両方残す理由である。今回の結果は固定されたRBF中心/幅や各辞書に限り、手法全体の優劣を表すものではない。
+
+本実験では真γを既知とした。未知尺度、外部入力、結合後の分布変化への頑健性は未検証であり、実用入力に対する最適座標の証拠へ拡張しない。有限精度、窓長、学習seed、辞書次数を変えた安定性や適応TMも別課題である。
+
+次は上記TM-B/E1Bの容量一致・観測情報損失対照、その後にTM-C/E3Cの同期×入力保持へ進む。最重要のTM-Cを実行済みとは扱わず、基底適合性→入力読み出し→同期後の保持→復元を別判定で積み上げる。TMを必ず勝たせるための再選択は行わない。
+
+## 再現性・検証・実装上の修正
+
+既存E1テスト内で、新しい状態辞書・multi-output ridge・作用素監査の1単位を追加し、既存固定読み出しの1単位も再実行して**2件合格**。本実験の独立validatorは**396/396項目通過**。全軌道の完全再生、異なる辞書計算、全penaltyの選択、凍結モデル、全予測、seed指標、bootstrap、理論行列、原文とコード/成果物のハッシュを照合した。
+
+縮小テストではLegendre辞書の正規方程式の条件数約1.19e8で、係数の丸め差が不安定な反復予測へ増幅された。共通ridgeを拡大最小二乗の直接解法へ修正した。約93,322のvalidation NMSEに対する差約0.00178（相対1.91e−8）を絶対許容差だけで扱っていたvalidatorも、NMSEスケールを考慮するよう修正。これは本実験前の修正で、科学的ゲート・seed・次数・予測条件は変えていない。
+
+独立照合は予測/指標atol・rtol 2e−5、悪条件辞書を含む係数はatol・rtol 2e−4。完全一致を要求する軌道再生・ハッシュとは別契約である。旧E1Aの実行時ソースと結果を上書きせず保持した。ソルバー変更後も旧ridgeとの一致を含む既存テストが通過したが、別環境での最終bit一致を保証しない。
+
+```powershell
+$env:OPENBLAS_NUM_THREADS = '1'
+$env:OMP_NUM_THREADS = '1'
+python -m unittest experiments.tests.test_e1a_temporal_alpha_readout.FixedReadoutTests experiments.tests.test_e1a_temporal_alpha_readout.DynamicsAuditTests
+python experiments/E1/run_dynamics.py --output experiments/E1/artifacts/tm_dynamics_replication --request experiments/E1/artifacts/tm_dynamics/request_text.txt
+python experiments/E1/validate_results.py --output experiments/E1/artifacts/tm_dynamics_replication
+```
+
+保存済み結果の検証だけなら `python experiments/E1/validate_results.py --output experiments/E1/artifacts/tm_dynamics`。既存出力先への上書きはしない。
+
+- [config_dynamics.json](config_dynamics.json)、[run_dynamics.py](run_dynamics.py): 事前設定と実行コード。
+- [共通readout](../src/readout.py)、[既存validatorの拡張](validate_results.py): 固定状態辞書と読み出し、実験IDに応じた独立照合。
+- [summary.json](artifacts/tm_dynamics/summary.json)、[validation.json](artifacts/tm_dynamics/validation.json): 科学的判定と数値整合性を分離。
+- `*_orbits.npz` / `*_conditions.csv`: 全168軌道、seed/α/初期値、有限性・近傍・再訪の診断。
+- `models_alpha_*.npz` / `selection.json` / `validation_candidates.csv`: 全operator/decoder、train統計、target分母、全54候補とtest前凍結。
+- `predictions_alpha_*.npz`: 6辞書×4 horizon×全test seed・時刻の予測、Gram、標準化行列、特異値。
+- `metrics.csv` / `seed_metrics.csv` / `structure.csv` / `contrasts.csv` / `bootstrap.npz`: 144集約条件、3,456 seed指標、18行列診断、24差分区間、再標本化indicesと分布。
+- `theory.npz` / `theory.json` / `theory_metrics.csv`: 解析正対照と計算結果。
+- `request_text.txt`: ユーザー添付原文。SHA-256=f45e7508c231fc7b57fb1bb2ce8c81e4f1ba0bdc86f934d60801a45be433adf4。
+- `source_code.zip` / `environment.json` / `sha256.txt`: 実行前の本仕様・ソース、原文/教材ハッシュ、Python3.12.10・NumPy1.26.2・Windows11・BLAS/OMP各1thread、全成果物ハッシュ。結果追記前の仕様はZIP内に固定。validation.jsonは自己参照を避けmanifest対象外。
+
+既存E1領域に実験固有の設定・runner・本レポートを追加し、共通辞書はsrc/readout.py、検証とテストは既存ファイルを拡張した。新しい実験番号の空フォルダや並行ライブラリは作っていない。
