@@ -49,18 +49,45 @@ def fixed_readout_features(orbit: FloatArray, permutation: NDArray[np.int64]) ->
 
 
 def fit_ridge(features: FloatArray, targets: FloatArray, penalty: float) -> Dict[str, FloatArray]:
-    """旧E1Aのtrain標準化付きridgeを、係数も保存できる形で再利用する。"""
+    """train標準化付きridgeの係数を返す。targetsは(n,)または(n,出力数)。"""
     if not np.isfinite(penalty) or penalty <= 0:
         raise ValueError("ridge penaltyは有限正数が必要です。")
     mean, scale = features.mean(axis=0), features.std(axis=0)
     # 定数列は中心化後にゼロとなる。除算だけを正規化し情報を追加しない。
     scale = np.where(scale > 1e-12, scale, 1.)
     x = (features-mean)/scale
-    intercept = np.array(targets.mean())
-    coefficients = np.linalg.solve(x.T@x+penalty*np.eye(x.shape[1]), x.T@(targets-intercept))
+    intercept = np.array(targets.mean(axis=0))
+    # 正規方程式は辞書の条件数を二乗してしまうため、拡大最小二乗を直接解く。
+    augmented = np.vstack((x, np.sqrt(penalty)*np.eye(x.shape[1])))
+    padded = np.concatenate((targets-intercept, np.zeros((x.shape[1],)+targets.shape[1:])))
+    coefficients = np.linalg.lstsq(augmented, padded, rcond=None)[0]
     return dict(mean=mean, scale=scale, intercept=intercept, coefficients=coefficients)
 
 
 def predict_ridge(model: Dict[str, FloatArray], features: FloatArray) -> FloatArray:
     """凍結済みのtrain統計・係数で予測する。評価データではfitしない。"""
     return model["intercept"]+(features-model["mean"])/model["scale"]@model["coefficients"]
+
+
+def state_dictionary(state: FloatArray, name: str) -> FloatArray:
+    """標準Cauchy状態へ固定16実数の観測辞書を適用する。時間FFTではない。"""
+    x = np.asarray(state, dtype=np.float64)
+    if x.ndim != 1 or not np.isfinite(x).all():
+        raise ValueError("状態は有限な1次元配列が必要です。")
+    u = .5+np.arctan(x)/np.pi
+    if name in ("tm", "phase_fourier", "euclidean_fourier"):
+        k = np.arange(1,9)
+        if name == "tm":
+            modes = cayley_modes(x,tuple(range(1,9)))
+        else:
+            angle = -2*np.arctan2(1.,x) if name == "phase_fourier" else x
+            modes = np.exp(1j*angle[:,None]*k)
+        return np.sqrt(2)*np.stack((modes.real,modes.imag),axis=-1).reshape(len(x),16)
+    if name == "cdf_cosine":
+        return np.sqrt(2)*np.cos(np.pi*u[:,None]*np.arange(1,17))
+    if name == "cdf_legendre":
+        return np.polynomial.legendre.legvander(2*u-1,16)[:,1:]*np.sqrt(2*np.arange(1,17)+1)
+    if name == "cdf_rbf":
+        centers=(2*np.arange(16)+1)/16-1
+        return np.exp(-.5*((2*u[:,None]-1-centers)/.25)**2)
+    raise ValueError("未知の状態辞書です: "+name)

@@ -45,6 +45,8 @@ def independent_features(x: np.ndarray, permutation: np.ndarray) -> Dict[str, np
 def validate(out: Path) -> Dict:
     """事後整合性検証。科学的仮説が不合格でも記録の整合性は検証できる。"""
     config=json.loads((out/"config.json").read_text())
+    if config["experiment_id"] == "E1-TMA-DYNAMICS-AUDIT":
+        return validate_dynamics(out)
     summary=json.loads((out/"summary.json").read_text())
     frozen=json.loads((out/"selection.json").read_text())
     env=json.loads((out/"environment.json").read_text())
@@ -137,6 +139,140 @@ def validate(out: Path) -> Dict:
     checks["artifact_hashes"]=all(hashlib.sha256((out/p).read_bytes()).hexdigest()==h for h,p in (line.split("  ",1) for line in (out/"sha256.txt").read_text().splitlines()))
     checks={k:bool(v) for k,v in checks.items()}
     result=dict(passed=all(checks.values()),check_count=len(checks),checks=checks,validator_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),interpretation="Independent integrity checks; scientific gates are reported separately.")
+    (out/"validation.json").write_text(json.dumps(result,indent=2),encoding="utf-8")
+    print(json.dumps(dict(passed=result["passed"],check_count=len(checks),failed=[k for k,v in checks.items() if not v]),indent=2))
+    return result
+
+
+def audit_dictionary(x: np.ndarray, name: str) -> np.ndarray:
+    """runnerの辞書をimportせず、TMは位相・多項式は漸化式で照合する。"""
+    u=.5+np.arctan(x)/np.pi; t=2*u-1
+    if name in ("tm","phase_fourier","euclidean_fourier"):
+        if name=="tm":
+            modes=np.exp(-2j*np.arctan2(1,x)[:,None]*np.arange(1,9))
+        elif name=="phase_fourier":
+            modes=((x-1j)/(x+1j))[:,None]**np.arange(1,9)
+        else:
+            angles=x[:,None]*np.arange(1,9);modes=np.cos(angles)+1j*np.sin(angles)
+        return np.sqrt(2)*np.stack([modes.real,modes.imag],axis=-1).reshape(len(x),16)
+    if name=="cdf_cosine":return np.sqrt(2)*np.cos(u[:,None]*np.pi*np.arange(1,17))
+    if name=="cdf_rbf":return np.column_stack([np.exp(-((t-((2*j+1)/16-1))**2)/(2*.25**2)) for j in range(16)])
+    previous=np.ones(len(t));current=t.copy();columns=[np.sqrt(3)*current]
+    for k in range(2,17):
+        following=((2*k-1)*t*current-(k-1)*previous)/k
+        columns.append(np.sqrt(2*k+1)*following);previous,current=current,following
+    return np.column_stack(columns)
+
+
+def audit_targets(x: np.ndarray) -> np.ndarray:
+    """共通targetを角度だけで評価する。"""
+    phase=-2*np.arctan2(1,x)
+    return np.column_stack((np.cos(phase),np.sin(phase),2*np.arctan(x)/np.pi))
+
+
+def validate_dynamics(out: Path) -> Dict:
+    """TM-A全軌道・作用素/decoder・共通予測・bootstrapと理論対照を独立検証。"""
+    c=json.loads((out/"config.json").read_text());summary=json.loads((out/"summary.json").read_text())
+    env=json.loads((out/"environment.json").read_text());frozen=json.loads((out/"selection.json").read_text())
+    checks={};data={};repeats=0;T=c["observation_length"]
+    sets=[set(c[s+"_seeds"]) for s in ("train","validation","test")]
+    checks["seed_disjoint"]=all(not sets[i]&sets[j] for i in range(3) for j in range(i))
+    checks["freeze_order"]=env["started_utc"]<=frozen["frozen_utc"]<=env["test_generation_started_utc"]<=env["completed_utc"]
+    for split in ("train","validation","test"):
+        rows=read_csv(out/(split+"_conditions.csv"))
+        expected=[(a,s) for a in c["alphas"] for s in c[split+"_seeds"]]
+        with np.load(out/(split+"_orbits.npz")) as d:
+            raw=d["orbits"];a=d["alpha"];gamma=np.sqrt(a/(1-a))
+            initial=gamma*np.array([np.random.default_rng(np.random.SeedSequence([seed,round(alpha*1000000)])).standard_cauchy() for alpha,seed in expected])
+            checks[split+"_manifest"]=[(float(r["alpha"]),int(r["seed"])) for r in rows]==expected and np.array_equal(a,[v for v,s in expected]) and np.array_equal(d["seeds"],[s for v,s in expected]) and np.array_equal(d["initial"],initial)
+            state=initial.copy();near=np.zeros((len(state),3),dtype=int);replay=True
+            for step in range(c["burn_in"]+T+4):
+                near+=np.abs(state[:,None])<np.array([1e-12,1e-10,1e-8]);state=a*(state-1/state)
+                if step>=c["burn_in"]:replay=replay and np.array_equal(state,raw[:,step-c["burn_in"]])
+            checks[split+"_replay"]=replay and raw.shape==(len(expected),T+4) and raw.dtype==np.float64
+            checks[split+"_finite"]=np.isfinite(raw).all() and np.all(d["failure_step"]==-1) and np.all(d["nonfinite_update_count"]==0) and np.array_equal(near,d["near_zero_counts"])
+            row_ok=True
+            for i,orbit in enumerate(raw):
+                repeated=np.unique(orbit).size!=orbit.size;repeats+=repeated
+                row_ok=row_ok and rows[i]["repeated"]==str(repeated) and int(rows[i]["near_1e8"])==near[i,2] and float(rows[i]["initial_state"])==initial[i]
+            checks[split+"_diagnostics"]=row_ok
+            data[split]={round(alpha*100):raw[a==alpha]/np.sqrt(alpha/(1-alpha)) for alpha in c["alphas"]}
+    metrics=read_csv(out/"metrics.csv");seeds=read_csv(out/"seed_metrics.csv");structure=read_csv(out/"structure.csv");candidates=read_csv(out/"validation_candidates.csv");contrasts=read_csv(out/"contrasts.csv")
+    checks["table_counts"]=(len(metrics)==3*6*4*2 and len(seeds)==len(metrics)*len(c["test_seeds"]) and len(candidates)==3*6*len(c["ridge_penalties"]) and len(structure)==18 and len(contrasts)==24)
+    all_errors={};own_half=None;low_half=None
+    for a in c["alphas"]:
+        key=round(a*100);train=data["train"][key];val=data["validation"][key];test=data["test"][key]
+        target=audit_targets(train[:,:T].ravel());variance=target.var(axis=0)
+        modelpath=out/f"models_alpha_{key}.npz"
+        checks[f"model_hash_{key}"]=hashlib.sha256(modelpath.read_bytes()).hexdigest()==frozen["model_sha256"][modelpath.name]
+        with np.load(modelpath) as saved,np.load(out/f"predictions_alpha_{key}.npz") as predictions:
+            checks[f"variance_{key}"]=np.allclose(saved["target_variance"],variance,rtol=1e-12,atol=1e-12)
+            for name in c["dictionaries"]:
+                prefix=f"{key}_{name}"
+                x=audit_dictionary(train[:,:T].ravel(),name);future=audit_dictionary(train[:,1:T+1].ravel(),name)
+                mu=x.mean(axis=0);scale=x.std(axis=0);scale[scale<=1e-12]=1;z=(x-mu)/scale
+                chosen=next(r for r in frozen["selection"] if r["alpha"]==a and r["dictionary"]==name)
+                selected_rows=[r for r in candidates if float(r["alpha"])==a and r["dictionary"]==name]
+                minimum=min(selected_rows,key=lambda r:(float(r["validation_nmse"]),float(r["penalty"])))
+                checks[prefix+"_selection"]=chosen["penalty"]==float(minimum["penalty"]) and chosen["validation_nmse"]==float(minimum["validation_nmse"])
+                verified={}
+                for penalty in c["ridge_penalties"]:
+                    augmented=np.vstack([z,np.sqrt(penalty)*np.eye(16)])
+                    means=[future.mean(axis=0),target.mean(axis=0)]
+                    betas=[np.linalg.lstsq(augmented,np.vstack([y-center,np.zeros((16,y.shape[1]))]),rcond=None)[0] for y,center in zip((future,target),means)]
+                    current=audit_dictionary(val[:,:T].ravel(),name);loss=[]
+                    for h in c["horizons"]:
+                        current=means[0]+(current-mu)/scale@betas[0]
+                        pred=(means[1]+(current-mu)/scale@betas[1]).reshape(len(val),T,3)
+                        truth=audit_targets(val[:,h:h+T].ravel()).reshape(len(val),T,3)
+                        mse=np.mean((pred-truth)**2,axis=1);loss.extend([np.mean(mse[:,:2].sum(axis=1)/variance[:2].sum()),np.mean(mse[:,2]/variance[2])])
+                    value=np.mean(loss)
+                    recorded=float(next(r["validation_nmse"] for r in selected_rows if float(r["penalty"])==penalty))
+                    checks[prefix+"_candidate_"+str(penalty)]=np.isclose(value,recorded,atol=2e-5,rtol=2e-5)
+                    if penalty==chosen["penalty"]:verified=dict(betas=betas,means=means)
+                for j,part in enumerate(("operator","decoder")):
+                    checks[prefix+"_"+part]=np.allclose(saved[name+"__"+part+"__mean"],mu,atol=1e-12) and np.allclose(saved[name+"__"+part+"__scale"],scale,atol=1e-12) and np.allclose(saved[name+"__"+part+"__intercept"],verified["means"][j],atol=1e-12) and np.allclose(saved[name+"__"+part+"__coefficients"],verified["betas"][j],atol=2e-4,rtol=2e-4)
+                current=audit_dictionary(test[:,:T].ravel(),name);errors=[]
+                for hi,h in enumerate(c["horizons"]):
+                    current=verified["means"][0]+(current-mu)/scale@verified["betas"][0]
+                    pred=(verified["means"][1]+(current-mu)/scale@verified["betas"][1]).reshape(len(test),T,3)
+                    truth=audit_targets(test[:,h:h+T].ravel()).reshape(len(test),T,3)
+                    checks[prefix+f"_pred_h{h}"]=np.allclose(pred,predictions[name][hi],atol=2e-5,rtol=2e-5)
+                    mse=np.mean((pred-truth)**2,axis=1);err=np.column_stack([mse[:,:2].sum(axis=1)/variance[:2].sum(),mse[:,2]/variance[2]]);errors.append(err)
+                    for ti,t in enumerate(c["targets"]):
+                        rows=[r for r in seeds if float(r["alpha"])==a and r["dictionary"]==name and int(r["horizon"])==h and r["target"]==t]
+                        recorded=float(next(r["nmse"] for r in metrics if float(r["alpha"])==a and r["dictionary"]==name and int(r["horizon"])==h and r["target"]==t))
+                        checks[prefix+f"_metric_{h}_{t}"]=[int(r["seed"]) for r in rows]==c["test_seeds"] and np.allclose(err[:,ti],[float(r["nmse"]) for r in rows],atol=2e-5,rtol=2e-5) and np.isclose(err[:,ti].mean(),recorded,atol=2e-5,rtol=2e-5)
+                    if h==1:
+                        phi_future=audit_dictionary(test[:,1:T+1].ravel(),name);residual=np.mean((current-phi_future)**2,axis=0)
+                        own=residual.sum()/x.var(axis=0).sum();low=residual[:8].sum()/x.var(axis=0)[:8].sum()
+                all_errors[(key,name)]=np.array(errors)
+                B=verified["betas"][0]/scale[None,:];sv=np.linalg.svd(B,compute_uv=False);gram=z.T@z/len(z)
+                row=next(r for r in structure if float(r["alpha"])==a and r["dictionary"]==name)
+                checks[prefix+"_structure"]=np.allclose(B,predictions[name+"__B_standardized"],atol=2e-4,rtol=2e-4) and np.allclose(gram,predictions[name+"__gram"],atol=1e-12) and abs(float(row["own_dictionary_nmse"])-own)<2e-5 and abs(float(row["first8_nmse"])-low)<2e-5 and abs(float(row["stable_rank"])-np.sum(sv**2)/sv[0]**2)<2e-4
+                if key==50 and name=="tm":own_half=own;low_half=low
+    draws=np.random.default_rng(c["bootstrap_seed"]).integers(0,len(c["test_seeds"]),size=(c["bootstrap_repetitions"],len(c["test_seeds"])))
+    with np.load(out/"bootstrap.npz") as d:
+        checks["bootstrap_indices"]=np.array_equal(draws,d["draws"])
+        for row in contrasts:
+            key=round(float(row["alpha"])*100);name=row["baseline"];target=row["target"];ti=c["targets"].index(target)
+            delta=all_errors[(key,"tm")][0,:,ti]-all_errors[(key,name)][0,:,ti];samples=delta[draws].mean(axis=1);lo,hi=np.quantile(samples,[.025,.975])
+            checks[f"bootstrap_{key}_{name}_{target}"]=np.allclose(samples,d[f"{key}__{name}__{target}"],atol=2e-5,rtol=2e-5) and all(abs(float(row[k])-v)<2e-5 for k,v in (("mean_difference",delta.mean()),("lower",lo),("upper",hi)))
+    theory=json.loads((out/"theory.json").read_text());theory_rows=read_csv(out/"theory_metrics.csv")
+    with np.load(out/"theory.npz") as d:
+        B=d["operator"];expected=np.zeros((16,16))
+        for j in range(8):expected[2*(j//2+1)*2-2+j%2,j]=1
+        checks["exact_shift_matrix"]=np.array_equal(B,expected) and np.linalg.matrix_rank(B)==8 and np.count_nonzero(B)==8 and np.all(np.linalg.matrix_power(B,4)==0)
+        checks["analytic_gram"]=np.linalg.norm(d["gram"]-np.eye(16))<1e-10 and np.linalg.norm(d["mismatch_gram"]-np.eye(16))>.5
+    checks["theoretical_truncation"]=np.allclose([float(r["full_nmse"]) for r in theory_rows],[.5,.75,.875,1],atol=1e-10) and np.allclose([float(r["first_mode_nmse"]) for r in theory_rows],[0,0,0,1],atol=1e-10)
+    g=c["gates"];h4=all_errors[(50,"tm")][3,:,0].mean()
+    checks["gate_decisions"]=(summary["scientific_gates"]["low_modes_representable"]==(low_half<g["low_modes_nmse_max"]) and summary["scientific_gates"]["finite_dictionary_half_loss"]==(abs(own_half-.5)<g["full_dictionary_nmse_tolerance"]) and summary["scientific_gates"]["four_step_escape"]==(h4>g["horizon4_cayley_nmse_min"]) and summary["scientific_gates"]["tm_uniform_advantage"]==all(float(r["upper"])<0 for r in contrasts) and summary["scientific_gates"]["finite_no_repeats"]==(repeats==0))
+    checks["equivalent_predictions"]=all(np.max(np.abs(all_errors[(round(a*100),"tm")]-all_errors[(round(a*100),"phase_fourier")]))<2e-5 for a in c["alphas"])
+    checks["request_hash"]=hashlib.sha256((out/"request_text.txt").read_bytes()).hexdigest()==env["request_sha256"]
+    with zipfile.ZipFile(out/"source_code.zip") as archive:checks["source_hashes"]=all(hashlib.sha256(archive.read(p)).hexdigest()==h for p,h in env["source_sha256"].items())
+    checks["artifact_hashes"]=all(hashlib.sha256((out/p).read_bytes()).hexdigest()==h for h,p in (line.split("  ",1) for line in (out/"sha256.txt").read_text().splitlines()))
+    checks={k:bool(v) for k,v in checks.items()}
+    result=dict(passed=all(checks.values()),check_count=len(checks),checks=checks,validator_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),numerical_tolerance="Independent least-squares predictions/metrics atol/rtol 2e-5; coefficients atol/rtol 2e-4 for ill-conditioned fixed RBF dictionary; exact orbit replay.")
     (out/"validation.json").write_text(json.dumps(result,indent=2),encoding="utf-8")
     print(json.dumps(dict(passed=result["passed"],check_count=len(checks),failed=[k for k,v in checks.items() if not v]),indent=2))
     return result
