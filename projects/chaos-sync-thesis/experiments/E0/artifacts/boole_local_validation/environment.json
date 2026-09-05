@@ -1,0 +1,41 @@
+{
+  "created_utc": "2026-09-05T06:57:24.911282+00:00",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\長松　蒼空\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy": "1.26.2",
+  "matplotlib": "3.9.1",
+  "simulation_seconds": {
+    "float64": 13.490222499938682,
+    "float32": 17.806422699941322
+  },
+  "command": [
+    "experiments/E0/run_e0.py"
+  ],
+  "float_info": {
+    "float32": {
+      "bits": 32,
+      "eps": 1.1920928955078125e-07,
+      "nmant": 23
+    },
+    "float64": {
+      "bits": 64,
+      "eps": 2.220446049250313e-16,
+      "nmant": 52
+    },
+    "longdouble": {
+      "bits": 64,
+      "eps": 2.220446049250313e-16,
+      "nmant": 52
+    }
+  },
+  "source_sha256": {
+    "experiments/E0/run_e0.py": "30e2bec0c61041f7b374a25f8db9e78d4c089618abf2430bef30818a212e4994",
+    "experiments/E0/validate_results.py": "7951ad7c0ffbe0caec42ebec2f4dc19f16eef4814cb782d3b6ca6bed39b73b94",
+    "experiments/src/core.py": "dad5938fd4b4661523c86edf049971fd593956593c4c351180a58cf1a7fce05b",
+    "experiments/E0/config.json": "8524eeb849314741628b74cdda14e00473e2f20177d999dd1911900628f59760",
+    "experiments/chaos-sync-tm-self-implementation/docs/chaos_sync_tm_experiment_textbook_ja.pdf": "7636ef03919a0dfce9b310de02570818c35768b87dea056e8320d9c047c5300f",
+    "references/papers/infinite-dimensional-chaotic-synchronization.pdf": "21873881490230fe671daa959a04757c223ff26420ac9eba9f454c3248b7d0e3",
+    "experiments/tests/test_e0_boole_validation.py": "3c35e120530c6ccb4e51330bf96b6c629fc688f18947d30ae534ad155e1259bf"
+  }
+}

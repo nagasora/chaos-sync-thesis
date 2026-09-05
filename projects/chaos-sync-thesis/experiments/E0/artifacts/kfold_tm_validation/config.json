@@ -1,0 +1,75 @@
+{
+  "experiment_id": "E0B-KFOLD-TM-SHIFT-CHECK",
+  "precision": "float64",
+  "seeds": [
+    20260915,
+    20260916,
+    20260917,
+    20260918,
+    20260919,
+    20260920,
+    20260921,
+    20260922,
+    20260923,
+    20260924
+  ],
+  "sample_lengths": [
+    1000,
+    10000,
+    100000
+  ],
+  "K_values": [
+    2,
+    3,
+    5
+  ],
+  "shift_orders": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "gram_orders": [
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "pole_sine_threshold": 1e-10,
+  "pole_offsets": [
+    -0.001,
+    0.001,
+    -1e-06,
+    1e-06,
+    -1e-09,
+    1e-09,
+    -1e-12,
+    1e-12
+  ],
+  "negative_alphas": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "gates": {
+    "max_shift_residual": 1e-12,
+    "max_modulus_error": 1e-14,
+    "max_gram_frobenius": 0.08,
+    "max_uniform_ks": 0.01,
+    "min_negative_control_rms": 0.01,
+    "gram_convergence": "Every seed and pooled median must have lower Frobenius error at largest N than smallest N; intermediate lengths are diagnostic, not required monotone.",
+    "pole_policy": "All finite near-pole residuals use the same 1e-12 gate and are reported separately. Exact x=0 is undefined for even K and must be flagged, not treated as success.",
+    "finite": "All IID samples and images must be finite; retain failures and fail the gate if any."
+  },
+  "hypothesis": "Under standard Cauchy measure, Cayley power modes are orthonormal and composition with H_K maps index k to K*k. This is a coordinate identity, not input compression or a diagonal eigenfunction relation.",
+  "sampling": "PCG64(seed), theta=pi*U with U in (0,1), x=cot(theta); no iterative orbit, burn-in or float32. Reject unexpected RNG endpoint; do not reseed.",
+  "negative_control": "Use input gamma_star(alpha)*x, actual Boole F_alpha and Cayley scale gamma_star(alpha). Test the K=2 shift identity; alpha=0.5 is positive, 0.25 and 0.75 must fail despite standardized invariant measure.",
+  "source_pdf": "experiments/chaos-sync-tm-self-implementation/docs/chaos_sync_tm_experiment_textbook_ja.pdf",
+  "scope": "E0B only. E0A float32 failure is retained; no synchronization, compression, decoder or TM superiority claim.",
+  "predecessor": "experiments/E0/artifacts/boole_local_validation/summary.json"
+}

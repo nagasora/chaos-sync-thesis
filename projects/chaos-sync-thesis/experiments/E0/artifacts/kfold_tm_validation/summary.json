@@ -1,0 +1,31 @@
+{
+  "experiment_id": "E0B-KFOLD-TM-SHIFT-CHECK",
+  "scientific_gates": {
+    "iid_finite": true,
+    "shift_identity": true,
+    "unit_modulus": true,
+    "cauchy_input": true,
+    "cauchy_output": true,
+    "gram_accuracy_all_seeds": true,
+    "gram_convergence_all_seeds": true,
+    "gram_convergence_median": true,
+    "finite_pole_shift": true,
+    "pole_diagnostics": true,
+    "positive_control": true,
+    "negative_control": true
+  },
+  "overall_passed": true,
+  "seed_count": 10,
+  "maximum_shift_residual": 1.3027983502405825e-14,
+  "maximum_near_pole_residual": 5.643844870138039e-15,
+  "gram_median_by_length": {
+    "1000": 0.23359419799670383,
+    "10000": 0.0821565564542753,
+    "100000": 0.024905237413751523
+  },
+  "negative_rms_by_alpha": {
+    "0.25": 0.707317274269391,
+    "0.5": 2.1382754284257529e-16,
+    "0.75": 0.7071061940419385
+  }
+}

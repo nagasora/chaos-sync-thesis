@@ -1,0 +1,60 @@
+{
+  "experiment_id": "E0A-BOOLE-LOCAL-VALIDATION",
+  "protocol": "textbook-v1.0-initialization-precision-audit",
+  "alpha_values": [
+    0.25,
+    0.4,
+    0.5,
+    0.6,
+    0.75
+  ],
+  "seeds": [
+    20260905,
+    20260906,
+    20260907,
+    20260908,
+    20260909
+  ],
+  "initial_distributions": [
+    "cauchy",
+    "gaussian",
+    "uniform"
+  ],
+  "precision": [
+    "float64",
+    "float32"
+  ],
+  "burn_in": 20000,
+  "observation_lengths": [
+    10000,
+    30000,
+    100000
+  ],
+  "near_zero_thresholds": [
+    1e-12,
+    1e-10,
+    1e-08
+  ],
+  "initialization": "One PCG64 generator per seed and distribution; standard Cauchy, N(0,1), U(-1,1); same x0 across alpha and dtype, cast only at simulation entry.",
+  "gates": {
+    "max_group_median_mad_relative_error": 0.05,
+    "max_group_median_lyapunov_absolute_error": 0.02,
+    "convergence": "For float64, pooled median errors at T=100000 must be no greater than at T=10000 for both MAD and Lyapunov. Intermediate lengths and all groups are reported without demanding monotonicity.",
+    "precision": "Apply the same accuracy gates separately per dtype, alpha, initialization. Any float32 reversal or numerical failure requires a causal audit before advancing.",
+    "finite": "All 150 conditions must finish with finite, nonzero observations; failed conditions remain in metrics and cannot be dropped.",
+    "periodicity": "Exact repeats imply a finite precision periodic orbit; save first repeat and period, distinguish from mathematical chaos."
+  },
+  "theory": "F_alpha(x)=alpha*(x-1/x), 0<alpha<1; gamma=sqrt(alpha/(1-alpha)); lambda=2*log(sqrt(alpha)+sqrt(1-alpha)). Cauchy has no population mean or variance; MAD is unscaled median absolute deviation.",
+  "scope": "Uncoupled single-node consistency only; no training, synchronization, compression, decoder or superiority claims. No clipping, jitter, reseeding, or failed-orbit replacement.",
+  "independence": "Seeds are replication units. Alpha, initialization and precision are controlled paired conditions, not independent samples. No iid KS p-values for time series.",
+  "source_pdf": "experiments/chaos-sync-tm-self-implementation/docs/chaos_sync_tm_experiment_textbook_ja.pdf",
+  "source_pdf_pages": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ]
+}

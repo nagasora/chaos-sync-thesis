@@ -1,0 +1,36 @@
+{
+  "experiment_id": "E0A-BOOLE-LOCAL-VALIDATION",
+  "groups": [
+    {
+      "dtype": "float64",
+      "alpha": 0.5,
+      "initial_distribution": "gaussian",
+      "completed": true,
+      "median_mad_relative_error": 0.010150417658317146,
+      "median_lyapunov_absolute_error": 1.2429186248774649e-05,
+      "passed": true
+    }
+  ],
+  "convergence": [
+    {
+      "dtype": "float64",
+      "length": 10000,
+      "median_mad_relative_error": 0.010150417658317146,
+      "median_lyapunov_absolute_error": 1.2429186248774649e-05
+    }
+  ],
+  "float64_accuracy_passed": true,
+  "float32_accuracy_passed": null,
+  "float64_convergence_passed": true,
+  "all_conditions_finite": true,
+  "exact_repeat_conditions": {
+    "float64": 0
+  },
+  "overall_passed": true,
+  "condition_count": 1,
+  "row_count": 1,
+  "metadata_correction": {
+    "original_float32_accuracy_passed": true,
+    "reason": "float32 was not tested; empty all() previously returned True. No numerical values changed."
+  }
+}
