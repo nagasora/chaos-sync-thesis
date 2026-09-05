@@ -1,0 +1,23 @@
+{
+  "created_utc": "2026-09-05T07:31:11.902920+00:00",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy": "1.26.2",
+  "matplotlib": "3.9.1",
+  "command": [
+    "experiments/E0/run_e0b.py"
+  ],
+  "source_sha256": {
+    "experiments/E0/run_e0b.py": "81dfde2580016e338fcf150769f0e6be2f2029699d96ac492df8946e3686965c",
+    "experiments/E0/run_e0.py": "4ad4a84b808d823fd0ec0140b2775118d8bdfaa633ff2f077f595982b1ad506e",
+    "experiments/E0/validate_results.py": "9cfbd69f6a182b644dca42ca19507a6f108531ecb8afb5eecb005cea5df14e77",
+    "experiments/E0/config_e0b.json": "308f07508a650dfc07b846c4fccbe83be45f988659d849e406f9f476ba620b28",
+    "experiments/src/core.py": "68abaff53630368fc19849c1ba96040941e5251b30ab1b71a30264c58dd8af52",
+    "experiments/tests/test_e0_boole_validation.py": "2813581c185ba35246c7866d5c1fe80a9f8d5b01165dd9224f7c77f2f8e8cb52"
+  },
+  "reference_sha256": {
+    "experiments/chaos-sync-tm-self-implementation/docs/chaos_sync_tm_experiment_textbook_ja.pdf": "7636ef03919a0dfce9b310de02570818c35768b87dea056e8320d9c047c5300f"
+  },
+  "generation": "IID PCG64, not an iterative chaotic orbit; no burn-in",
+  "core_precision": "float64 / complex128"
+}

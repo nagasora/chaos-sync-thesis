@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "checks": {
+    "row_count": true,
+    "unique_conditions": true,
+    "condition_grid": true,
+    "quadrature_0.5": true,
+    "shape_dtype_float64": true,
+    "independent_exact_replay_float64": true,
+    "diagnostic_counts_float64": true,
+    "independent_metrics_float64": true,
+    "exact_period_suffix_float64": true,
+    "group_float64_0.5_gaussian": true,
+    "source_hashes": true,
+    "artifact_hashes": true
+  },
+  "quadrature": [
+    {
+      "alpha": 0.5,
+      "gamma": 1.0,
+      "closed_form": 0.6931471805599453,
+      "quadrature": 0.6931471805599477,
+      "quadrature_error": 1.7319479184152442e-14
+    }
+  ],
+  "cycles": [],
+  "scipy_version": "1.16.2",
+  "validator_sha256": "293c63e14438947a0685075c8d0fab6801396a4e920d1e8f690c0af8fd4fe1bb",
+  "interpretation": "Artifact integrity is separate from scientific gate success."
+}

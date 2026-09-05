@@ -101,5 +101,101 @@ class BooleValidationTests(unittest.TestCase):
             self.assertTrue((run_directory / "artifacts" / "diagnostic_orbit_samples.npz").is_file())
 
 
+
+class SharedBooleCoreTests(unittest.TestCase):
+    """共通写像の精度・特異点診断・旧実装との整合性を確認する。"""
+
+    def test_shared_core_precision_and_failure_contract(self) -> None:
+        """既知値、真のdtype、失敗停止、旧軌道との一致を一つの境界で検証する。"""
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+        from src.core import generalized_boole, boole_log_derivative, boole_theory, simulate_boole_orbits
+        for dtype in (np.float32,np.float64):
+            with self.subTest(dtype=dtype):
+                x = np.array([2.0,0.0,1e-15],dtype=dtype)
+                y,bad,near = generalized_boole(x,np.array(.5))
+                self.assertEqual(y.dtype,np.dtype(dtype))
+                self.assertEqual(float(y[0]),.75)
+                self.assertTrue(bad[1])
+                np.testing.assert_array_equal(near,[False,True,True])
+                orbit,diag = simulate_boole_orbits(np.array([1.0,2.0],dtype=dtype),np.array(.5),0,4)
+                self.assertEqual(diag["failure_step"][0],1)
+                self.assertEqual(float(orbit[0,0]),0.0)
+                self.assertTrue(np.isnan(orbit[0,1:]).all())
+                self.assertEqual(diag["failure_step"][1],-1)
+        gamma,lyap = boole_theory(np.array(.5))
+        self.assertAlmostEqual(float(gamma),1)
+        self.assertAlmostEqual(float(lyap),math.log(2))
+        self.assertAlmostEqual(float(boole_log_derivative(np.array([2.]),np.array(.5))[0]),math.log(.625))
+        old = load_script_module()
+        actual,_ = simulate_boole_orbits(np.array([2.],dtype=np.float64),np.array(.4),10,100)
+        expected = []
+        state = 2.
+        for i in range(110):
+            state = old.generalized_boole_map(state,.4)
+            if i >= 10:
+                expected.append(state)
+        np.testing.assert_array_equal(actual[0],expected)
+        with self.assertRaises(ValueError):
+            boole_theory(np.array([0.,1.]))
+        with self.assertRaises(ValueError):
+            boole_log_derivative(np.array([0.]),np.array(.5))
+
+
+
+    def test_runner_marks_unmeasured_precision_and_serializes_validation(self) -> None:
+        """未実施精度を合格にせず、独立検証結果をJSONへ保存できる。"""
+        base = Path(__file__).resolve().parents[1] / "E0"
+        modules = {}
+        for name in ("run_e0", "validate_results"):
+            spec = importlib.util.spec_from_file_location(name, base / (name + ".py"))
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            modules[name] = module
+        config = json.loads((base / "config.json").read_text(encoding="utf-8-sig"))
+        config.update(alpha_values=[.5], seeds=[20260905], initial_distributions=["gaussian"],
+                      precision=["float64"], burn_in=10, observation_lengths=[100])
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory) / "single_precision"
+            summary = modules["run_e0"].run(config, out)
+            self.assertIsNone(summary["float32_accuracy_passed"])
+            self.assertTrue(modules["validate_results"].validate(out)["passed"])
+            saved = json.loads((out / "validation.json").read_text(encoding="utf-8"))
+            self.assertIs(saved["passed"], True)
+
+
+
+    def test_kfold_tm_identity_gram_and_exact_poles(self) -> None:
+        """枝・直交性・shiftの正負対照・厳密極の契約を確認する。"""
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+        from src.core import cayley_modes, kfold_cotangent
+        theta = np.pi*(np.arange(2048)+.371)/2048
+        x = np.cos(theta)/np.sin(theta)
+        orders = tuple(range(-4,5))
+        modes = cayley_modes(x,orders)
+        np.testing.assert_allclose(modes,np.exp(-2j*theta[:,None]*np.array(orders)),atol=2e-14,rtol=0)
+        np.testing.assert_allclose(modes.conj().T@modes/len(x),np.eye(9),atol=2e-14,rtol=0)
+        for K in (2,3,5):
+            y,bad,near = kfold_cotangent(x,K)
+            self.assertFalse(bad.any())
+            for k in (1,2,3,4):
+                np.testing.assert_allclose(cayley_modes(y,(k,)),cayley_modes(x,(K*k,)),atol=1e-12,rtol=0)
+        y,bad,near = kfold_cotangent(np.array([0.]),2)
+        self.assertTrue(bad[0] and near[0] and np.isnan(y[0]))
+        y,bad,near = kfold_cotangent(np.array([0.]),3)
+        self.assertEqual(y[0],0)
+        self.assertFalse(bad[0])
+        for alpha in (.25,.75):
+            y=alpha*x-(1-alpha)/x
+            residual=np.abs(cayley_modes(y,(1,))-cayley_modes(x,(2,)))
+            self.assertGreater(float(np.sqrt(np.mean(residual**2))),.01)
+        for bad_K in (1,2.5,True):
+            with self.assertRaises(ValueError):
+                kfold_cotangent(x,bad_K)
+        with self.assertRaises(ValueError):
+            cayley_modes(x,(1,),gamma=0)
+        with self.assertRaises(ValueError):
+            cayley_modes(x,(.5,))
+
+
 if __name__ == "__main__":
     unittest.main()

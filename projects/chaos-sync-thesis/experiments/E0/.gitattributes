@@ -1,0 +1,2 @@
+# Preserve recorded artifact bytes for SHA-256 verification.
+artifacts/** -text whitespace=cr-at-eol
