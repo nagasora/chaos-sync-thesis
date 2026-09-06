@@ -1,0 +1,1273 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "check": "sha256 benchmark.json",
+      "passed": true
+    },
+    {
+      "check": "sha256 config.json",
+      "passed": true
+    },
+    {
+      "check": "sha256 environment.json",
+      "passed": true
+    },
+    {
+      "check": "sha256 metrics.json",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/a.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/aggregate.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/a_audit.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/a_diagnostics.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/a_failed_case_diagnosis.json",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/b.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/b_audit.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/b_diagnostics.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/c.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/cdf.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/c_audit.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/c_diagnostics.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/fig1_cauchy_cdf.png",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/fig2_scale_dynamics.png",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/fig3_critical_relaxation.png",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/fig4_scale_emergence.png",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/fig5_critical_ratios.png",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/fig6_lyapunov.png",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/fits.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/fixed.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/initial_states.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/relaxation.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/representative_orbits.npz",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/supplement_numerical_audit.png",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/theory.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/theory_checks.csv",
+      "passed": true
+    },
+    {
+      "check": "sha256 README.md",
+      "passed": true
+    },
+    {
+      "check": "sha256 e0_tangent_cauchy.py",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/executed_source.py",
+      "passed": true
+    },
+    {
+      "check": "sha256 artifacts/repetition_diagnosis.csv",
+      "passed": true
+    },
+    {
+      "check": "A primary count",
+      "passed": true
+    },
+    {
+      "check": "A precision count",
+      "passed": true
+    },
+    {
+      "check": "a diagnostic count",
+      "passed": true
+    },
+    {
+      "check": "a audit count",
+      "passed": true
+    },
+    {
+      "check": "b diagnostic count",
+      "passed": true
+    },
+    {
+      "check": "b audit count",
+      "passed": true
+    },
+    {
+      "check": "c diagnostic count",
+      "passed": true
+    },
+    {
+      "check": "c audit count",
+      "passed": true
+    },
+    {
+      "check": "B checkpoint count",
+      "passed": true
+    },
+    {
+      "check": "C window count",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 0/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 1/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 2/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 3/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 4/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 5/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 6/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 7/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 8/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 9/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 10/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 11/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 12/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 13/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 14/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 15/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 16/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 17/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 18/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 19/9",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/0",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/1",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/2",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/3",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/4",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/5",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/6",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/7",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/8",
+      "passed": true
+    },
+    {
+      "check": "A gate 20/9",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0001/float32/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0001/float32/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0001/float32/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0001/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0001/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0001/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0002/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0002/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0002/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0005/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0005/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.0005/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.001/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.001/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.001/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.002/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.002/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.002/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.005/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.005/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.005/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.01/float32/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.01/float32/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.01/float32/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.01/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.01/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.01/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.02/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.02/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.02/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.05/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.05/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.05/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.1/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.1/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.1/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.5/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.5/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 1.5/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 2.0/float32/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 2.0/float32/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 2.0/float32/ks",
+      "passed": true
+    },
+    {
+      "check": "aggregate 2.0/float64/lyapunov",
+      "passed": true
+    },
+    {
+      "check": "aggregate 2.0/float64/estimated_scale",
+      "passed": true
+    },
+    {
+      "check": "aggregate 2.0/float64/ks",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.0001_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.0001_float32",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.0002_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.0005_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.001_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.002_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.005_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.01_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.01_float32",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.02_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.05_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.1_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b1.5_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b2.0_float64",
+      "passed": true
+    },
+    {
+      "check": "orbit b2.0_float32",
+      "passed": true
+    },
+    {
+      "check": "executed source hash",
+      "passed": true
+    },
+    {
+      "check": "only validator changed since execution",
+      "passed": true
+    },
+    {
+      "check": "reused Boole unchanged",
+      "passed": true
+    }
+  ]
+}

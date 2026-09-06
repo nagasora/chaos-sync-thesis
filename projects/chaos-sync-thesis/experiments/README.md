@@ -25,6 +25,9 @@ E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30
 
 実行済み: [20260806_E0_boole-invariant-measure](runs/20260806_E0_boole-invariant-measure/README.md)。3 alpha × 5 seed × 100,000点で全ゲートを通過し、独立検証37項目も通過した。
 
+
+追加実験: [tan(beta x) の事前登録E0A〜F](runs/20260906_E0_tangent-cauchy/README.md)。中心Cauchy族の尺度閉包・臨界緩和・Lyapunov・精度監査を分離し、Boole結果を保持する。
+
 ## E1: 読み出し単体
 
 - 既知の同期クラスタ、位相差、尺度母数を持つ人工軌道

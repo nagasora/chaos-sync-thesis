@@ -1,0 +1,66 @@
+{
+  "beta": [
+    0.5,
+    0.9,
+    1.0,
+    1.01,
+    1.1,
+    1.5,
+    2.0
+  ],
+  "epsilon": [
+    0.1,
+    0.05,
+    0.02,
+    0.01,
+    0.005,
+    0.002,
+    0.001,
+    0.0005,
+    0.0002,
+    0.0001
+  ],
+  "scales": [
+    0.1,
+    1.0,
+    10.0
+  ],
+  "seed_root": 20260906,
+  "a_seeds": 10,
+  "a_n": 100000,
+  "family_alpha": 0.01,
+  "b_seeds": 5,
+  "b_n": 4096,
+  "b_steps": 4096,
+  "long_beta": [
+    0.9999,
+    1.0,
+    1.0001
+  ],
+  "long_n": 512,
+  "long_steps": 200000,
+  "c_seeds": 20,
+  "c_steps": 200000,
+  "window": 50000,
+  "fp32_beta": [
+    1.0001,
+    1.01,
+    2.0
+  ],
+  "audit_k": 100,
+  "mp_digits": 100,
+  "block": 1024,
+  "gamma_floor": 1e-12,
+  "fixed_rtol": 1e-08,
+  "fit_cutoffs": [
+    0.1,
+    0.01
+  ],
+  "tail_multipliers": [
+    10,
+    100
+  ],
+  "bootstrap": null,
+  "interval": "independent-seed Student-t 95%, descriptive",
+  "classification": "DKW gate only for A-float64; other comparisons descriptive"
+}

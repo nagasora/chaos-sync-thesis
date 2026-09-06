@@ -1,0 +1,7 @@
+{
+  "seconds": 0.14303229993674904,
+  "evaluations": 2097152,
+  "estimated_long_ensemble_seconds": 104.75998530523611,
+  "includes_jit": false,
+  "includes_high_precision": false
+}

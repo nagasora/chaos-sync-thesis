@@ -61,3 +61,7 @@ projects/*/references/papers/
 !projects/chaos-sync-thesis/experiments/runs/20260901_E1B_two-source-identifiability/artifacts/features.npz
 !projects/chaos-sync-thesis/experiments/runs/20260901_E1B_two-source-identifiability/artifacts/identifiability_results.png
 !projects/chaos-sync-thesis/experiments/runs/20260901_E1B_two-source-identifiability/artifacts/prediction_scatter.png
+
+# E0 tangent: 代表軌道と図は再現性の証拠として管理する。
+!projects/chaos-sync-thesis/experiments/runs/20260906_E0_tangent-cauchy/artifacts/*.npz
+!projects/chaos-sync-thesis/experiments/runs/20260906_E0_tangent-cauchy/artifacts/*.png
