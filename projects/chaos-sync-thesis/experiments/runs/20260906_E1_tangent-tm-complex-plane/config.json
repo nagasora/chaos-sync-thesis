@@ -1,0 +1,73 @@
+{
+  "betas": [
+    1.0001,
+    1.0002,
+    1.0005,
+    1.001,
+    1.002,
+    1.005,
+    1.01,
+    1.02,
+    1.05,
+    1.1,
+    1.5,
+    2.0
+  ],
+  "fp32_betas": [
+    1.0001,
+    1.01,
+    2.0
+  ],
+  "representatives": [
+    1.0001,
+    1.01,
+    1.1,
+    2.0
+  ],
+  "n": 200000,
+  "window": 50000,
+  "scales": [
+    "fixed",
+    "half",
+    "matched",
+    "double"
+  ],
+  "degree": 8,
+  "lags": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    64,
+    256,
+    1024,
+    4096,
+    16384
+  ],
+  "bins": 64,
+  "scatter_n": 4096,
+  "time_n": 2048,
+  "phase_lags": [
+    1,
+    64,
+    4096
+  ],
+  "quadrature_n": [
+    4096,
+    8192
+  ],
+  "contour_lags": [
+    1,
+    2,
+    4,
+    8,
+    16
+  ],
+  "radius": 0.5,
+  "theory_tolerance": 1e-10,
+  "unit_tolerance": 1e-12,
+  "shuffle_seed": 20260906,
+  "source_run": "20260906_E0_tangent-cauchy",
+  "selected_seed": 0
+}

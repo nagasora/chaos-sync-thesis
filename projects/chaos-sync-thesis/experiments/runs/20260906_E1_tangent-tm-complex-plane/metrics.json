@@ -1,0 +1,14 @@
+{
+  "status": "completed",
+  "orbits": 15,
+  "unit_error": 2.220446049250313e-16,
+  "max_original_correlation_error": 0.18094841274407636,
+  "max_shuffled_correlation_error": 0.006180648074551092,
+  "row_counts": {
+    "moments": 2400,
+    "density": 19200,
+    "gram": 24300,
+    "correlations": 12000
+  },
+  "limitation": "One representative seed per condition; windows are not independent replicates."
+}

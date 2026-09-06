@@ -1,0 +1,10 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy": "1.26.2",
+  "scipy": "1.16.2",
+  "matplotlib": "3.9.1",
+  "code_sha256": "233228d93c79a6d04d50bf8bac551bb674a7980dddcc33fc662daa46b833c60d",
+  "theory_sha256": "3ea86d9c02b632388eb6dc375e6ba4e9e08e70d24a6d6c54c0defe8eb8acf833",
+  "config_sha256": "b0eeb632996e9a7eb1898d6a3f45efce5fa4e789c0428fb5d2d19672a76dac5e"
+}

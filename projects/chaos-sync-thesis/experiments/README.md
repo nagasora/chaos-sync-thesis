@@ -82,3 +82,5 @@ python experiments/new_experiment.py --stage E1A --slug tm-linear-mixture --titl
 ```
 
 実験 ID ごとに `runs/` 以下へ新規作成し、同じ ID は上書きしません。
+
+- [E1 tangent TM complex-plane analysis](runs/20260906_E1_tangent-tm-complex-plane/README.md): theory, saved E0 trajectories, figures and reproducibility.

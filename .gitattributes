@@ -1,2 +1,5 @@
 # Markdown の末尾2空白は、研究文書で意図的な改行として使用している。
 *.md whitespace=-trailing-space
+
+projects/chaos-sync-thesis/experiments/runs/20260906_E1_tangent-tm-complex-plane/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260906_E1_tangent-tm-complex-plane/artifacts/*.svg -whitespace
