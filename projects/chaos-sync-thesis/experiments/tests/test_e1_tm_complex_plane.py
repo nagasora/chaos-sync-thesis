@@ -85,3 +85,30 @@ def test_shuffle_conditional_mean() -> None:
     expected=(abs(z.sum())**2-len(z))/(len(z)*(len(z)-1))
     direct=np.mean([a*np.conj(b) for i,a in enumerate(z) for j,b in enumerate(z) if i!=j])
     assert abs(expected-direct)<1e-14
+
+
+def test_finite_time_covariance_and_orbit(tmp_path: Path) -> None:
+    """追試の有限長分散と実軌道が独立な定義に一致する。"""
+    path = PATH.parent.parent / "20260907_E1_tangent-finite-time-confirmation/finite_time.py"
+    spec = importlib.util.spec_from_file_location("finite_time", path)
+    assert spec is not None and spec.loader is not None
+    followup = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(followup)
+    for rho in [0., .3, .9999, 1.]:
+        for n in [1, 2, 31]:
+            covariance = rho ** abs(np.arange(n)[:, None] - np.arange(n)[None, :])
+            assert followup.mean_square(n, rho) == pytest.approx(covariance.mean())
+    beta, x0 = 1.1, .03
+    expected = []
+    for _ in range(12):
+        x0 = float(np.tan(beta*x0))
+        expected.append(x0)
+    np.testing.assert_allclose(followup.orbit(beta, .03, 12), expected, rtol=1e-13)
+    g = followup.gamma_fixed(beta)
+    assert g > 0 and abs(g-np.tanh(beta*g)) < 1e-12
+    with pytest.raises(ValueError):
+        followup.mean_square(0, .5)
+
+    followup.theory(tmp_path)
+    assert json.loads((tmp_path / "theory.json").read_text(encoding="utf-8"))["passed"]
+    assert (tmp_path / "preregistration.md").exists()
