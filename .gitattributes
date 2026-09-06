@@ -1,2 +1,6 @@
 # Markdown の末尾2空白は、研究文書で意図的な改行として使用している。
 *.md whitespace=-trailing-space
+
+# E0 tangent のハッシュ付き成果物はバイト列を保持し、再利用依存はLFに固定する。
+projects/chaos-sync-thesis/experiments/runs/20260906_E0_tangent-cauchy/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260806_E0_boole-invariant-measure/e0_boole_validation.py text eol=lf

@@ -1,0 +1,18 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy": "1.26.2",
+  "scipy": "1.16.2",
+  "numba": "0.66.0",
+  "mpmath": "1.3.0",
+  "matplotlib": "3.9.1",
+  "git_head": "4ac62a71a37dfcd255c7294fcf90c0a3a91ffbbe",
+  "script_sha256": "06c101c544588e76e910d308f18635e295dcb5a6ef6eef48de5b28d529e954d1",
+  "config_sha256": "8c948a34e1cd268f653c86c4e8fac105ad89a96dfff382bf12b814bc4713bd2f",
+  "reused_boole_sha256": "7e94d32b7fb34cb448d760b608a54104486b125d1b16182765542069380d2607",
+  "command": [
+    "experiments/runs/20260906_E0_tangent-cauchy/e0_tangent_cauchy.py",
+    "--run"
+  ],
+  "started_utc": "2026-09-06T07:56:48Z"
+}

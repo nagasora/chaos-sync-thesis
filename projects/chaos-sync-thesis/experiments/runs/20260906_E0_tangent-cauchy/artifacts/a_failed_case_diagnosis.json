@@ -1,0 +1,18 @@
+[
+  {
+    "beta": 1.0,
+    "gamma0": 1.0,
+    "condition": 7,
+    "seed": 4,
+    "preregistered_gate": 0.007295692186922878,
+    "original_KS": 0.0073901139238876645,
+    "high_precision_KS": 0.0073901139238876645,
+    "iid_KS_pvalue_diagnostic": 3.5904615765702385e-05,
+    "max_absolute_state_difference": 1.7763568394002505e-15,
+    "max_CDF_difference": 7.067899292141149e-17,
+    "mp_digits": 100,
+    "sample_size": 100000,
+    "method": "Post-hoc diagnostic only: exact same finite float64 initial sample, 100-digit beta*x and tan, independent scipy.stats.kstest. Original gate unchanged.",
+    "interpretation": "Threshold exceedance persists at high precision; finite-sample discrepancy, no demonstrated floating-point cause. This is not proof that sampling alone is the cause."
+  }
+]
