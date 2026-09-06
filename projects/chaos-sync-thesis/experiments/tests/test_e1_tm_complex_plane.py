@@ -112,3 +112,35 @@ def test_finite_time_covariance_and_orbit(tmp_path: Path) -> None:
     followup.theory(tmp_path)
     assert json.loads((tmp_path / "theory.json").read_text(encoding="utf-8"))["passed"]
     assert (tmp_path / "preregistration.md").exists()
+
+def test_additive_sync_theory_and_variation(tmp_path: Path) -> None:
+    """相互加算結合の尺度・横変分・理論ゲートを確認する。"""
+    path = PATH.parent.parent / "20260907_E2_tangent-additive-sync/additive_sync.py"
+    spec = importlib.util.spec_from_file_location("additive_sync", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    for beta, epsilon in [(1.0001, 0.), (1.1, .5), (2., .9)]:
+        p = module.predictions(beta, epsilon)
+        assert p["transverse"] > p["lower_bound"] > 0
+        assert abs((1-epsilon)*p["gamma"]-np.tanh(beta*p["gamma"])) < 1e-12
+    with pytest.raises(ValueError):
+        module.predictions(1.1, 1.)
+    beta, epsilon, x0 = 1.1, .1, .02
+    states, parallel, transverse = module.orbit(beta, epsilon, x0, 12)
+    expected = []
+    for i in range(12):
+        derivative = beta/np.cos(beta*x0)**2
+        assert parallel[i] == pytest.approx(np.log(derivative+epsilon))
+        assert transverse[i] == pytest.approx(np.log(derivative-epsilon))
+        x0 = np.tan(beta*x0)+epsilon*x0
+        expected.append(x0)
+    np.testing.assert_allclose(states, expected, atol=1e-12)
+    module.theory(tmp_path)
+    gate = json.loads((tmp_path / "theory.json").read_text(encoding="utf-8"))
+    assert gate["passed"]
+    gate["passed"] = False
+    (tmp_path / "theory.json").write_text(json.dumps(gate), encoding="utf-8")
+    with pytest.raises(ValueError):
+        module.run(tmp_path)
+    assert not (tmp_path / "artifacts").exists()
