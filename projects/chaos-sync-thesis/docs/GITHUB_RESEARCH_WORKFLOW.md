@@ -37,7 +37,7 @@ Issue一件には一つの研究上の対象だけを置く。
 1. 未解決点をIssueフォームで起票し、対応するProjectへ追加する。
 2. 原典または既存の再現計算を確認し、`Evidence`欄とIssueへ根拠を追記する。
 3. 実験が必要なら、仮説を一つに絞ったExperiment Issueを作る。基準実験は保持する。
-4. コード、設定、結果メモを `experiments/runs/<experiment-id>/` に保存し、Issueからリンクする。
+4. 現行実験のコード・設定・レポートは `experiments/E<段階>/`、実行時データ・数値・図はその `artifacts/<実行名>/` に保存し、[結果・データ対応台帳](../experiments/RESULTS_INDEX.md) とIssueからリンクする。旧 `experiments/runs/<experiment-id>/` は履歴として保持する。
 5. 結果を「支持・反証・未判定」に分けて記録する。スコアや結論を未実行のまま記載しない。
 6. 判断が確定したらDecision Issueへ理由と再検討条件を残し、Projectの状態を更新する。
 

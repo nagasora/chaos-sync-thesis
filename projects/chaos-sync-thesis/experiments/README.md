@@ -1,5 +1,9 @@
 # 実験計画
 
+**結果を探す:** [実験結果・データ対応台帳](RESULTS_INDEX.md) → 各実行の設定・入力・予測・図・レポート。**実験を追加する:** [記録ガイド](RECORDING_GUIDE.md) → 既存レポートと台帳を更新する。
+
+現行E1Bは [事前計画](E1/IDENTIFIABILITY.md) と設定のみで未実行。下記の旧E1B実行済み結果とは区別する。
+
 2026-09-06: [E1 TM-A追加実験と再検討方針](E1/TM_DYNAMICS.md)。16次元6辞書、共通未来targetで168軌道を評価し、独立396チェック通過。角度Fourierとの同値性と有限射影の限界を確認。TM-B/E1、TM-C/E3へ段階的に進め、基底適合性を同期・圧縮成功と同一視しない。
 
 E1A時点: [E1A固定読み出しレポート](E1/README.md)。432軌道・48 test seed、TM RMSE 0.006507、実数Fourier 0.003912。時間順序の情報は支持、固定TM16優位は棄却。独立検証155/155。次は教材E1Bの二源識別可能性。
@@ -20,7 +24,11 @@ E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30
 
 実験記録の作成方法と上書き方針は [RECORDING_GUIDE.md](RECORDING_GUIDE.md) を参照してください。発表フィードバックを受けた最初の実験は、人工カオス源の線形混合に対する TM 読み出し単体検証 E1A です。
 
-## E0: 理論整合性
+## 以下は旧系列の計画・実行履歴
+
+現行系列の実行状態は上記と [台帳](RESULTS_INDEX.md) を参照する。以下の「次段階」は各旧run時点の判断を残したもの。
+
+### E0: 理論整合性
 
 - 一般化 Boole 写像の軌道生成
 - Cauchy 不変測度の再現
@@ -29,7 +37,7 @@ E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30
 
 実行済み: [20260806_E0_boole-invariant-measure](runs/20260806_E0_boole-invariant-measure/README.md)。3 alpha × 5 seed × 100,000点で全ゲートを通過し、独立検証37項目も通過した。
 
-## E1: 読み出し単体
+### E1: 読み出し単体
 
 - 既知の同期クラスタ、位相差、尺度母数を持つ人工軌道
 - TM / GFT / 時間遅延特徴による既知パラメータの回収
@@ -44,7 +52,7 @@ E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30
 
 2026-09-01進捗: [2源識別可能性対照](runs/20260901_E1B_two-source-identifiability/README.md) を実行した。既知full-rank 2観測を逆変換したoracle TMの順序付きtest RMSEは `0.002083`、direct TMは `0.007740` だった。対称1観測では全352衝突対の特徴差が `0.0`、順序付きRMSEの理論下限は `0.073030` で、TM `0.073710`、Fourier `0.073891` は下限を下回らなかった。したがって、可逆観測では2源alphaを読める正対照と、源入替えで情報を失う厳密な失敗対照を同時に確認した。使用源軌道NPZ、特徴NPZ、全CSV、PNG、SHA-256を保存し、独立validator 20/20項目を通過した。
 
-## E2: 頑健性
+### E2: 頑健性
 
 - 観測ノイズ
 - 欠損
@@ -52,7 +60,7 @@ E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30
 - 初期値変動
 - 同期臨界からの距離
 
-## E3: 結合 Boole 系
+### E3: 結合 Boole 系
 
 - 入力注入方法の比較
 - 同期と復号可能性の関係
@@ -79,7 +87,9 @@ E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30
 
 文章中に数値や図だけを残してデータ・コードを失う状態は完了としない。
 
-## 記録の作成
+## 旧形式の作成ツール（履歴参照用）
+
+以下は旧 `runs/` 形式専用。現行実験の作成手順は [記録ガイド](RECORDING_GUIDE.md) を使う。
 
 ```powershell
 python experiments/new_experiment.py --stage E1A --slug tm-linear-mixture --title "TM基底による人工カオス線形混合の読み出し" --seed 20260806
