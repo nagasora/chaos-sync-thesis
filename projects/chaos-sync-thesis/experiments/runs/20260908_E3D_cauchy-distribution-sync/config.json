@@ -1,0 +1,26 @@
+{
+  "betas": [
+    1.01,
+    1.1,
+    1.5,
+    2.0
+  ],
+  "seeds": [
+    810,
+    811,
+    812
+  ],
+  "couplings": [
+    0.0,
+    0.25,
+    0.5
+  ],
+  "n": 20000,
+  "steps": 16,
+  "dkw_alpha": 0.01,
+  "hoeffding_alpha": 0.01,
+  "precision_digits": 80,
+  "dkw_tests": 1272,
+  "distance_tests": 204,
+  "dtype": "float64"
+}
