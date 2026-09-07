@@ -1,0 +1,7 @@
+{
+  "python": "3.12.4",
+  "numpy": "2.0.0",
+  "threads": "1",
+  "source_sha256": "7a74200acc6ec5297adc6a029419fbe3161ad95fa4dda935703b142fe504706d",
+  "code_sha256": "39ef949b0c41ada63be95b7b7d9e5b26eb3b17b6b02aea3902f2f325f203c58b"
+}

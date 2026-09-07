@@ -1,0 +1,9 @@
+{
+  "artifacts/budget_mse.png": "ba1dd8f3c34f95e539592488a8894a193805b27501db78ca2e85c806d934f2d8",
+  "artifacts/case_metrics.csv": "a6c6376c0f17d2e2525f61844da56e795d3f5cc0a19f005eb68bbcfd841fa618",
+  "artifacts/predictions.npz": "3245dc061c636648e440c59e58eb89fd5f70acc7713d68112cb980d85571e605",
+  "artifacts/raw_complex64_control.csv": "637f869cd5b5c0d4753230f748c58f1cd7db493271b018294781d8a8b7754c53",
+  "artifacts/selected_poles.npz": "ac64b604b1568d95f6977e451c081a11f553c4b70f7e44b6771fea4f03156a17",
+  "artifacts/summary.json": "009b50e9aff230fc761cff7086c151ffd7e09c04e70fae77a10f58cd5242751d",
+  "artifacts/validation.json": "ac2199d298697d1ffd1ff5fca42aa71d031307dc5940fb968e1ec1ea7f33e932"
+}
