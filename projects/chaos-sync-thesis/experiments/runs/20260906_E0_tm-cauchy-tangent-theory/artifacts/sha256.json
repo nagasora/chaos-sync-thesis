@@ -1,0 +1,12 @@
+{
+  "verify_theory.py": "3add97a2fcb79925ad23e441da4f53b34e54ecf34887144a8b37b91ef8a46c69",
+  "config.json": "046cac86ac5425e2cd3bb3f1088d985a1907a4ad003dc3cbac4325dde3a57464",
+  "environment.json": "bfece96c598eeb552ba6884cb0c5b970c58b083c5eb014c5b5384495237c203e",
+  "metrics.json": "3db65648958c412ac27745022dd0e1ea75dd86f221239a75907851b0a34cbe48",
+  "artifacts\\independent_projection_validation.json": "3367aa4b16a3b222acd93b7dfe82e72e5c25c7513be0dcf3a4efd1cb1d97a1ec",
+  "artifacts\\correlation_quadrature.csv": "c48c58c3bfb6b1af07d78b295051bd339e7a9f7dfc43b6009985f281010c1293",
+  "artifacts\\correlation_seeds.csv": "28f110b87d222339a6ff2a7cd065d3858bf46beb0f2dff7da7c3e204e25f038f",
+  "artifacts\\correlation_trajectories.csv": "e3a1d0973fd543f1bb652429af1a2fc1ade41929caf6b694301edcdad3e7c67b",
+  "artifacts\\gram.csv": "315bdcbe539bb84adbef819519af212a28f30e4f5e52c987754f56ebc41bda31",
+  "artifacts\\operator.csv": "a4de915952027923430ab0674b0b93285aefbc2488205547c04619c6c373f501"
+}
