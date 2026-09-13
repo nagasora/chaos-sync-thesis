@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "hashes": 19,
+  "conditions": 25,
+  "csv_rows": 41472,
+  "replayed_pairs": 50,
+  "meaning": "integrity and reproducibility, not proof of asymptotic synchronization"
+}

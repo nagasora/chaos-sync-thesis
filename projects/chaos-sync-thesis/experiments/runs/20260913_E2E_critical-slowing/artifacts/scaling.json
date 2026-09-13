@@ -1,0 +1,140 @@
+[
+  {
+    "beta": 1.2,
+    "horizon": 7500,
+    "eligible_deltas": [
+      0.005,
+      0.01,
+      0.02,
+      0.05
+    ],
+    "slope": -1.5092888180993427,
+    "ci95": [
+      -1.5713653039498374,
+      -1.4374195460981924
+    ],
+    "bootstrap_invalid": 0,
+    "status": "finite_window_descriptive_fit"
+  },
+  {
+    "beta": 1.2,
+    "horizon": 15000,
+    "eligible_deltas": [
+      0.005,
+      0.01,
+      0.02,
+      0.05
+    ],
+    "slope": -1.5266385165525018,
+    "ci95": [
+      -1.5919792157504582,
+      -1.4577784272189016
+    ],
+    "bootstrap_invalid": 0,
+    "status": "finite_window_descriptive_fit"
+  },
+  {
+    "beta": 1.2,
+    "horizon": 30000,
+    "eligible_deltas": [
+      0.001,
+      0.002,
+      0.005,
+      0.01,
+      0.02,
+      0.05
+    ],
+    "slope": -1.530308348320695,
+    "ci95": [
+      -1.5665616721720501,
+      -1.4923236941705094
+    ],
+    "bootstrap_invalid": 0,
+    "status": "finite_window_descriptive_fit"
+  },
+  {
+    "beta": 1.05,
+    "horizon": 7500,
+    "eligible_deltas": [
+      0.01,
+      0.02
+    ],
+    "slope": null,
+    "ci95": null,
+    "bootstrap_invalid": 0,
+    "status": "insufficient_eligible_conditions"
+  },
+  {
+    "beta": 1.05,
+    "horizon": 15000,
+    "eligible_deltas": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "slope": null,
+    "ci95": null,
+    "bootstrap_invalid": 0,
+    "status": "insufficient_eligible_conditions"
+  },
+  {
+    "beta": 1.05,
+    "horizon": 30000,
+    "eligible_deltas": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "slope": null,
+    "ci95": null,
+    "bootstrap_invalid": 0,
+    "status": "insufficient_eligible_conditions"
+  },
+  {
+    "beta": 1.5,
+    "horizon": 7500,
+    "eligible_deltas": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "slope": null,
+    "ci95": null,
+    "bootstrap_invalid": 0,
+    "status": "insufficient_eligible_conditions"
+  },
+  {
+    "beta": 1.5,
+    "horizon": 15000,
+    "eligible_deltas": [
+      0.002,
+      0.005,
+      0.01,
+      0.02
+    ],
+    "slope": -1.6206319125099322,
+    "ci95": [
+      -1.7035856624137613,
+      -1.5477152054155001
+    ],
+    "bootstrap_invalid": 0,
+    "status": "finite_window_descriptive_fit"
+  },
+  {
+    "beta": 1.5,
+    "horizon": 30000,
+    "eligible_deltas": [
+      0.002,
+      0.005,
+      0.01,
+      0.02
+    ],
+    "slope": -1.6537540988018014,
+    "ci95": [
+      -1.7349422255721751,
+      -1.5688656848569387
+    ],
+    "bootstrap_invalid": 0,
+    "status": "finite_window_descriptive_fit"
+  }
+]
