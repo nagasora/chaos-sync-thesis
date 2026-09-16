@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "checks": {
+    "independent_conditional_entropy": true,
+    "independent_chain_rule": true,
+    "independent_fano": true,
+    "diagonal_conditional_entropy": true,
+    "diagonal_chain_rule": true,
+    "diagonal_fano": true,
+    "anti_diagonal_conditional_entropy": true,
+    "anti_diagonal_chain_rule": true,
+    "anti_diagonal_fano": true,
+    "one_step_kappa_half": true,
+    "logd_below_underflow_retained": true,
+    "kappa_grid": true,
+    "simulate_evaluate_pipeline": true
+  },
+  "gamma": 0.6585696604057537,
+  "lambda0_theory": 1.1942327179468006,
+  "kappa_c": 0.3485318486896931,
+  "frozen_hashes": {
+    "config.json": "930762cffec59f213470f32b7a6a94974121bbd36d8e472f715c9a09d238ef2f",
+    "entropy_sync.py": "75563d611c0cd6ff1656f1f117411f9484013a32e9078dbf9b90ef465025b13b",
+    "../20260913_E2E_critical-slowing/e2e_dynamics.py": "1a0887be00271a086e529a94a040a289b355ec445b1a003599921eeadf7690d7"
+  }
+}
