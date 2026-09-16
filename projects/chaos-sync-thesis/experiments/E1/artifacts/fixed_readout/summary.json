@@ -1,0 +1,139 @@
+{
+  "experiment_id": "E1A-BOOLE-FIXED-READOUT",
+  "scientific_gates": {
+    "temporal_information": true,
+    "tm_superiority_raw": false,
+    "lag_information": true,
+    "dimension_budget": true,
+    "no_observed_repeats": true,
+    "split_contract": true,
+    "all_finite": true
+  },
+  "proceed_to_e1b": true,
+  "repeated_conditions": 0,
+  "sample_counts": {
+    "train": 160,
+    "validation": 80,
+    "test": 192
+  },
+  "metrics": [
+    {
+      "model": "tm",
+      "dimension": 16,
+      "rmse": 0.006507126123821933,
+      "mae": 0.004997622398378529,
+      "r2": 0.9947071637010843
+    },
+    {
+      "model": "fourier_raw",
+      "dimension": 16,
+      "rmse": 0.0039119700258639445,
+      "mae": 0.0021680406055781293,
+      "r2": 0.9980870613145928
+    },
+    {
+      "model": "fourier_cayley",
+      "dimension": 16,
+      "rmse": 0.004905843253911385,
+      "mae": 0.003820907543984744,
+      "r2": 0.9969915877460065
+    },
+    {
+      "model": "tm_shuffle",
+      "dimension": 16,
+      "rmse": 0.09371990696050524,
+      "mae": 0.08231458401978366,
+      "r2": -0.09792762008571998
+    },
+    {
+      "model": "fourier_raw_shuffle",
+      "dimension": 16,
+      "rmse": 0.0885405597343729,
+      "mae": 0.07910030801026778,
+      "r2": 0.020071160240493047
+    },
+    {
+      "model": "fourier_cayley_shuffle",
+      "dimension": 16,
+      "rmse": 0.08947096792939166,
+      "mae": 0.07773541746161733,
+      "r2": -0.000631762777778988
+    },
+    {
+      "model": "tm_instant",
+      "dimension": 16,
+      "rmse": 0.08952372371761111,
+      "mae": 0.07731278980157552,
+      "r2": -0.0018121385333957907
+    },
+    {
+      "model": "quantiles",
+      "dimension": 16,
+      "rmse": 0.08780711246527244,
+      "mae": 0.0767550871959268,
+      "r2": 0.036238875063874576
+    },
+    {
+      "model": "constant",
+      "dimension": 0,
+      "rmse": 0.08944271909999157,
+      "mae": 0.08000000000000002,
+      "r2": 0.0
+    },
+    {
+      "model": "analytic",
+      "dimension": 0,
+      "rmse": 0.011558000037225792,
+      "mae": 0.009118514453128541,
+      "r2": 0.9833015793924361
+    }
+  ],
+  "contrasts": [
+    {
+      "contrast": "tm - tm_shuffle (97.5%)",
+      "left": "tm",
+      "right": "tm_shuffle",
+      "coverage": 0.975,
+      "mean_seed_difference": -0.08704976978269245,
+      "lower": -0.09064628086884516,
+      "upper": -0.0835372063391685
+    },
+    {
+      "contrast": "fourier_raw - fourier_raw_shuffle (97.5%)",
+      "left": "fourier_raw",
+      "right": "fourier_raw_shuffle",
+      "coverage": 0.975,
+      "mean_seed_difference": -0.08546700314134932,
+      "lower": -0.08741031982416018,
+      "upper": -0.08354748888213862
+    },
+    {
+      "contrast": "tm - fourier_raw (95%)",
+      "left": "tm",
+      "right": "fourier_raw",
+      "coverage": 0.95,
+      "mean_seed_difference": 0.003114063027690452,
+      "lower": 0.002064414202684594,
+      "upper": 0.004116091302652249
+    },
+    {
+      "contrast": "tm - tm_instant (95%)",
+      "left": "tm",
+      "right": "tm_instant",
+      "coverage": 0.95,
+      "mean_seed_difference": -0.08298327530383018,
+      "lower": -0.08590382300895245,
+      "upper": -0.08011877333669588
+    },
+    {
+      "contrast": "tm - fourier_cayley (95%)",
+      "left": "tm",
+      "right": "fourier_cayley",
+      "coverage": 0.95,
+      "mean_seed_difference": 0.001506491584169917,
+      "lower": 0.0007368811939223589,
+      "upper": 0.0022539764222704664
+    }
+  ],
+  "interpretation": "Finite-window parameter readout; not synchronization, compression, or universal TM superiority."
+}

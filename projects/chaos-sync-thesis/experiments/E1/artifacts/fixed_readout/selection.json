@@ -1,0 +1,46 @@
+{
+  "frozen_utc": "2026-09-05T09:25:49.965993+00:00",
+  "selection": {
+    "tm": {
+      "penalty": 1.0,
+      "validation_rmse": 0.006622559682332446,
+      "dimension": 16
+    },
+    "fourier_raw": {
+      "penalty": 0.01,
+      "validation_rmse": 0.003296420003029357,
+      "dimension": 16
+    },
+    "fourier_cayley": {
+      "penalty": 0.01,
+      "validation_rmse": 0.005831642673226813,
+      "dimension": 16
+    },
+    "tm_shuffle": {
+      "penalty": 100.0,
+      "validation_rmse": 0.11331690516434909,
+      "dimension": 16
+    },
+    "fourier_raw_shuffle": {
+      "penalty": 100.0,
+      "validation_rmse": 0.11254828118006058,
+      "dimension": 16
+    },
+    "fourier_cayley_shuffle": {
+      "penalty": 100.0,
+      "validation_rmse": 0.11599174865557801,
+      "dimension": 16
+    },
+    "tm_instant": {
+      "penalty": 100.0,
+      "validation_rmse": 0.1143935884857665,
+      "dimension": 16
+    },
+    "quantiles": {
+      "penalty": 100.0,
+      "validation_rmse": 0.11293162830214765,
+      "dimension": 16
+    }
+  },
+  "model_sha256": "0143e2ef634e521cf8500e67a3ceeccc2f33e5ada8f0a81d8a29f6f6d17c06d3"
+}
