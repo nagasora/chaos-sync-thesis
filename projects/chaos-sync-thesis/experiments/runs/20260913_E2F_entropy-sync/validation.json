@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "hashes_checked": 17,
+  "count_metric_checks": 720,
+  "aggregate_rows_checked": 225,
+  "main_dynamics_replayed_pairs": 2,
+  "sensitivity_dynamics_replayed_pairs": 6,
+  "meaning": "integrity and deterministic replay; not proof of asymptotic synchronization or estimator unbiasedness"
+}

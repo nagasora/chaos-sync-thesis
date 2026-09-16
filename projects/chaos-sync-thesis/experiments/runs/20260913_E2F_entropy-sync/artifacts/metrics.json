@@ -1,0 +1,41 @@
+{
+  "status": "executed",
+  "beta": 1.2,
+  "gamma": 0.6585696604057537,
+  "lambda0_theory": 1.1942327179468006,
+  "kappa_c": 0.3485318486896931,
+  "main_batches": 4,
+  "main_pairs_per_batch": 4096,
+  "main_gate_details": [
+    {
+      "bins": 8,
+      "hcond_ratio": 0.0,
+      "hcond_pass": true,
+      "sync_fraction": 1.0,
+      "sync_pass": true
+    },
+    {
+      "bins": 16,
+      "hcond_ratio": 0.0,
+      "hcond_pass": true,
+      "sync_fraction": 1.0,
+      "sync_pass": true
+    },
+    {
+      "bins": 32,
+      "hcond_ratio": 0.0,
+      "hcond_pass": true,
+      "sync_fraction": 1.0,
+      "sync_pass": true
+    }
+  ],
+  "main_gate_pass": true,
+  "diagonal_mean": 1.1942481715799538,
+  "diagonal_mean_error": 1.5453633153139634e-05,
+  "diagonal_gate_pass": true,
+  "ftle_window_note": "Non-overlapping windows within a trajectory are descriptive and are not treated as independent replicates.",
+  "shuffle_note": "Finite-sample plugin MI baseline is reported separately and is not subtracted.",
+  "state_note": "Reconstructed equal floating values at tiny logd indicate finite resolution, not exact synchronization.",
+  "scope": "finite-time fixed-bin ensemble entropy and diagonal transverse FTLE; no full spectrum, KS entropy, or permanent synchronization claim",
+  "runtime_seconds": 98.93843670003116
+}

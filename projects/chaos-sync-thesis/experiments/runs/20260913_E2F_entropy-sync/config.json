@@ -1,0 +1,33 @@
+{
+  "experiment": "E2F_entropy_sync",
+  "seed": 20260913,
+  "beta": 1.2,
+  "main_batches": 4,
+  "main_pairs_per_batch": 4096,
+  "kappa_offsets": [
+    null,
+    -0.02,
+    -0.01,
+    -0.002,
+    0.0,
+    0.002,
+    0.01,
+    0.05,
+    null
+  ],
+  "kappa_special": [0.0, 0.5],
+  "snapshots": [0, 100, 1000, 7500, 30000],
+  "bins": [8, 16, 32],
+  "linear_eta": 1e-06,
+  "sync_log_threshold": -11.512925464970229,
+  "ftle_trajectories": 256,
+  "ftle_steps": 32768,
+  "ftle_block_lengths": [256, 4096],
+  "sensitivity_batches": 2,
+  "sensitivity_pairs_per_batch": 2048,
+  "sensitivity_offsets": [-0.01, 0.002],
+  "sensitivity_etas": [0.0001, 1e-06, 1e-08],
+  "main_hcond_ratio_gate": 0.25,
+  "main_sync_fraction_gate": 0.95,
+  "diagonal_mean_error_gate": 0.02
+}

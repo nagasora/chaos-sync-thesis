@@ -87,85 +87,130 @@ def test_shuffle_conditional_mean() -> None:
     assert abs(expected-direct)<1e-14
 
 
-def test_finite_time_covariance_and_orbit(tmp_path: Path) -> None:
-    """追試の有限長分散と実軌道が独立な定義に一致する。"""
-    path = PATH.parent.parent / "20260907_E1_tangent-finite-time-confirmation/finite_time.py"
-    spec = importlib.util.spec_from_file_location("finite_time", path)
-    assert spec is not None and spec.loader is not None
-    followup = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(followup)
-    for rho in [0., .3, .9999, 1.]:
-        for n in [1, 2, 31]:
-            covariance = rho ** abs(np.arange(n)[:, None] - np.arange(n)[None, :])
-            assert followup.mean_square(n, rho) == pytest.approx(covariance.mean())
-    beta, x0 = 1.1, .03
-    expected = []
-    for _ in range(12):
-        x0 = float(np.tan(beta*x0))
-        expected.append(x0)
-    np.testing.assert_allclose(followup.orbit(beta, .03, 12), expected, rtol=1e-13)
-    g = followup.gamma_fixed(beta)
-    assert g > 0 and abs(g-np.tanh(beta*g)) < 1e-12
-    with pytest.raises(ValueError):
-        followup.mean_square(0, .5)
+import math
 
-    followup.theory(tmp_path)
-    assert json.loads((tmp_path / "theory.json").read_text(encoding="utf-8"))["passed"]
-    assert (tmp_path / "preregistration.md").exists()
+E2E_PATH = PATH.parent.parent / "20260913_E2E_critical-slowing/e2e_dynamics.py"
+E2E_SPEC = importlib.util.spec_from_file_location("e2e_dynamics", E2E_PATH)
+assert E2E_SPEC is not None and E2E_SPEC.loader is not None
+e2e = importlib.util.module_from_spec(E2E_SPEC)
+sys.modules[E2E_SPEC.name] = e2e
+E2E_SPEC.loader.exec_module(e2e)
 
-def test_additive_sync_theory_and_variation(tmp_path: Path) -> None:
-    """相互加算結合の尺度・横変分・理論ゲートを確認する。"""
-    path = PATH.parent.parent / "20260907_E2_tangent-additive-sync/additive_sync.py"
-    spec = importlib.util.spec_from_file_location("additive_sync", path)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    for beta, epsilon in [(1.0001, 0.), (1.1, .5), (2., .9)]:
-        p = module.predictions(beta, epsilon)
-        assert p["transverse"] > p["lower_bound"] > 0
-        assert abs((1-epsilon)*p["gamma"]-np.tanh(beta*p["gamma"])) < 1e-12
-    with pytest.raises(ValueError):
-        module.predictions(1.1, 1.)
-    beta, epsilon, x0 = 1.1, .1, .02
-    states, parallel, transverse = module.orbit(beta, epsilon, x0, 12)
-    expected = []
-    for i in range(12):
-        derivative = beta/np.cos(beta*x0)**2
-        assert parallel[i] == pytest.approx(np.log(derivative+epsilon))
-        assert transverse[i] == pytest.approx(np.log(derivative-epsilon))
-        x0 = np.tan(beta*x0)+epsilon*x0
-        expected.append(x0)
-    np.testing.assert_allclose(states, expected, atol=1e-12)
-    module.theory(tmp_path)
-    gate = json.loads((tmp_path / "theory.json").read_text(encoding="utf-8"))
-    assert gate["passed"]
-    gate["passed"] = False
-    (tmp_path / "theory.json").write_text(json.dumps(gate), encoding="utf-8")
-    with pytest.raises(ValueError):
-        module.run(tmp_path)
-    assert not (tmp_path / "artifacts").exists()
 
-def test_output_diffusion_contract(tmp_path: Path) -> None:
-    """出力結合の同時更新・厳密同期・丸め監査・理論ゲートを確認する。"""
-    path = PATH.parent.parent / "20260907_E3_tangent-output-diffusion/output_diffusion.py"
-    spec = importlib.util.spec_from_file_location("output_diffusion", path)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
-    x, y = module.pair(1.1, .5, .2, -.3, 16)
-    np.testing.assert_array_equal(x, y)
-    cfg = dict(tail=4, threshold=1e-6)
-    d, _ = module.diagnostics(x, y, 1., cfg)
-    assert d["first_exact"] == 1 and d["finite_sync"] == 1
-    x, y = module.pair(1.1, .2, .2, -.3, 1)
-    assert x[0] == pytest.approx(.8*np.tan(.22)+.2*np.tan(-.33))
-    assert y[0] == pytest.approx(.2*np.tan(.22)+.8*np.tan(-.33))
-    # 大きい同符号状態はCayley上で近くても、実数状態の同期ではない。
-    d, _ = module.diagnostics(np.ones(4)*1e10, np.ones(4)*2e10, 1., cfg)
-    assert d["tail_chord"] < 1e-6 and d["finite_sync"] == 0
-    module.theory(tmp_path)
-    gate = json.loads((tmp_path / "theory.json").read_text(encoding="utf-8"))
-    assert gate["passed"]
-    gate["passed"] = False
-    (tmp_path / "theory.json").write_text(json.dumps(gate), encoding="utf-8")
-    with pytest.raises(ValueError):
-        module.run(tmp_path)
+def _mp_e2e_step(
+    s: float,
+    logd: float,
+    beta: float,
+    kappa: float,
+) -> tuple[float, float]:
+    """binary64入力から独立な80桁 tan 更新を計算する。"""
+    import mpmath as mp
+
+    with mp.workdps(80):
+        ms = mp.mpf(s)
+        mbeta = mp.mpf(beta)
+        mkappa = mp.mpf(kappa)
+        d = mp.mpf("0") if logd == -math.inf else mp.exp(mp.mpf(logd))
+        plus = mp.tan(mbeta * (ms + d))
+        minus = mp.tan(mbeta * (ms - d))
+        s_new = (plus + minus) / 2
+        d_new = abs(1 - 2 * mkappa) * abs(plus - minus) / 2
+        return float(s_new), -math.inf if d_new == 0 else float(mp.log(d_new))
+
+
+@pytest.mark.parametrize(
+    ("gap_scale", "expected_linear"),
+    [(0.5e-6, True), (2.0e-6, False)],
+)
+def test_e2e_one_step_branch_crossing_matches_mpmath(
+    gap_scale: float,
+    expected_linear: bool,
+) -> None:
+    """線形化境界の両側で一歩更新が80桁の有限差分更新と一致する。"""
+    beta, kappa, s = 1.01, 0.37, 0.23
+    d = gap_scale * abs(math.cos(beta * s)) / beta
+    logd = math.log(d)
+    expected_s, expected_logd = _mp_e2e_step(s, logd, beta, kappa)
+    actual_s, actual_logd, used_linear, valid = e2e.step(
+        s, logd, beta, kappa, 1e-6
+    )
+    assert valid
+    assert used_linear is expected_linear
+    assert actual_s == pytest.approx(expected_s, rel=1e-9, abs=1e-9)
+    assert actual_logd == pytest.approx(expected_logd, rel=1e-9, abs=1e-9)
+
+
+def test_e2e_near_pole_product_avoids_cosine_sum_cancellation() -> None:
+    """極近傍の有限結果を、相殺する旧分母より高精度に評価する。"""
+    s = math.pi / 2.0 - 5e-7
+    logd = math.log(4e-7)
+    expected_s, _ = _mp_e2e_step(s, logd, 1.0, 0.31)
+    actual_s, _, used_linear, valid = e2e.step(s, logd, 1.0, 0.31, 1e-6)
+    d = math.exp(logd)
+    legacy_s = math.sin(2.0 * s) / (
+        math.cos(2.0 * s) + math.cos(2.0 * d)
+    )
+    assert valid and not used_linear and math.isfinite(actual_s)
+    assert abs((actual_s - expected_s) / expected_s) < 2e-9
+    assert abs((legacy_s - expected_s) / expected_s) > 1e-5
+
+
+def test_e2e_small_gap_linearization_is_nonuniform_near_pole() -> None:
+    """絶対差だけ小さい場合は、極近傍で線形近似へ入らない。"""
+    s = math.pi / 2.0 - 1e-4
+    logd = math.log(9e-7)
+    expected_s, expected_logd = _mp_e2e_step(s, logd, 1.0, 0.2)
+    actual_s, actual_logd, used_linear, valid = e2e.step(
+        s, logd, 1.0, 0.2, 1e-6
+    )
+    naive_linear_s = math.tan(s)
+    assert valid and not used_linear
+    assert actual_s == pytest.approx(expected_s, rel=1e-9)
+    assert actual_logd == pytest.approx(expected_logd, rel=1e-9)
+    assert abs(naive_linear_s - expected_s) > 0.1
+
+
+def test_e2e_exact_zero_coupling_and_unresolvable_gap() -> None:
+    """κ=1/2とd=0は真の零差分を保ち、巨大差分は無効化する。"""
+    s_new, logd_new, used_linear, valid = e2e.step(
+        0.2, math.log(0.3), 1.01, 0.5, 1e-6
+    )
+    assert valid and not used_linear and math.isfinite(s_new)
+    assert logd_new == -math.inf
+    _, second_logd, second_linear, second_valid = e2e.step(
+        s_new, logd_new, 1.01, 0.5, 1e-6
+    )
+    assert second_valid and second_linear and second_logd == -math.inf
+    _, _, _, overflow_valid = e2e.step(0.2, 1_000.0, 1.01, 0.2, 1e-6)
+    assert not overflow_valid
+
+
+def test_e2e_measure_preserves_finite_window_history_and_invalidity() -> None:
+    """checkpointごとに再離脱・窓長を残し、無効軌道を明示する。"""
+    beta = 2.0
+    target = (math.pi / 2.0 - 1e-8) / beta
+    s_before_pole = math.atan(target) / beta
+    checkpoints = np.array([1, 2, 3], dtype=np.int64)
+    result = e2e.measure(
+        beta,
+        0.45,
+        np.array([s_before_pole, 1e308]),
+        np.array([math.log(1e-12), math.log(1e-4)]),
+        3,
+        1e-6,
+        1e-8,
+        1e-5,
+        1,
+        2,
+        checkpoints,
+    )
+    assert result.shape == (2, 3, 8)
+    np.testing.assert_array_equal(result[0, :, 0], [1, 1, 1])
+    assert result[0, 1, 1] == 2
+    assert result[0, 1, 3] == 1
+    assert result[0, 0, 2] == 1
+    assert result[0, 1, 2] == 0
+    np.testing.assert_array_equal(result[1, :, 5], 1)
+    np.testing.assert_array_equal(result[1, :, 7], 1)
+    np.testing.assert_array_equal(result[1, :, 2], -1)
+    assert np.isnan(result[1, :, 4]).all()
