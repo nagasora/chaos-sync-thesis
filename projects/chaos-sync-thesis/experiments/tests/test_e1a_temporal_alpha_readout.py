@@ -484,5 +484,74 @@ class TwoSourceIdentifiabilityTests(unittest.TestCase):
             self.module.validate_feature_dataset(restored_features, config)
 
 
+class FixedReadoutTests(unittest.TestCase):
+    """教材準拠の固定特徴と情報漏洩境界を検証する。"""
+
+    def test_fixed_features_theory_and_frozen_readout(self) -> None:
+        """母相関の導出、旧ridge一致、seed拒否、最小runの独立照合を確認する。"""
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+        from src.core import cayley_modes
+        from src.readout import fixed_readout_features, fit_ridge, predict_ridge
+        from E1.run_e1 import run, validate_config
+        from E1.validate_results import validate
+        theta=np.pi*(np.arange(8192)+.37)/8192
+        x=1/np.tan(theta)
+        q=cayley_modes(x,(1,))[:,0]
+        for alpha in (.25,.34,.5,.66,.75):
+            y=alpha*x-(1-alpha)/x
+            actual=np.mean(cayley_modes(y,(1,))[:,0]*np.conj(q))
+            self.assertAlmostEqual(actual.real,2*alpha-1,places=12)
+            self.assertAlmostEqual(actual.imag,0,places=12)
+        permutation=np.random.default_rng(99).permutation(len(x))
+        features,_,_=fixed_readout_features(x,permutation)
+        self.assertEqual(len(features),8)
+        self.assertTrue(all(v.shape==(16,) for v in features.values()))
+        reversed_features,_,_=fixed_readout_features(x[permutation],np.arange(len(x)))
+        np.testing.assert_allclose(features["tm_instant"],reversed_features["tm_instant"],atol=1e-13)
+        matrix=np.random.default_rng(3).normal(size=(20,16)); target=np.linspace(.34,.66,20)
+        old=load_script_module()
+        model=fit_ridge(matrix,target,.01)
+        np.testing.assert_allclose(predict_ridge(model,matrix),old.fit_ridge(matrix,target,matrix,.01),atol=1e-12)
+        config=json.loads((Path(__file__).resolve().parents[1]/"E1/config.json").read_text())
+        config.update(train_seeds=[1,2,3],validation_seeds=[4,5],test_seeds=[6,7,8],burn_in=20,observation_length=128,bootstrap_repetitions=100)
+        invalid=dict(config,validation_seeds=[1])
+        with self.assertRaises(ValueError):
+            validate_config(invalid)
+        with tempfile.TemporaryDirectory() as directory:
+            out=Path(directory)/"readout"
+            result=run(config,out)
+            self.assertEqual(result["sample_counts"]["test"],12)
+            self.assertTrue(validate(out)["passed"])
+            with self.assertRaises(FileExistsError):
+                run(config,out)
+
+
+class DynamicsAuditTests(unittest.TestCase):
+    """状態辞書と有限作用素監査の契約を確認する。"""
+
+    def test_dictionary_equivalence_and_multioutput_audit(self) -> None:
+        """角度Fourier一致、低rankでも非閉包、multi-output fit、全証拠を検証する。"""
+        root=Path(__file__).resolve().parents[1];sys.path.insert(0,str(root))
+        from src.readout import state_dictionary,fit_ridge,predict_ridge
+        from E1.run_dynamics import run,validate_config
+        from E1.validate_results import validate
+        x=np.linspace(-100,100,1001)
+        np.testing.assert_allclose(state_dictionary(x,"tm"),state_dictionary(x,"phase_fourier"),atol=1e-12)
+        matrix=state_dictionary(x,"cdf_legendre");target=np.column_stack([2*matrix[:,0]+1,-matrix[:,1]+3])
+        np.testing.assert_allclose(predict_ridge(fit_ridge(matrix,target,1e-6),matrix),target,atol=1e-5)
+        c=json.loads((root/"E1/config_dynamics.json").read_text())
+        c.update(train_seeds=[1,2],validation_seeds=[3,4],test_seeds=[5,6],burn_in=10,observation_length=32,bootstrap_repetitions=100)
+        with self.assertRaises(ValueError):validate_config(dict(c,test_seeds=[1]))
+        with tempfile.TemporaryDirectory() as directory:
+            out=Path(directory)/"dynamics"
+            result=run(c,out,root/"E1/TM_DYNAMICS.md")
+            self.assertTrue(result["scientific_gates"]["angle_fourier_identity"])
+            self.assertEqual(result["trajectory_count"],18)
+            self.assertTrue(validate(out)["passed"])
+            with np.load(out/"theory.npz") as d:
+                self.assertEqual(np.linalg.matrix_rank(d["operator"]),8)
+                self.assertTrue(np.all(np.linalg.matrix_power(d["operator"],4)==0))
+
+
 if __name__ == "__main__":
     unittest.main()

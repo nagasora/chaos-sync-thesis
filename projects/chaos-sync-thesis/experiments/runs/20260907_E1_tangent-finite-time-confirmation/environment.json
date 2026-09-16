@@ -1,0 +1,11 @@
+{
+  "python": "3.12.10",
+  "numpy": "1.26.2",
+  "scipy": "1.16.2",
+  "numba": "0.66.0",
+  "matplotlib": "3.9.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "fastmath": false,
+  "engine": "Numba float64 tan",
+  "code_sha256": "044aa68203ef0b29d4d56513b7f7d7dfe0f0bdc56b1d44c13337cabf33049a81"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "completed",
+  "cases": 48,
+  "rows": 1632,
+  "dkw_tests": 1272,
+  "dkw_epsilon": 0.01763991433542699,
+  "dkw_exceedances": 0,
+  "dkw_max_ks": 0.01345870133409377,
+  "distance_tests": 204,
+  "distance_epsilon": 0.0651657497782148,
+  "distance_exceedances": 0,
+  "uncoupled_distance_range": [
+    1.9723250909568517,
+    2.0237667858768877
+  ],
+  "half_all_exact": true,
+  "half_max_distance": 0.0,
+  "quarter_unknown_max_ks": 0.013166667260474663,
+  "nonhalf_equal_rows": 0
+}

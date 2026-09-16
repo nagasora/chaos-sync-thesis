@@ -1,0 +1,29 @@
+{
+  "equivalence_max": 6.439293542825908e-15,
+  "gram_frobenius": 1.7282817596016446e-15,
+  "mismatch_gram_frobenius": 1.862458056337185,
+  "exact_rank": 8,
+  "exact_nonzero_fraction": 0.03125,
+  "rows": [
+    {
+      "horizon": 1,
+      "full_nmse": 0.5,
+      "first_mode_nmse": 0.0
+    },
+    {
+      "horizon": 2,
+      "full_nmse": 0.7500000000000001,
+      "first_mode_nmse": 0.0
+    },
+    {
+      "horizon": 3,
+      "full_nmse": 0.875,
+      "first_mode_nmse": 0.0
+    },
+    {
+      "horizon": 4,
+      "full_nmse": 1.0000000000000002,
+      "first_mode_nmse": 1.0
+    }
+  ]
+}

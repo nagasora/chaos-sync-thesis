@@ -1,0 +1,23 @@
+{
+  "additive_sync.py": "dd6f3c7ce54e16b2f2db4620893e00e281d4a369cea9c05f8a4afa67daefedfb",
+  "artifacts\\fig1_stability_scale.pdf": "102e0c466ad8003ec3553384292d0c18a8a4b351d4773651ab8c360b4eaab8c8",
+  "artifacts\\fig1_stability_scale.png": "35998e33c187d85d49dd0ba2bec7711ea2b68c3c6a10d78e4f880748cf8d7cc8",
+  "artifacts\\fig1_stability_scale.svg": "5507cc3a0b6d5d78cb45dfb3e10d347ba7ca48cc07171d5bbbbb928916240609",
+  "artifacts\\fig2_complex_plane.pdf": "51665b9fb0d886f6211e2ab9aec651b6ac9092d119f992d62e822a5f258753e6",
+  "artifacts\\fig2_complex_plane.png": "9e751053f00b34f354979c3f9052edc2c07cf236b4b398f9373c4c2e3c99f029",
+  "artifacts\\fig2_complex_plane.svg": "629a74da50ca0c1b3967397a94845f668b523593bba6cb02fcfda2e81608cf0a",
+  "artifacts\\fig3_transverse_gain.pdf": "d175abe220de23500f6fdc0f8ac2f2b08b25cacaa1fbc29516778ecd3298baac",
+  "artifacts\\fig3_transverse_gain.png": "5260825dbc0224f6962f3ae1c12b9d62157334bce2cf096f018ece4d86022294",
+  "artifacts\\fig3_transverse_gain.svg": "c6cca28b0f2fdbccadfe5cf036c01c5b99d1b8934104732bbd8f5c0764d1b5cc",
+  "artifacts\\log_gain.csv": "1715570f74dec0b7387123ff1195bed751f1be1f3c1f0a99d9e30cedbb7619f1",
+  "artifacts\\representative_orbits.npz": "2891dfba8c8413480a367f8d1a3b630f8cb63738e00e88ca4967648bc6d19280",
+  "artifacts\\seeds.csv": "ff78deaecec8d4678332a2a241a4ab5f78a804ca54dbe9fc1281e7f62d5bcecf",
+  "artifacts\\summary.csv": "96c6c82244930ad28b2a758eb4dffaf40607be238b9b6d7e1363cbad0aef690a",
+  "config.json": "72380067a49918b07f115d3e6fc13361a875b1055fc1257059e939584a6a2494",
+  "environment.json": "77917f46d65a6b7333ea286067c234f3afecec364d89faa7718929ea61a13c1d",
+  "execution.json": "abe2cc6b0c6d69ec62517af91ee826f9f3414b5328f03d7722d6b1dd8695c34f",
+  "predictions.csv": "b0d2a68d70440c72bae3bc070ce6e66129112dc5ddbac365be9b4dd34554d8c3",
+  "preregistration.md": "056ddfb0fe61a5348f69d04dc749559328303b3e3e783b70850efdffac2627ab",
+  "README.md": "faa038ecbd2fd56d052cbdb3406bf2d6cc86cee95ab039717b6748fcfe28bfd7",
+  "theory.json": "07ce218311e5b0cc5c31c3db80cb48a62386c4a2bec867ea301c714352f6e1b3"
+}

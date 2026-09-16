@@ -1,0 +1,78 @@
+{
+  "run_id": "20260908_E1C_adaptive-tm-budget",
+  "status": "approved_ready_to_run",
+  "source_run": "20260906_E1_tangent-tm-complex-plane",
+  "source_artifact": "artifacts/representative_orbits.npz",
+  "source_keys": [
+    "b1.01_float64",
+    "b1.1_float64",
+    "b1.5_float64",
+    "b2.0_float64"
+  ],
+  "window_length": 128,
+  "windows_per_beta": 12,
+  "window_policy": "fixed_nonoverlap_from_saved_representative_orbit",
+  "independent_seed_replicates": false,
+  "cayley_scale": 1.0,
+  "grid": "xi_t=exp(2*pi*i*t/T), t=0..T-1",
+  "pole_candidates": {
+    "origin": [
+      0.0,
+      0.0
+    ],
+    "radii": [
+      0.3,
+      0.6,
+      0.85
+    ],
+    "angles": 16,
+    "count": 49
+  },
+  "methods": [
+    "fixed_tm_a0",
+    "two_sided_low_frequency_dft",
+    "adaptive_tm_qr_residual_gain"
+  ],
+  "diagnostic_m": [
+    2,
+    4,
+    8
+  ],
+  "real_coordinate_budgets": [
+    8,
+    16,
+    32
+  ],
+  "budget_rule": {
+    "fixed_m": "d/2",
+    "adaptive_m": "d/4",
+    "coefficient_bits": 64,
+    "adaptive_pole_index_bits": 8,
+    "header": "version,T,m,method,grid-convention"
+  },
+  "codec": {
+    "coefficient_dtype": "complex64",
+    "pole_index_dtype": "uint8",
+    "raw_complex_float32_control": true,
+    "bitstream_only_decode": true,
+    "quantizer_sweep": false
+  },
+  "selection": "ordinary_finite_grid_residual_gain_then_full_qr_ls_refit",
+  "threads": 1,
+  "seed": 20260908,
+  "approval_required_before_execution": true,
+  "out_of_scope": [
+    "input recovery",
+    "VAE comparison",
+    "synchronization",
+    "greedy optimality theorem",
+    "population-level generalization",
+    "quantizer-resolution sweep"
+  ],
+  "total_byte_budgets": [
+    48,
+    80,
+    144
+  ],
+  "header_bytes": 16
+}

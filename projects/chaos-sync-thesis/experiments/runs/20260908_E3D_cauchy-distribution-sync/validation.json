@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "hashed_files": 11,
+  "replayed_cases": 48,
+  "observation_rows": 1632,
+  "precision_records": 12,
+  "finite_all": true
+}

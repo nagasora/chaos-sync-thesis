@@ -1,0 +1,2 @@
+# Preserve exact research evidence bytes.
+artifacts/** -text whitespace=cr-at-eol
