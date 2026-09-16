@@ -242,3 +242,29 @@ class FiniteSizeSyncTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_e3d_cauchy_distribution_contract() -> None:
+    """E3Dの代数的一歩同期と分布oracleを独立な定義で照合する。"""
+    path = SCRIPT_PATH.parent.parent / "20260908_E3D_cauchy-distribution-sync/run_experiment.py"
+    spec = importlib.util.spec_from_file_location("e3d_distribution", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    states = np.array([[-.7, .2], [1.1, -2.3], [0., 0.5]])
+    beta = 1.5
+    expected = np.tan(beta * states).mean(axis=1)
+    advanced = module.advance(states, beta, .5)
+    np.testing.assert_array_equal(advanced[:, 0], advanced[:, 1])
+    np.testing.assert_allclose(advanced[:, 0], expected, rtol=1e-15)
+    gamma = module.scale_fixed(beta)
+    assert abs(gamma-math.tanh(beta*gamma)) < 1e-12
+    params, records = module.parameter_path(np.array([1j*gamma, 1j*gamma]), beta, .5)
+    np.testing.assert_allclose(params, 1j*gamma, atol=2e-12)
+    assert max(r["float64_parameter_error"] for r in records) < 1e-14
+    n = 1000
+    cauchy_quantiles = .3+.7*np.tan(np.pi*((np.arange(n)+.5)/n-.5))
+    assert abs(module.cauchy_ks(cauchy_quantiles, .3+.7j)-.5/n) < 1e-13
+    row = module.measure(states, np.array([0j, 0j]), beta, gamma, .25, "stationary", 0, 2)[0]
+    assert not row["closure_supported"]
+    assert row["reference_gamma"] == gamma
