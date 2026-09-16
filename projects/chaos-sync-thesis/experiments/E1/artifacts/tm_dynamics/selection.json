@@ -1,0 +1,118 @@
+{
+  "frozen_utc": "2026-09-05T16:08:43.556221+00:00",
+  "selection": [
+    {
+      "alpha": 0.25,
+      "dictionary": "tm",
+      "penalty": 1.0,
+      "validation_nmse": 0.35016590588743685
+    },
+    {
+      "alpha": 0.25,
+      "dictionary": "phase_fourier",
+      "penalty": 1.0,
+      "validation_nmse": 0.35016590588743685
+    },
+    {
+      "alpha": 0.25,
+      "dictionary": "euclidean_fourier",
+      "penalty": 1e-06,
+      "validation_nmse": 0.7556580304463242
+    },
+    {
+      "alpha": 0.25,
+      "dictionary": "cdf_cosine",
+      "penalty": 1.0,
+      "validation_nmse": 0.3353804342519312
+    },
+    {
+      "alpha": 0.25,
+      "dictionary": "cdf_legendre",
+      "penalty": 1e-06,
+      "validation_nmse": 0.36952828608410065
+    },
+    {
+      "alpha": 0.25,
+      "dictionary": "cdf_rbf",
+      "penalty": 1e-06,
+      "validation_nmse": 0.4029660287670356
+    },
+    {
+      "alpha": 0.5,
+      "dictionary": "tm",
+      "penalty": 1.0,
+      "validation_nmse": 0.3400386136449171
+    },
+    {
+      "alpha": 0.5,
+      "dictionary": "phase_fourier",
+      "penalty": 1.0,
+      "validation_nmse": 0.34003861364491716
+    },
+    {
+      "alpha": 0.5,
+      "dictionary": "euclidean_fourier",
+      "penalty": 1e-06,
+      "validation_nmse": 0.7615889281915948
+    },
+    {
+      "alpha": 0.5,
+      "dictionary": "cdf_cosine",
+      "penalty": 1e-06,
+      "validation_nmse": 0.37658654452427737
+    },
+    {
+      "alpha": 0.5,
+      "dictionary": "cdf_legendre",
+      "penalty": 1.0,
+      "validation_nmse": 0.48193335808391663
+    },
+    {
+      "alpha": 0.5,
+      "dictionary": "cdf_rbf",
+      "penalty": 1e-06,
+      "validation_nmse": 0.4992116977496973
+    },
+    {
+      "alpha": 0.75,
+      "dictionary": "tm",
+      "penalty": 1e-06,
+      "validation_nmse": 0.37834930237562947
+    },
+    {
+      "alpha": 0.75,
+      "dictionary": "phase_fourier",
+      "penalty": 1e-06,
+      "validation_nmse": 0.37834930237562947
+    },
+    {
+      "alpha": 0.75,
+      "dictionary": "euclidean_fourier",
+      "penalty": 1e-06,
+      "validation_nmse": 0.8629494624707077
+    },
+    {
+      "alpha": 0.75,
+      "dictionary": "cdf_cosine",
+      "penalty": 1.0,
+      "validation_nmse": 0.33686014926414437
+    },
+    {
+      "alpha": 0.75,
+      "dictionary": "cdf_legendre",
+      "penalty": 1.0,
+      "validation_nmse": 0.4305179170341683
+    },
+    {
+      "alpha": 0.75,
+      "dictionary": "cdf_rbf",
+      "penalty": 1e-06,
+      "validation_nmse": 0.382093204818853
+    }
+  ],
+  "model_sha256": {
+    "models_alpha_25.npz": "d405fbfa61642a5d9578a2b17c05bccd6bb25e36867abf0be20218b7391c9313",
+    "models_alpha_50.npz": "55a3ad4d3d03a3bb286a4fa5ee8b3c393f40a1900ec5829b75e40a4bee63300c",
+    "models_alpha_75.npz": "a0805934856f84caacdfc1e3f12519a37faf4c84d3d8585d4a323761cb0c669d"
+  }
+}

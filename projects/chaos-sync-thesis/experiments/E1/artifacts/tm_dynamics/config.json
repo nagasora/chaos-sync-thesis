@@ -1,0 +1,108 @@
+{
+  "experiment_id": "E1-TMA-DYNAMICS-AUDIT",
+  "alphas": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "train_seeds": [
+    610000,
+    610001,
+    610002,
+    610003,
+    610004,
+    610005,
+    610006,
+    610007,
+    610008,
+    610009,
+    610010,
+    610011,
+    610012,
+    610013,
+    610014,
+    610015,
+    610016,
+    610017,
+    610018,
+    610019,
+    610020,
+    610021,
+    610022,
+    610023
+  ],
+  "validation_seeds": [
+    620000,
+    620001,
+    620002,
+    620003,
+    620004,
+    620005,
+    620006,
+    620007
+  ],
+  "test_seeds": [
+    630000,
+    630001,
+    630002,
+    630003,
+    630004,
+    630005,
+    630006,
+    630007,
+    630008,
+    630009,
+    630010,
+    630011,
+    630012,
+    630013,
+    630014,
+    630015,
+    630016,
+    630017,
+    630018,
+    630019,
+    630020,
+    630021,
+    630022,
+    630023
+  ],
+  "burn_in": 20000,
+  "observation_length": 1024,
+  "horizons": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "dictionaries": [
+    "tm",
+    "phase_fourier",
+    "euclidean_fourier",
+    "cdf_cosine",
+    "cdf_legendre",
+    "cdf_rbf"
+  ],
+  "dimension": 16,
+  "ridge_penalties": [
+    1e-06,
+    0.01,
+    1.0
+  ],
+  "bootstrap_repetitions": 10000,
+  "bootstrap_seed": 640000,
+  "normalization": "Known stationary gamma for each alpha; oracle geometry audit, not alpha readout",
+  "targets": [
+    "cayley",
+    "cdf"
+  ],
+  "gates": {
+    "equivalence_atol": 1e-12,
+    "low_modes_nmse_max": 0.01,
+    "full_dictionary_nmse_tolerance": 0.04,
+    "horizon4_cayley_nmse_min": 0.8
+  },
+  "reference": "https://arxiv.org/abs/1408.4408",
+  "source_text": "experiments/chaos-sync-tm-self-implementation/docs/chaos_sync_tm_experiment_textbook_main.tex",
+  "theory_grid_size": 16384
+}
