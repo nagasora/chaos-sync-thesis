@@ -1,2 +1,23 @@
 # Markdown の末尾2空白は、研究文書で意図的な改行として使用している。
 *.md whitespace=-trailing-space
+
+projects/chaos-sync-thesis/experiments/runs/20260906_E1_tangent-tm-complex-plane/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260906_E1_tangent-tm-complex-plane/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260906_E0_tm-cauchy-tangent-theory/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260906_E0_tm-cauchy-tangent-theory/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260907_E1_tangent-finite-time-confirmation/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260907_E1_tangent-finite-time-confirmation/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260907_E2_tangent-additive-sync/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260907_E2_tangent-additive-sync/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260907_E3_tangent-output-diffusion/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260907_E3_tangent-output-diffusion/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260907_E6_cauchy-sync-vae/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260907_E6_cauchy-sync-vae/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260908_E3D_cauchy-distribution-sync/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260908_E3D_cauchy-distribution-sync/artifacts/*.svg -whitespace

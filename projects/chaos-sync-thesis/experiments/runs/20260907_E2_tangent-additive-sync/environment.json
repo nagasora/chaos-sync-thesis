@@ -1,0 +1,9 @@
+{
+  "python": "3.12.10",
+  "numpy": "1.26.2",
+  "scipy": "1.16.2",
+  "numba": "0.66.0",
+  "matplotlib": "3.9.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "fastmath": false
+}

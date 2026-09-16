@@ -1,0 +1,77 @@
+{
+  "method": "8192-point fit / shifted 16384-point test",
+  "max_error": 1.1102230246251565e-16,
+  "rows": [
+    {
+      "m": 2,
+      "horizon": 1,
+      "nmse": 0.5,
+      "theory": 0.5,
+      "error": 0.0
+    },
+    {
+      "m": 2,
+      "horizon": 2,
+      "nmse": 0.75,
+      "theory": 0.75,
+      "error": 0.0
+    },
+    {
+      "m": 2,
+      "horizon": 3,
+      "nmse": 0.8750000000000001,
+      "theory": 0.875,
+      "error": 1.1102230246251565e-16
+    },
+    {
+      "m": 2,
+      "horizon": 4,
+      "nmse": 1.0,
+      "theory": 1.0,
+      "error": 0.0
+    },
+    {
+      "m": 2,
+      "horizon": 5,
+      "nmse": 1.0,
+      "theory": 1.0,
+      "error": 0.0
+    },
+    {
+      "m": 3,
+      "horizon": 1,
+      "nmse": 0.7500000000000001,
+      "theory": 0.75,
+      "error": 1.1102230246251565e-16
+    },
+    {
+      "m": 3,
+      "horizon": 2,
+      "nmse": 1.0,
+      "theory": 1.0,
+      "error": 0.0
+    },
+    {
+      "m": 3,
+      "horizon": 3,
+      "nmse": 1.0,
+      "theory": 1.0,
+      "error": 0.0
+    },
+    {
+      "m": 3,
+      "horizon": 4,
+      "nmse": 1.0,
+      "theory": 1.0,
+      "error": 0.0
+    },
+    {
+      "m": 3,
+      "horizon": 5,
+      "nmse": 1.0,
+      "theory": 1.0,
+      "error": 0.0
+    }
+  ],
+  "status": "passed"
+}

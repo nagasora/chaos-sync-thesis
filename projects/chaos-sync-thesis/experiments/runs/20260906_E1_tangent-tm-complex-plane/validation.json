@@ -1,0 +1,441 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "hash config.json",
+      "passed": true
+    },
+    {
+      "name": "hash environment.json",
+      "passed": true
+    },
+    {
+      "name": "hash metrics.json",
+      "passed": true
+    },
+    {
+      "name": "hash provenance.json",
+      "passed": true
+    },
+    {
+      "name": "hash README.md",
+      "passed": true
+    },
+    {
+      "name": "hash theory.json",
+      "passed": true
+    },
+    {
+      "name": "hash tm_complex_plane.py",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/correlations.csv",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/density.csv",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/diagnostics.csv",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig1_geometry_density.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig1_geometry_density.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig1_geometry_density.svg",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig2_time_colored.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig2_time_colored.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig2_time_colored.svg",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig3_modes.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig3_modes.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig3_modes.svg",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig4_phase_difference.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig4_phase_difference.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig4_phase_difference.svg",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig5_correlations.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig5_correlations.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig5_correlations.svg",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram.svg",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram_beta_1.01.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram_beta_1.01.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram_beta_1.01.svg",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram_beta_1.1.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram_beta_1.1.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram_beta_1.1.svg",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram_beta_2.0.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram_beta_2.0.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/fig6_gram_beta_2.0.svg",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/gram.csv",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/moments.csv",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/plot_points.npz",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/source_orbits.npz",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/supplement_controls.pdf",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/supplement_controls.png",
+      "passed": true
+    },
+    {
+      "name": "hash artifacts/supplement_controls.svg",
+      "passed": true
+    },
+    {
+      "name": "count moments",
+      "passed": true
+    },
+    {
+      "name": "count density",
+      "passed": true
+    },
+    {
+      "name": "count gram",
+      "passed": true
+    },
+    {
+      "name": "count correlations",
+      "passed": true
+    },
+    {
+      "name": "mean b1.0001_float32",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.0001_float32",
+      "passed": true
+    },
+    {
+      "name": "lag b1.0001_float32/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.0001_float32/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.0001_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.0001_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.0001_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.0001_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.0002_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.0002_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.0002_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.0002_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.0005_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.0005_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.0005_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.0005_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.001_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.001_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.001_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.001_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.002_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.002_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.002_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.002_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.005_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.005_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.005_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.005_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.01_float32",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.01_float32",
+      "passed": true
+    },
+    {
+      "name": "lag b1.01_float32/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.01_float32/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.01_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.01_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.01_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.01_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.02_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.02_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.02_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.02_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.05_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.05_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.05_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.05_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.1_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.1_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.1_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.1_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b1.5_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b1.5_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b1.5_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b1.5_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b2.0_float32",
+      "passed": true
+    },
+    {
+      "name": "plot positions b2.0_float32",
+      "passed": true
+    },
+    {
+      "name": "lag b2.0_float32/1",
+      "passed": true
+    },
+    {
+      "name": "lag b2.0_float32/16384",
+      "passed": true
+    },
+    {
+      "name": "mean b2.0_float64",
+      "passed": true
+    },
+    {
+      "name": "plot positions b2.0_float64",
+      "passed": true
+    },
+    {
+      "name": "lag b2.0_float64/1",
+      "passed": true
+    },
+    {
+      "name": "lag b2.0_float64/16384",
+      "passed": true
+    },
+    {
+      "name": "theory gate and unchanged code",
+      "passed": true
+    }
+  ]
+}
