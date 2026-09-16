@@ -144,3 +144,28 @@ def test_additive_sync_theory_and_variation(tmp_path: Path) -> None:
     with pytest.raises(ValueError):
         module.run(tmp_path)
     assert not (tmp_path / "artifacts").exists()
+
+def test_output_diffusion_contract(tmp_path: Path) -> None:
+    """出力結合の同時更新・厳密同期・丸め監査・理論ゲートを確認する。"""
+    path = PATH.parent.parent / "20260907_E3_tangent-output-diffusion/output_diffusion.py"
+    spec = importlib.util.spec_from_file_location("output_diffusion", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    x, y = module.pair(1.1, .5, .2, -.3, 16)
+    np.testing.assert_array_equal(x, y)
+    cfg = dict(tail=4, threshold=1e-6)
+    d, _ = module.diagnostics(x, y, 1., cfg)
+    assert d["first_exact"] == 1 and d["finite_sync"] == 1
+    x, y = module.pair(1.1, .2, .2, -.3, 1)
+    assert x[0] == pytest.approx(.8*np.tan(.22)+.2*np.tan(-.33))
+    assert y[0] == pytest.approx(.2*np.tan(.22)+.8*np.tan(-.33))
+    # 大きい同符号状態はCayley上で近くても、実数状態の同期ではない。
+    d, _ = module.diagnostics(np.ones(4)*1e10, np.ones(4)*2e10, 1., cfg)
+    assert d["tail_chord"] < 1e-6 and d["finite_sync"] == 0
+    module.theory(tmp_path)
+    gate = json.loads((tmp_path / "theory.json").read_text(encoding="utf-8"))
+    assert gate["passed"]
+    gate["passed"] = False
+    (tmp_path / "theory.json").write_text(json.dumps(gate), encoding="utf-8")
+    with pytest.raises(ValueError):
+        module.run(tmp_path)

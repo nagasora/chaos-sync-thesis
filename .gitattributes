@@ -3,3 +3,6 @@
 
 projects/chaos-sync-thesis/experiments/runs/20260906_E1_tangent-tm-complex-plane/** -text whitespace=cr-at-eol
 projects/chaos-sync-thesis/experiments/runs/20260906_E1_tangent-tm-complex-plane/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260906_E0_tm-cauchy-tangent-theory/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260906_E0_tm-cauchy-tangent-theory/artifacts/*.svg -whitespace
