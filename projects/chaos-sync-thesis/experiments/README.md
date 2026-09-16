@@ -12,6 +12,8 @@ E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30
 
 旧 runs/ と new_experiment.py は既存記録の参照・再現のため保持する。new_experiment.pyは旧runs形式の作成ツールであり、今回のE0形式は作成しない。
 
+2026-09-07研究方針改訂：既存の軌道読み出し・同期実験を基礎として保存し、Cauchy潜在分布とカオス同期を用いるVAEの構築・検証を次の実行課題に追加する。研究全体の現行目的・E0〜E6の役割・ELBO・生成手順は[研究・実験ノート第15章](../docs/RESEARCH_NOTEBOOK.md)を参照。新規runは `20260907_E6_cauchy-sync-vae`。既存のtan発表題目とその実証範囲は維持する。以下の旧計画は履歴として読む。
+
 卒論の最小スコープは E0〜E3 です。実験コードや Notebook は、各実験を独立したフォルダに分け、設定・乱数 seed・出力・評価を保存します。
 
 実験記録の作成方法と上書き方針は [RECORDING_GUIDE.md](RECORDING_GUIDE.md) を参照してください。発表フィードバックを受けた最初の実験は、人工カオス源の線形混合に対する TM 読み出し単体検証 E1A です。
@@ -24,6 +26,9 @@ E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30
 - TM 係数の解析値との照合
 
 実行済み: [20260806_E0_boole-invariant-measure](runs/20260806_E0_boole-invariant-measure/README.md)。3 alpha × 5 seed × 100,000点で全ゲートを通過し、独立検証37項目も通過した。
+
+
+追加実験: [tan(beta x) の事前登録E0A〜F](runs/20260906_E0_tangent-cauchy/README.md)。中心Cauchy族の尺度閉包・臨界緩和・Lyapunov・精度監査を分離し、Boole結果を保持する。
 
 ## E1: 読み出し単体
 
@@ -83,4 +88,10 @@ python experiments/new_experiment.py --stage E1A --slug tm-linear-mixture --titl
 
 実験 ID ごとに `runs/` 以下へ新規作成し、同じ ID は上書きしません。
 
-- [E1 tangent TM complex-plane analysis](runs/20260906_E1_tangent-tm-complex-plane/README.md): theory, saved E0 trajectories, figures and reproducibility.
+- [E1 tangent TM・複素平面解析](runs/20260906_E1_tangent-tm-complex-plane/README.md)：保存E0軌道、事前理論、複素点群・相関・Gramと再現資料。
+
+- [E1 tangent 有限時間・独立seed追試](runs/20260907_E1_tangent-finite-time-confirmation/README.md)：複素平均の理論二乗誤差、64 seedと観測長依存。
+
+- [E2 tangent 相互加算結合の同期可能性](runs/20260907_E2_tangent-additive-sync/README.md)：同期多様体の不変測度・縦横指数・複素平面図。
+
+- [E3 tangent 出力拡散結合](runs/20260907_E3_tangent-output-diffusion/README.md)：理論安定境界、有限距離同期、浮動小数点吸収の監査。
