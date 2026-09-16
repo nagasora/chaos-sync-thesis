@@ -1,0 +1,2089 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "fixed point",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 7.28583859910259e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 7.28583859910259e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 5.003707553108401e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 1.0408340855860843e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 1.2266347333466993e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 3.925231146709438e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 6.938893903907228e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 2.3354429532350846e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 3.33510996597397e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 5.625944154985518e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 1.7995605006149162e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.0001,
+      "epsilon": 0.0,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 2.7755575615628914e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 6.661338147750939e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 4.884981308350689e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 8.326672684688674e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 1.0408340855860843e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 1.8526854844795106e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 5.551115123125783e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 1.2509268882771003e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 2.3354429532350846e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 3.3362201889985954e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 1.0889511514733385e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 2.325917236589703e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.0001,
+      "epsilon": 0.01,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 3.9968028886505635e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 3.9968028886505635e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 2.7755575615628914e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 6.938893903907228e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 1.7515822149263133e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 2.7755575615628914e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 3.878959614448864e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 4.84869951806108e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 3.33510996597397e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 9.689249402811129e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 1.5120016350067544e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.0001,
+      "epsilon": 0.1,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 3.9968028886505635e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 5.10702591327572e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 3.7367087251761353e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 5.485677294651096e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 4.663329871477281e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 4.3885418357208765e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 4.670885906470169e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 4.733694229938162e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 3.33510996597397e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 5.125899704694348e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 1.7495560555857992e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.0001,
+      "epsilon": 0.5,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 3.3306690738754696e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 2.4646951146678475e-14,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 2.4424906541753444e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 5.551115123125783e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 1.0408340855860843e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 4.84869951806108e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 5.003707553108401e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 1.5515838457795457e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 1.999170025984728e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 3.335665077486283e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 7.501443910484795e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 3.3748892569462896e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.0001,
+      "epsilon": 0.9,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 6.5503158452884236e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 6.5503158452884236e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 1.0408340855860843e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 2.0456685677126055e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 2.7755575615628914e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 1.2509268882771003e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 1.939479807224432e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 3.432809592140984e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 3.7265746044568004e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 6.537881347412622e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.01,
+      "epsilon": 0.0,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 2.7755575615628914e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 6.716849298982197e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 1.27675647831893e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 3.1031676915590914e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 2.2215299868541707e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 4.336808689942018e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 1.3877787807814457e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 1.0408340855860843e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 6.505213034913027e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 3.4350300381902343e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 1.5369927552910667e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 1.2743139876647547e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.01,
+      "epsilon": 0.01,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 5.329070518200751e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 4.218847493575595e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 4.163336342344337e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 2.6020852139652106e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 3.0665868333667484e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 5.003707553108401e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 5.553824967135427e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 4.84869951806108e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 3.433919815165609e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 3.3673064336881e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 4.464317804320217e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.01,
+      "epsilon": 0.1,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 1.2434497875801753e-14,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 2.6645352591003757e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 2.0816681711721685e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 5.204170427930421e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 3.045551692543916e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 3.1031676915590914e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 6.314488766312914e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 5.55653613398821e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 3.433919815165609e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 4.226619054747971e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 7.037925797703792e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.01,
+      "epsilon": 0.5,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 6.661338147750939e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 4.6629367034256575e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 1.9984014443252818e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 1.3877787807814457e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 4.9065389333867974e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 1.5786221915782286e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 3.1031676915590914e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 1.3548623466035522e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 1.7482234731686756e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 3.433919815165609e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 1.2026712958856933e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 9.215406215901112e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.01,
+      "epsilon": 0.9,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 4.107825191113079e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 4.107825191113079e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 1.5265566588595902e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 7.757919228897728e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 6.505213034913027e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 1.8253379971363983e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 7.410741937918042e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 5.421010862427522e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 4.4364512064021255e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 6.565636923028251e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 8.828493491819245e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.1,
+      "epsilon": 0.0,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 2.6645352591003757e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 3.9968028886505635e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 5.003707553108401e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 7.152448122690996e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 4.84869951806108e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 1.3877787807814457e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 3.469446951953614e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 3.2526065174565133e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 4.4364512064021255e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 1.1829204282776118e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 1.4092060851567112e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.1,
+      "epsilon": 0.01,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 4.884981308350689e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 5.995204332975845e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 3.469446951953614e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 7.757919228897728e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 1.1677214766175423e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 3.7367087251761353e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 3.469446951953614e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 4.84869951806108e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 4.4364512064021255e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 1.0629053193156324e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 5.953015858040089e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.1,
+      "epsilon": 0.1,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 3.3306690738754696e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 4.6629367034256575e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 3.878959614448864e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 4.511180105982342e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 6.938893903907228e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 3.469446951953614e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 5.178413355279147e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 4.4364512064021255e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 8.733014311701481e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 5.5493387662863825e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.1,
+      "epsilon": 0.5,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 3.3306690738754696e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 2.886579864025407e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 2.220446049250313e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 5.003707553108401e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 6.2546344413855015e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 4.84869951806108e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 2.7755575615628914e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 1.0971354589302191e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 8.673617379884035e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 4.436728762158282e-13,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 1.5022427746202993e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 1.0703993247318522e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 1.1,
+      "epsilon": 0.9,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 3.552713678800501e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 3.552713678800501e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 5.377642775528102e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 4.4702800766818725e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 3.4144989710325696e-20,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 5.377642775528102e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 4.4702800766818725e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 5.1357375531570375e-20,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 2.666311615939776e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 2.9305446958005632e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 1.886935052652916e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 2.0,
+      "epsilon": 0.0,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 3.9968028886505635e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 2.6645352591003757e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 2.5257955065251657e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 2.1582160144742958e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 7.496241583200558e-20,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 2.949029909160572e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 1.893477691975265e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 3.030437198788175e-20,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 2.666533660544701e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 8.193890010943505e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 3.376410262490026e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 2.0,
+      "epsilon": 0.01,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 1.8207657603852567e-14,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 8.881784197001252e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 3.469446951953614e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 1.3021714944895506e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 3.5265893093107544e-20,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 6.133173666733497e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 4.600159076789624e-20,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 2.666755705149626e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 5.5067062021407764e-14,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 4.7624126864320715e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 2.0,
+      "epsilon": 0.1,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 6.661338147750939e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 3.3306690738754696e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 4.163336342344337e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 3.903127820947816e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 4.253421298569455e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 3.469446951953614e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 5.076104428597243e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 4.338925755574552e-19,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 2.666533660544701e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 1.1447287562305064e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 4.402034292638746e-11,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 2.0,
+      "epsilon": 0.5,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "fixed point",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral parallel",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 3.552713678800501e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "log integral transverse",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 4.884981308350689e-15,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=1",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 3.925231146709438e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=2",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 5.204170427930421e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=4096 k=4",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 2.917289683928108e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=1",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 3.925231146709438e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=2",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 1.4304896245381992e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "Cayley mean nq=8192 k=4",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 3.576224061345498e-18,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 2.666533660544701e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 4.805933428997378e-12,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "transverse Jacobian",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 1.1546319456101628e-14,
+      "tolerance": 1e-07,
+      "passed": true
+    },
+    {
+      "name": "positive lower bound",
+      "beta": 2.0,
+      "epsilon": 0.9,
+      "error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    }
+  ],
+  "code_sha256": "dd6f3c7ce54e16b2f2db4620893e00e281d4a369cea9c05f8a4afa67daefedfb",
+  "config_sha256": "72380067a49918b07f115d3e6fc13361a875b1055fc1257059e939584a6a2494",
+  "predictions_sha256": "b0d2a68d70440c72bae3bc070ce6e66129112dc5ddbac365be9b4dd34554d8c3",
+  "preregistration_sha256": "056ddfb0fe61a5348f69d04dc749559328303b3e3e783b70850efdffac2627ab"
+}
