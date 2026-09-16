@@ -12,3 +12,9 @@ projects/chaos-sync-thesis/experiments/runs/20260907_E1_tangent-finite-time-conf
 
 projects/chaos-sync-thesis/experiments/runs/20260907_E2_tangent-additive-sync/** -text whitespace=cr-at-eol
 projects/chaos-sync-thesis/experiments/runs/20260907_E2_tangent-additive-sync/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260907_E3_tangent-output-diffusion/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260907_E3_tangent-output-diffusion/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260907_E6_cauchy-sync-vae/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260907_E6_cauchy-sync-vae/artifacts/*.svg -whitespace
