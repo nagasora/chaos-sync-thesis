@@ -1,0 +1,19 @@
+{
+  "config.json": "930762cffec59f213470f32b7a6a94974121bbd36d8e472f715c9a09d238ef2f",
+  "entropy_sync.py": "75563d611c0cd6ff1656f1f117411f9484013a32e9078dbf9b90ef465025b13b",
+  "../20260913_E2E_critical-slowing/e2e_dynamics.py": "1a0887be00271a086e529a94a040a289b355ec445b1a003599921eeadf7690d7",
+  "artifacts/aggregate_metrics.csv": "7800309cf70486ce62a7150750a16ad52a7c636cc60f33b925fdbd31139f9c52",
+  "artifacts/batch_metrics.csv": "556fd2079ff7d1012047145c833ab89e67cb95a8eb438d09c4afebed87619862",
+  "artifacts/entropy_sync_summary.png": "545c355259df9e3dfeb4a9fd5d62ce3606c73e5b492c9dfb269856347747a00d",
+  "artifacts/environment.json": "733f7105a2ce68958b116032abf8ba3031d0871536ea813c4989de396f2f5eb4",
+  "artifacts/ftle.npz": "2a50ddcb5a57589bddf5b49c779a596a8539b81954951c1b6ab6b0299f42f6d4",
+  "artifacts/ftle_per_trajectory.csv": "75574dbc7937fba19ccd963b58adcbf48f71b16ad75ee489c4a44de9d87ff951",
+  "artifacts/main_counts.npz": "99603d7a041e401516d0b98346a923334f87013e1d0461fd9c6ebdef601b434e",
+  "artifacts/main_snapshots.npz": "adec754dcc63125b21fcc969aefea14fb6bbd59f7ab78fdcf15e6b392bcadc0e",
+  "artifacts/metrics.json": "7e97eb8c2b6a63ddf86240f9c2e6c54c98e376859f79f73fb49aa9396cd6aed5",
+  "artifacts/preflight.json": "45fbcf9fa38e182e59cb5ba8c8a9e9b7b688f558f5322ff4d03b0212feee5aaa",
+  "artifacts/sensitivity_counts.npz": "bae5195571e2a6eb456e0c1f0028c477927dce36d5cfec1e2ef2758b40bfb6f3",
+  "artifacts/sensitivity_snapshots.npz": "3c4fd072dd65c4e55b74203ee2b0f4d9d87d823a6cfbeb03c387200b694a1539",
+  "README.md": "075ad65ef87a0716485db3893e0d38b8afd4cda921ba5a86dca647c2196e7000",
+  "RESULTS.md": "d85f31ba207376fb34ccf095d36e98b193fa42fe0569bca7ee31e94633e9b4d5"
+}

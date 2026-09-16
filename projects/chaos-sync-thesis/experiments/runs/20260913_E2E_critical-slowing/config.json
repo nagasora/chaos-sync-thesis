@@ -1,0 +1,55 @@
+{
+  "seed": 20260913,
+  "main_beta": 1.2,
+  "main_pairs": 1024,
+  "deltas": [
+    -0.01,
+    0.0,
+    0.001,
+    0.002,
+    0.005,
+    0.01,
+    0.02,
+    0.05
+  ],
+  "replication_betas": [
+    1.05,
+    1.5
+  ],
+  "replication_pairs": 512,
+  "replication_deltas": [
+    0.002,
+    0.005,
+    0.01,
+    0.02
+  ],
+  "checkpoints": [
+    7500,
+    15000,
+    30000
+  ],
+  "eta": 1e-06,
+  "sensitivity_etas": [
+    0.0001,
+    1e-06,
+    1e-08
+  ],
+  "sensitivity_pairs": 512,
+  "sensitivity_deltas": [
+    -0.01,
+    0.002,
+    0.01
+  ],
+  "sensitivity_steps": 7500,
+  "entry_tol": 1e-08,
+  "exit_tol": 1e-05,
+  "entry_hold": 10,
+  "tail_hold": 500,
+  "ftle_pairs": 256,
+  "ftle_steps": 32768,
+  "bootstrap": 2000,
+  "ftle_max_error_gate": 0.01,
+  "sensitivity_span_gate": 0.1,
+  "fit_min_confirmed": 0.95,
+  "fit_min_conditions": 4
+}

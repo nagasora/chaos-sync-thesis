@@ -1,0 +1,48 @@
+{
+  "status": "executed",
+  "conditions": 25,
+  "pair_conditions": 16896,
+  "checkpoint_rows": 41472,
+  "seconds": 21.189240899984725,
+  "ftle": [
+    {
+      "beta": 1.2,
+      "mean": 1.1936363700698644,
+      "theory": 1.1942327179468006,
+      "error": -0.0005963478769361874,
+      "seed_se": 0.0007286868839882226
+    },
+    {
+      "beta": 1.05,
+      "mean": 0.6778720614314115,
+      "theory": 0.6794416451037592,
+      "error": -0.0015695836723476075,
+      "seed_se": 0.0008872578223808561
+    },
+    {
+      "beta": 1.5,
+      "mean": 1.6450989961427218,
+      "theory": 1.6450687057641087,
+      "error": 3.029037861312922e-05,
+      "seed_se": 0.0006817594438274641
+    }
+  ],
+  "ftle_gate": true,
+  "sensitivity": [
+    {
+      "delta": -0.01,
+      "rate_span": 0.017578125
+    },
+    {
+      "delta": 0.002,
+      "rate_span": 0.04296875
+    },
+    {
+      "delta": 0.01,
+      "rate_span": 0.001953125
+    }
+  ],
+  "sensitivity_gate": true,
+  "invalid_checkpoint_count": 0,
+  "scope": "finite-window stability and log-distance hybrid approximation; no global or permanent synchronization proof"
+}
