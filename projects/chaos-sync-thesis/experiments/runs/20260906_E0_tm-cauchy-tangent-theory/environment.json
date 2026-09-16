@@ -1,0 +1,8 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "executable": "C:\\Users\\\u9577\u677e\u3000\u84bc\u7a7a\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+  "numpy": "2.3.5",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "command": "python verify_theory.py",
+  "finite_precision": "float64/complex128"
+}
