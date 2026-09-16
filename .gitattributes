@@ -21,3 +21,6 @@ projects/chaos-sync-thesis/experiments/runs/20260907_E6_cauchy-sync-vae/artifact
 
 projects/chaos-sync-thesis/experiments/runs/20260908_E3D_cauchy-distribution-sync/** -text whitespace=cr-at-eol
 projects/chaos-sync-thesis/experiments/runs/20260908_E3D_cauchy-distribution-sync/artifacts/*.svg -whitespace
+
+projects/chaos-sync-thesis/experiments/runs/20260908_E1C_adaptive-tm-budget/** -text whitespace=cr-at-eol
+projects/chaos-sync-thesis/experiments/runs/20260908_E1C_adaptive-tm-budget/artifacts/*.svg -whitespace
