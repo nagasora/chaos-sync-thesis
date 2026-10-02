@@ -6,11 +6,13 @@ E1A時点: [E1A固定読み出しレポート](E1/README.md)。432軌道・48 te
 
 E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30e-14、Gram誤差中央値0.2336→0.02491、独立検証104/104。一般Booleへの恒等式流用は負対照で棄却した。この次計画だったE1Aは上記のとおり実施済み。E0Aのfloat32不合格は維持する。
 
+過去runの一覧・実行状態・限定・再現の入口は[公開実験インデックス（2026-10-02）](EXPERIMENT_INDEX_2026-10-02.md)を参照してください。対象は公開リポジトリの `4bad6128d305330a2ae2821ac64c148f215bbc3e` スナップショットです。
+
 ## 現行の実験配置と進行方針（2026-09-05）
 
 ユーザー指定に従い、新しい実験は **experiments/E0、E1、E2…** の段階別フォルダへ置き、全実験に共通する処理は **experiments/src** に集約する。各段階のREADMEに目的・仮説・理論・方法・結果・考察・展望を記録し、artifacts配下に実行条件、全数値、図、環境とコードの由来を保存する。未着手段階の空フォルダは作らない。
 
-正規系列は9月4日版[実験テキスト](chaos-sync-tm-self-implementation/docs/chaos_sync_tm_experiment_textbook_ja.pdf)を優先する。E0基礎→E1読み出し→E2頑健性→E3同期・入力保持→E4合成信号復元→E5画像。以下の旧計画・旧runの番号と今回のテキストの細分類は同一とは限らない。特に旧E3B/Cの結合学習計画と、テキストE3B tangent basin/E3C N8入力保持を混同しない。
+正規系列は9月4日版の保存済み[実験テキストTeX原稿](chaos-sync-tm-self-implementation/docs/chaos_sync_tm_experiment_textbook_main.tex)と[ソース一式](chaos-sync-tm-self-implementation/docs/chaos_sync_tm_experiment_textbook_sources.zip)を参照する（PDFはこの公開snapshotにありません）。E0基礎→E1読み出し→E2頑健性→E3同期・入力保持→E4合成信号復元→E5画像。以下の旧計画・旧runの番号とテキストの細分類は同一とは限らない。特に旧E3B/Cの結合学習計画と、テキストE3B tangent basin/E3C N8入力保持を混同しない。
 
 **直近結果:** [E0Aレポート](E0/README.md)。150条件・450行・全軌道を保存し、独立検証50/50、テスト7件合格。float64は全15群で精度基準を満たしたが、float32は75/75軌道が周期化し、α=0.75のMAD誤差約6.29%が基準超過。実験記録は完了、全精度ゲートは未達。その後float64のE0B正対照も実施した（上記）。モデル全体の完成はまだ主張しない。
 
@@ -32,7 +34,7 @@ E0BのK-fold/Cayley/TM正対照も実施済み。10 seedでshift最大残差1.30
 実行済み: [20260806_E0_boole-invariant-measure](runs/20260806_E0_boole-invariant-measure/README.md)。3 alpha × 5 seed × 100,000点で全ゲートを通過し、独立検証37項目も通過した。
 
 
-追加実験: [tan(beta x) の事前登録E0A〜F](runs/20260906_E0_tangent-cauchy/README.md)。中心Cauchy族の尺度閉包・臨界緩和・Lyapunov・精度監査を分離し、Boole結果を保持する。
+関連する公開記録: [tan写像のTM・Cauchy・接線理論照合](runs/20260906_E0_tm-cauchy-tangent-theory/README.md)。旧本文が参照していた `20260906_E0_tangent-cauchy` のrunは、この公開snapshotにはありません。
 
 ## E1: 読み出し単体
 

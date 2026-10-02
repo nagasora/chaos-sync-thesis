@@ -63,6 +63,11 @@ E3Aでは有限サイズ結合系792条件のpilotを完走しました。一様
 
 一様正結合の本確認は10 seed・最大 `N=512`・burn-in/評価各1000・臨界近傍細密格子の800条件で完走しました。最大N・localの持続同期K50は `0.465625`（95%区間 `[0.4625, 0.475]`）で、事前基準 `K_c=0.5±0.05` を満たしました。H1とTM秩序H4は確認実験として支持します。短期発表ではこの結果を主結論として凍結し、H2/H3の10-seed検証は未完の限界として明示します。読み出し側の次段階は、E1Bのfull-rank行列と分割を固定し、観測ノイズ強度だけを変えるE2A頑健性実験です。
 
+## 状況と過去実験
+
+- [公開記録に基づく研究状況（2026-10-02）](docs/RESEARCH_STATUS_2026-10-02.md)
+- [過去実験の索引と再現ガイド](experiments/EXPERIMENT_INDEX_2026-10-02.md)
+
 ## まず読むファイル
 
 研究目標・最新結果・理論の導出・次の実験手順は、[研究・実験ノート](docs/RESEARCH_NOTEBOOK.md)に整理しています（2026-09-06）。
@@ -81,8 +86,8 @@ E3Aでは有限サイズ結合系792条件のpilotを完走しました。一様
 - 研究文書・実験: この `projects/chaos-sync-thesis` 配下
 - TeXソースと生成PDF: [`../../latex`](../../latex/README.md)
 - PowerPointと発表ノート: [`presentations`](presentations/README.md)
-- 中核論文: [`references/papers`](references/README.md)
+- 中核論文・参考文献台帳: [references/README.md](references/README.md)
 
 ## 参考文献
 
-主要 PDF は [references/papers](references/papers) に保存されています。特に、無限次元ランダム結合 Boole 系、Artificial Kuramoto Oscillatory Neurons、TM–Koopman 関連論文の役割を区別して利用します。旧名称とSHA-256は[参考文献台帳](references/README.md)に記録しています。
+参考文献PDFの所在、旧名称、SHA-256は[参考文献台帳](references/README.md)を参照してください。特に、無限次元ランダム結合 Boole 系、Artificial Kuramoto Oscillatory Neurons、TM–Koopman 関連論文の役割を区別して利用します。
